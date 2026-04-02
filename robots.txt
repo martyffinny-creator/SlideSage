@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /netlify/
 
-Sitemap: https://slidesage-app.netlify.app/sitemap.xml
+Sitemap: https://spontaneous-tanuki-e1d535.netlify.app/sitemap.xml
