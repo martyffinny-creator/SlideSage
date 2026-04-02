@@ -1,0 +1,23 @@
+{
+  "name": "slidesage",
+  "version": "1.0.0",
+  "description": "AI-powered PowerPoint analysis SaaS",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Static site - no build step required'",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "@supabase/supabase-js": "^2.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["presentation", "ai", "analysis", "powerpoint", "saas"],
+  "license": "MIT"
+}
