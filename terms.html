@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — SlideSage</title>
+  <!-- SEO -->
+  <meta name="description" content="SlideSage Terms of Service. Read the terms and conditions governing use of our AI-powered presentation analysis service." />
+  <meta name="keywords" content="SlideSage terms of service, terms and conditions, user agreement, presentation analyzer terms" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/terms.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Terms of Service — SlideSage" />
+  <meta property="og:description" content="Read the terms and conditions governing use of SlideSage." />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/terms.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="Terms of Service — SlideSage" />
+  <meta name="twitter:description" content="Read the terms and conditions governing use of SlideSage." />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dim: #16a34a;
+      --green-glow: rgba(34,197,94,0.18);
+      --green-glow-strong: rgba(34,197,94,0.35);
+      --navy: #080c14;
+      --navy2: #0d1117;
+      --navy3: #111827;
+      --surface: rgba(255,255,255,0.04);
+      --surface2: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(34,197,94,0.25);
+      --text: #f1f5f9;
+      --text-muted: #64748b;
+      --text-muted2: #94a3b8;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy2); }
+    ::-webkit-scrollbar-thumb { background: #1e3a2e; border-radius: 3px; }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(8,12,20,0.7);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1rem,4vw,2.5rem);
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+    }
+    .navbar.scrolled { background: rgba(8,12,20,0.92); }
+
+    .nav-logo {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.35rem; font-weight: 800;
+      background: linear-gradient(135deg, #22c55e 0%, #86efac 50%, #22c55e 100%);
+      background-size: 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 4s linear infinite;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo::before {
+      content: '';
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 12px var(--green-glow-strong);
+      flex-shrink: 0;
+    }
+
+    @keyframes shimmerText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted2); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      position: relative; padding-bottom: 2px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--green);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta { display: flex; align-items: center; gap: 1rem; }
+    .btn-ghost {
+      color: var(--text-muted2); background: none; border: none;
+      font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .btn-ghost:hover { color: var(--text); }
+
+    .btn-primary {
+      position: relative; display: inline-flex; align-items: center; gap: 6px;
+      padding: 0.5rem 1.25rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; font-size: 0.9rem; font-weight: 600;
+      border: none; border-radius: 10px; cursor: pointer;
+      text-decoration: none;
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 24px var(--green-glow-strong), 0 4px 16px rgba(0,0,0,0.4);
+      transform: translateY(-1px);
+    }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      padding: 120px clamp(1rem,5vw,3rem) 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(34,197,94,0.1) 0%, transparent 70%),
+        var(--navy);
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 80%);
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+    .page-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.1); border: 1px solid var(--border2);
+      color: var(--green); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; border-radius: 100px; padding: 6px 16px;
+      margin-bottom: 1.5rem;
+    }
+    .page-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .page-subtitle {
+      color: var(--text-muted2);
+      font-size: 1.05rem;
+      margin-bottom: 0;
+    }
+    .updated-badge {
+      display: inline-block;
+      margin-top: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── CONTENT WRAPPER ─── */
+    .content-wrapper {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .content-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px clamp(1.5rem, 5vw, 3rem) 80px;
+    }
+
+    /* ─── TABLE OF CONTENTS ─── */
+    .toc {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 56px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .toc-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+    .toc ol {
+      padding-left: 1.4em;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 2rem;
+    }
+    .toc ol li a {
+      color: #0f172a;
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: color 0.2s;
+    }
+    .toc ol li a:hover { color: #16a34a; }
+
+    /* ─── SECTIONS ─── */
+    .policy-section {
+      margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
+    .policy-section h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .policy-section p {
+      font-size: 0.97rem;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 0.9rem;
+    }
+    .policy-section ul, .policy-section ol {
+      padding-left: 1.6em;
+      margin-bottom: 0.9rem;
+    }
+    .policy-section li {
+      font-size: 0.97rem;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 0.35rem;
+    }
+    .policy-section strong { color: #0f172a; }
+    .policy-section a { color: #16a34a; }
+    .policy-section a:hover { text-decoration: underline; }
+
+    /* ─── HIGHLIGHT BOX ─── */
+    .highlight-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #22c55e;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 1.2rem 0;
+      font-size: 0.95rem;
+      color: #166534;
+      line-height: 1.65;
+    }
+    .warn-box {
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-left: 4px solid #f59e0b;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 1.2rem 0;
+      font-size: 0.95rem;
+      color: #78350f;
+      line-height: 1.65;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      padding: 48px clamp(1rem, 5vw, 3rem) 32px;
+      color: var(--text-muted);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      gap: 1.5rem;
+    }
+    .footer-brand {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, #22c55e, #86efac);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.85rem; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 0.8rem; }
+
+    @media (max-width: 640px) {
+      .toc ol { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">SlideSage</a>
+    <ul class="nav-links">
+      <li><a href="features.html">Features</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="app.html" class="btn-primary">Try Free →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="page-label">📋 Legal</div>
+      <h1 class="page-title">Terms of Service</h1>
+      <p class="page-subtitle">The rules of the road for using SlideSage — plain English, no surprises.</p>
+      <span class="updated-badge">Last updated: April 2, 2026</span>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <div class="content-wrapper">
+    <div class="content-inner">
+
+      <!-- TOC -->
+      <div class="toc">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li><a href="#acceptance">Acceptance of Terms</a></li>
+          <li><a href="#service">Description of Service</a></li>
+          <li><a href="#accounts">Accounts &amp; Access</a></li>
+          <li><a href="#acceptable-use">Acceptable Use</a></li>
+          <li><a href="#content">Your Content</a></li>
+          <li><a href="#ai-outputs">AI-Generated Outputs</a></li>
+          <li><a href="#payments">Payments &amp; Billing</a></li>
+          <li><a href="#intellectual-property">Intellectual Property</a></li>
+          <li><a href="#disclaimers">Disclaimers</a></li>
+          <li><a href="#limitation">Limitation of Liability</a></li>
+          <li><a href="#termination">Termination</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ol>
+      </div>
+
+      <!-- 1 -->
+      <section class="policy-section" id="acceptance">
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing or using SlideSage (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, you may not use the Service.</p>
+        <p>These Terms apply to all visitors, users, and anyone else who accesses the Service. By using SlideSage you also agree to our <a href="privacy.html">Privacy Policy</a>, which is incorporated into these Terms by reference.</p>
+        <div class="highlight-box">
+          <strong>Plain English:</strong> Using SlideSage means you accept these rules. If something doesn't sit right, reach out before using — we're reasonable people.
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="policy-section" id="service">
+        <h2>2. Description of Service</h2>
+        <p>SlideSage is an AI-powered presentation analysis tool. It allows you to upload PowerPoint (.pptx) files and receive structured feedback, suggestions, and scores generated by large language models.</p>
+        <p>We reserve the right to modify, suspend, or discontinue any part of the Service at any time, with or without notice. We will not be liable to you or any third party for any modification, suspension, or discontinuation.</p>
+      </section>
+
+      <!-- 3 -->
+      <section class="policy-section" id="accounts">
+        <h2>3. Accounts &amp; Access</h2>
+        <p>Some features of SlideSage may require you to create an account. You are responsible for:</p>
+        <ul>
+          <li>Maintaining the confidentiality of your login credentials</li>
+          <li>All activity that occurs under your account</li>
+          <li>Notifying us immediately of any unauthorised use</li>
+        </ul>
+        <p>You must be at least 13 years old (or the minimum age of digital consent in your jurisdiction) to use SlideSage.</p>
+      </section>
+
+      <!-- 4 -->
+      <section class="policy-section" id="acceptable-use">
+        <h2>4. Acceptable Use</h2>
+        <p>You agree not to use SlideSage to:</p>
+        <ul>
+          <li>Upload content that is illegal, harmful, threatening, or infringes any third-party rights</li>
+          <li>Reverse-engineer, scrape, or attempt to extract our models or underlying systems</li>
+          <li>Circumvent rate limits, access controls, or authentication mechanisms</li>
+          <li>Use the Service for any purpose that violates applicable laws or regulations</li>
+          <li>Resell or sublicense access to the Service without our written consent</li>
+          <li>Attempt to disrupt or degrade the Service's performance</li>
+        </ul>
+        <div class="warn-box">
+          Violation of these rules may result in immediate suspension or termination of your account without refund.
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="policy-section" id="content">
+        <h2>5. Your Content</h2>
+        <p><strong>You own your content.</strong> When you upload a presentation to SlideSage, you retain full ownership of that file and its contents.</p>
+        <p>By uploading content, you grant SlideSage a limited, non-exclusive licence to process that content solely for the purpose of providing you with analysis results. We do not use your presentation content to train AI models, and we do not share it with third parties except as described in our <a href="privacy.html">Privacy Policy</a>.</p>
+        <p>You represent and warrant that you have all necessary rights to upload and process the content you submit.</p>
+      </section>
+
+      <!-- 6 -->
+      <section class="policy-section" id="ai-outputs">
+        <h2>6. AI-Generated Outputs</h2>
+        <p>SlideSage uses AI models to generate analysis, scores, and recommendations. You acknowledge that:</p>
+        <ul>
+          <li>AI outputs may be inaccurate, incomplete, or inappropriate for your specific context</li>
+          <li>Results should be reviewed by a qualified human before acting on them</li>
+          <li>We do not guarantee that AI feedback reflects best practices in any given industry or domain</li>
+          <li>The same input may produce different outputs on different occasions</li>
+        </ul>
+        <div class="highlight-box">
+          Think of SlideSage as a smart first-pass reviewer — useful, but not a substitute for expert human judgment.
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="policy-section" id="payments">
+        <h2>7. Payments &amp; Billing</h2>
+        <p>Paid plans are billed in advance on a monthly or annual basis. By subscribing, you authorise us to charge your payment method on a recurring basis until you cancel.</p>
+        <p><strong>Cancellations:</strong> You may cancel at any time. Cancellation takes effect at the end of your current billing period. We do not offer refunds for partial billing periods unless required by law.</p>
+        <p><strong>Price changes:</strong> We will give at least 30 days' notice before changing subscription prices. Continued use after the effective date constitutes acceptance of the new pricing.</p>
+        <p><strong>Free tier:</strong> The free tier is subject to usage limits and may be changed or discontinued at any time.</p>
+      </section>
+
+      <!-- 8 -->
+      <section class="policy-section" id="intellectual-property">
+        <h2>8. Intellectual Property</h2>
+        <p>SlideSage and its original content (excluding your uploaded files), features, and functionality are owned by SlideSage and its licensors, and are protected by copyright, trademark, and other intellectual property laws.</p>
+        <p>You may not copy, modify, distribute, sell, or lease any part of the Service or its underlying software without our prior written consent.</p>
+      </section>
+
+      <!-- 9 -->
+      <section class="policy-section" id="disclaimers">
+        <h2>9. Disclaimers</h2>
+        <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+        <p>We do not warrant that:</p>
+        <ul>
+          <li>The Service will be uninterrupted, error-free, or secure</li>
+          <li>Any errors in the Service will be corrected</li>
+          <li>Results obtained from the Service will be accurate or reliable</li>
+        </ul>
+      </section>
+
+      <!-- 10 -->
+      <section class="policy-section" id="limitation">
+        <h2>10. Limitation of Liability</h2>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, SLIDESAGE AND ITS AFFILIATES, OFFICERS, EMPLOYEES, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE SERVICE.</p>
+        <p>IN NO EVENT SHALL OUR TOTAL LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS PRECEDING THE CLAIM, OR (B) $100 USD.</p>
+      </section>
+
+      <!-- 11 -->
+      <section class="policy-section" id="termination">
+        <h2>11. Termination</h2>
+        <p>We may suspend or terminate your access to the Service at any time, with or without cause, with or without notice. Upon termination, your right to use the Service will immediately cease.</p>
+        <p>Provisions of these Terms that by their nature should survive termination (including intellectual property, disclaimers, limitation of liability, and governing law) will survive.</p>
+      </section>
+
+      <!-- 12 -->
+      <section class="policy-section" id="contact">
+        <h2>12. Contact Us</h2>
+        <p>If you have questions about these Terms, please contact us:</p>
+        <ul>
+          <li><strong>Email:</strong> <a href="mailto:legal@slidesage-app.netlify.app">legal@slidesage-app.netlify.app</a></li>
+          <li><strong>Website:</strong> <a href="https://slidesage-app.netlify.app">slidesage-app.netlify.app</a></li>
+        </ul>
+        <p>These Terms are governed by and construed in accordance with the laws of Ontario, Canada, without regard to conflict-of-law provisions.</p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">📊 SlideSage</div>
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+      <p class="footer-copy">© 2026 SlideSage. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+</body>
+</html>
