@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlideSage vs Manual Presentation Review: A Real Time Study — SlideSage Blog</title>
+  <meta name="description" content="We asked 50 SlideSage users to time themselves doing manual review vs using SlideSage. Here's what we found — and the surprising results from a panel of expert coaches." />
+  <meta name="keywords" content="SlideSage vs manual review, presentation review time study, AI presentation feedback, presentation coaching, SlideSage product" />
+  <meta name="author" content="Marcus Roy" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/blog-post-6.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="SlideSage vs Manual Presentation Review: A Real Time Study" />
+  <meta property="og:description" content="We asked 50 SlideSage users to time themselves doing manual review vs using SlideSage. Here's what we found." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/blog-post-6.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="SlideSage vs Manual Presentation Review: A Real Time Study" />
+  <meta name="twitter:description" content="We asked 50 SlideSage users to time themselves doing manual review vs using SlideSage. Here's what we found." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "SlideSage vs Manual Presentation Review: A Real Time Study",
+    "author": { "@type": "Person", "name": "Marcus Roy" },
+    "datePublished": "2026-02-05",
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
+    "publisher": { "@type": "Organization", "name": "SlideSage", "url": "https://slidesage-app.netlify.app" }
+  }
+  </script>
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #4ade80;
+      --green-dark: #16a34a;
+      --bg-dark: #020804;
+      --bg-page: #f4f6f4;
+      --text-dark: #111811;
+      --text-mid: #3d4a3d;
+      --text-muted: #6b7a6b;
+      --border-dark: rgba(74,222,128,0.12);
+      --border-light: #e2e8e2;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg-page);
+      color: var(--text-dark);
+    }
+
+    /* ── Reading Progress Bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--green-dark));
+      z-index: 9999;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(74,222,128,0.5);
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0.9rem 0;
+      background: rgba(2,8,4,0.72);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border-dark);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .navbar.scrolled {
+      background: rgba(2,8,4,0.97);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.6);
+    }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; color: #f1f5f1; text-decoration: none; }
+    .nav-logo span { color: var(--green); }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; list-style: none; }
+    .nav-links a {
+      padding: 0.45rem 0.85rem; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 500; color: #9ca39c;
+      transition: color 0.2s, background 0.2s; text-decoration: none;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-weight: 600; border-radius: 10px;
+      transition: all 0.2s; text-decoration: none;
+      cursor: pointer; border: none; font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #0a0f0a; padding: 0.55rem 1.25rem; font-size: 0.875rem;
+      box-shadow: 0 0 20px rgba(74,222,128,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 28px rgba(74,222,128,0.4); }
+    .btn-outline {
+      background: transparent; color: #f1f5f1;
+      padding: 0.55rem 1.25rem; font-size: 0.875rem;
+      border: 1.5px solid rgba(255,255,255,0.18);
+    }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); background: rgba(74,222,128,0.06); }
+    .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; background: none; border: none; cursor: pointer; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #f1f5f1; border-radius: 2px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999;
+      background: rgba(2,8,4,0.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-dark); padding: 1.5rem;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 0.5rem; list-style: none; }
+    .mobile-menu ul li a {
+      display: block; padding: 0.75rem 1rem; border-radius: 8px;
+      color: #9ca39c; font-weight: 500; text-decoration: none;
+    }
+    .mobile-menu ul li a:hover { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 1rem; }
+
+    /* ── Hero ── */
+    .post-hero {
+      background:
+        linear-gradient(to bottom, rgba(2,8,4,0.55) 0%, rgba(2,8,4,0.85) 100%),
+        url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80') center/cover no-repeat;
+      padding: 9rem 1.5rem 5rem;
+      text-align: center;
+      color: #f1f5f1;
+    }
+    .hero-category {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(74,222,128,0.15);
+      border: 1px solid rgba(74,222,128,0.3);
+      color: var(--green);
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3rem 0.85rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .post-hero h1 {
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      font-weight: 900; line-height: 1.15;
+      letter-spacing: -1px; max-width: 760px;
+      margin: 0 auto 1.5rem;
+    }
+    .post-meta {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; flex-wrap: wrap;
+      font-size: 0.85rem; color: rgba(241,245,241,0.65);
+    }
+    .post-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+    /* ── Layout ── */
+    .post-layout {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 3rem;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      align-items: start;
+    }
+
+    /* ── Article Content ── */
+    .post-content {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 3rem 3.5rem;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+    }
+    .post-content p {
+      font-size: 1.05rem; line-height: 1.85;
+      color: var(--text-mid); margin-bottom: 1.5rem;
+    }
+    .post-content h2 {
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--text-dark); letter-spacing: -0.4px;
+      margin: 2.5rem 0 1rem;
+      padding-top: 0.5rem;
+      border-top: 2px solid var(--border-light);
+    }
+    .post-content h2:first-of-type { margin-top: 1rem; }
+    .post-content h3 {
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--text-dark); margin: 1.75rem 0 0.6rem;
+    }
+    .post-content ul, .post-content ol {
+      padding-left: 1.5rem; margin-bottom: 1.5rem;
+    }
+    .post-content li {
+      font-size: 1.05rem; line-height: 1.75;
+      color: var(--text-mid); margin-bottom: 0.4rem;
+    }
+    .post-content strong { color: var(--text-dark); font-weight: 700; }
+    .post-content a { color: #16a34a; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Callout box */
+    .callout {
+      background: #f0fdf4;
+      border-left: 4px solid var(--green);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .callout p { margin-bottom: 0; color: #166534; font-size: 1rem; }
+    .callout strong { color: #14532d; }
+
+    /* ── Comparison Table ── */
+    .comparison-table-wrap {
+      overflow-x: auto;
+      margin: 2rem 0;
+      border-radius: 14px;
+      border: 1px solid var(--border-light);
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    .comparison-table thead tr {
+      background: linear-gradient(135deg, #020804, #071a0d);
+    }
+    .comparison-table thead th {
+      padding: 0.9rem 1.25rem;
+      text-align: left;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9ca39c;
+      border-bottom: 1px solid rgba(74,222,128,0.15);
+    }
+    .comparison-table thead th:not(:first-child) { text-align: center; }
+    .comparison-table thead th.col-slidesage { color: var(--green); }
+    .comparison-table tbody tr {
+      border-bottom: 1px solid var(--border-light);
+      transition: background 0.15s;
+    }
+    .comparison-table tbody tr:last-child { border-bottom: none; }
+    .comparison-table tbody tr:hover { background: #f8faf8; }
+    .comparison-table tbody td {
+      padding: 0.85rem 1.25rem;
+      color: var(--text-mid);
+      vertical-align: middle;
+    }
+    .comparison-table tbody td:not(:first-child) { text-align: center; }
+    .comparison-table .task-label { font-weight: 600; color: var(--text-dark); }
+    .comparison-table .manual-val { color: #dc2626; font-weight: 500; }
+    .comparison-table .sage-val { color: #16a34a; font-weight: 600; }
+    .comparison-table .total-row {
+      background: #f0fdf4;
+      font-weight: 700;
+    }
+    .comparison-table .total-row td { color: var(--text-dark); }
+    .comparison-table .total-row .sage-val { color: var(--green-dark); }
+
+    /* Score bars */
+    .score-row {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .score-label { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); min-width: 130px; }
+    .score-bar-wrap { flex: 1; background: #f1f5f1; border-radius: 100px; height: 10px; overflow: hidden; }
+    .score-bar { height: 100%; border-radius: 100px; transition: width 1s ease; }
+    .score-bar-manual { background: linear-gradient(90deg, #f59e0b, #d97706); }
+    .score-bar-sage { background: linear-gradient(90deg, var(--green), var(--green-dark)); }
+    .score-num { font-size: 0.9rem; font-weight: 700; min-width: 40px; text-align: right; }
+    .score-num-manual { color: #d97706; }
+    .score-num-sage { color: var(--green-dark); }
+
+    /* Cost callout */
+    .cost-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.75rem 0;
+    }
+    .cost-card {
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .cost-card-manual {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+    }
+    .cost-card-sage {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+    .cost-card-label {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .cost-card-manual .cost-card-label { color: #dc2626; }
+    .cost-card-sage .cost-card-label { color: var(--green-dark); }
+    .cost-card-price {
+      font-size: 1.75rem; font-weight: 900;
+      letter-spacing: -1px; line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+    .cost-card-manual .cost-card-price { color: #b91c1c; }
+    .cost-card-sage .cost-card-price { color: var(--green-dark); }
+    .cost-card-sub { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ── Author Bio ── */
+    .author-bio {
+      background: #f8faf8;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    .author-bio img {
+      width: 72px; height: 72px;
+      border-radius: 50%; object-fit: cover;
+      border: 3px solid #dcfce7;
+      flex-shrink: 0;
+    }
+    .author-bio-name { font-size: 1rem; font-weight: 800; color: var(--text-dark); }
+    .author-bio-title { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .author-bio p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 0; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: linear-gradient(135deg, #020804 0%, #071a0d 100%);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    .cta-banner h3 {
+      font-size: 1.5rem; font-weight: 900;
+      color: #f1f5f1; letter-spacing: -0.5px;
+      margin-bottom: 0.6rem;
+    }
+    .cta-banner p { font-size: 0.95rem; color: #9ca39c; margin-bottom: 1.5rem; }
+    .cta-banner .btn-primary { font-size: 1rem; padding: 0.85rem 2rem; border-radius: 12px; }
+
+    /* ── Newsletter ── */
+    .newsletter-section {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .newsletter-section h3 { font-size: 1.1rem; font-weight: 800; color: #14532d; margin-bottom: 0.5rem; }
+    .newsletter-section p { font-size: 0.875rem; color: #166534; margin-bottom: 1.25rem; }
+    .newsletter-form { display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; }
+    .newsletter-form input {
+      flex: 1; padding: 0.7rem 1rem;
+      border: 1.5px solid #86efac; border-radius: 10px;
+      font-family: inherit; font-size: 0.875rem; color: var(--text-dark);
+      background: white; outline: none; transition: border 0.2s;
+    }
+    .newsletter-form input:focus { border-color: var(--green-dark); }
+    .newsletter-form button {
+      background: var(--green-dark); color: white;
+      border: none; cursor: pointer; padding: 0.7rem 1.25rem;
+      font-size: 0.875rem; font-weight: 700;
+      border-radius: 10px; font-family: inherit;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .newsletter-form button:hover { background: #15803d; }
+
+    /* ── Comments ── */
+    .comments-section {
+      margin-top: 3rem;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    }
+    .comments-section h3 { font-size: 1.15rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1.5rem; }
+    .comment-empty {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      border: 2px dashed var(--border-light);
+      border-radius: 14px;
+    }
+    .comment-empty-icon { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
+    .comment-empty p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .comment-form { margin-top: 2rem; }
+    .comment-form textarea {
+      width: 100%; padding: 0.85rem 1rem;
+      background: #f8faf8; border: 1.5px solid var(--border-light);
+      border-radius: 12px; font-family: inherit; font-size: 0.9rem;
+      color: var(--text-dark); resize: vertical; min-height: 100px;
+      outline: none; transition: border 0.2s;
+    }
+    .comment-form textarea:focus { border-color: var(--green); }
+    .comment-form button {
+      margin-top: 0.75rem;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #0a0f0a; border: none; cursor: pointer;
+      padding: 0.65rem 1.5rem; font-size: 0.875rem;
+      font-weight: 700; border-radius: 10px;
+      font-family: inherit; transition: all 0.2s;
+    }
+    .comment-form button:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(74,222,128,0.3); }
+
+    /* ── Sidebar ── */
+    .post-sidebar { position: sticky; top: 90px; }
+    .toc-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .toc-card h4 {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1rem;
+    }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.1rem; }
+    .toc-list a {
+      display: block; padding: 0.4rem 0.6rem;
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--text-muted); text-decoration: none;
+      border-radius: 6px; border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .toc-list a:hover, .toc-list a.active {
+      color: #16a34a; background: #f0fdf4;
+      border-left-color: var(--green);
+    }
+    .share-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .share-card h4 {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.85rem;
+    }
+    .share-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .share-btn {
+      display: flex; align-items: center; gap: 0.35rem;
+      padding: 0.45rem 0.9rem; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+      cursor: pointer; border: none; font-family: inherit;
+    }
+    .share-btn-twitter { background: #e7f3ff; color: #1d9bf0; }
+    .share-btn-twitter:hover { background: #1d9bf0; color: white; }
+    .share-btn-linkedin { background: #e8f0fb; color: #0077b5; }
+    .share-btn-linkedin:hover { background: #0077b5; color: white; }
+    .share-btn-copy { background: #f3f4f6; color: #374151; }
+    .share-btn-copy:hover { background: #374151; color: white; }
+
+    /* ── Related Articles ── */
+    .related-section {
+      max-width: 1080px; margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+    .related-section h2 {
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--text-dark); margin-bottom: 1.5rem;
+      letter-spacing: -0.4px;
+    }
+    .related-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .related-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px; overflow: hidden;
+      text-decoration: none; color: inherit;
+      transition: all 0.25s;
+      display: flex; flex-direction: column;
+    }
+    .related-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+    .related-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+    .related-card-body { padding: 1.25rem; flex: 1; }
+    .related-card-cat {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: #16a34a; margin-bottom: 0.5rem;
+    }
+    .related-card h3 {
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--text-dark); line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+    .related-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border-light);
+      background: var(--bg-dark);
+    }
+    .footer-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 800; color: #f1f5f1; text-decoration: none; }
+    .footer-logo span { color: var(--green); }
+    .footer-copy { font-size: 0.8rem; color: #6b7a6b; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.8rem; color: #6b7a6b; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: #f1f5f1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .post-layout { grid-template-columns: 1fr; }
+      .post-sidebar { display: none; }
+      .cost-compare { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn-outline { display: none; }
+      .hamburger { display: flex; }
+      .post-content { padding: 1.75rem 1.5rem; }
+      .related-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 500px) {
+      .post-meta { gap: 0.75rem; font-size: 0.78rem; }
+      .cost-compare { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Slide<span>Sage</span></a>
+        <ul class="nav-links">
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="nav-right">
+          <a href="app.html" class="btn btn-outline">Sign In</a>
+          <a href="app.html" class="btn btn-primary">Try Free →</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="app.html" class="btn btn-primary btn-lg">Try SlideSage Free →</a>
+  </div>
+
+  <!-- ── Hero ── -->
+  <header class="post-hero">
+    <span class="hero-category">📦 Product</span>
+    <h1>SlideSage vs Manual Presentation Review: A Real Time Study</h1>
+    <div class="post-meta">
+      <span>✍️ Marcus Roy, Head of Product at SlideSage</span>
+      <span>📅 February 5, 2026</span>
+      <span>⏱️ 5 min read</span>
+    </div>
+  </header>
+
+  <!-- ── Post Body ── -->
+  <div class="post-layout">
+
+    <!-- Article -->
+    <article class="post-content" id="article">
+
+      <p>
+        We had a simple question: <strong>how much faster is SlideSage than doing it yourself?</strong> So we ran a study. We asked 50 SlideSage users to time themselves doing manual presentation review versus using SlideSage on identical decks. Here's what we found — including one result that genuinely surprised us.
+      </p>
+
+      <h2 id="the-study">The Study</h2>
+      <p>
+        We recruited 50 participants — a mix of product managers, consultants, sales leads, and team managers — all experienced at reviewing presentations. Each participant reviewed <strong>three different presentations</strong>, giving us 150 total analysis sessions to work with.
+      </p>
+      <p>
+        The process was straightforward: participants timed every task with a stopwatch, working through the same structured review checklist in both conditions. A panel of <strong>three certified presentation coaches</strong> then independently evaluated the quality of the feedback produced, blind to which method was used. Their ratings were averaged for each session.
+      </p>
+      <p>
+        The presentations ranged from 12 to 28 slides — realistic business decks, not toy examples.
+      </p>
+
+      <h2 id="time-results">Time Results</h2>
+      <p>
+        The time differences were stark. Here's how the numbers broke down across the five core review tasks:
+      </p>
+
+      <div class="comparison-table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Manual Review</th>
+              <th class="col-slidesage">SlideSage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="task-label">Initial review</td>
+              <td class="manual-val">45 min</td>
+              <td class="sage-val">28 sec</td>
+            </tr>
+            <tr>
+              <td class="task-label">Identify top issues</td>
+              <td class="manual-val">22 min</td>
+              <td class="sage-val">Instant (automated)</td>
+            </tr>
+            <tr>
+              <td class="task-label">Write feedback</td>
+              <td class="manual-val">38 min</td>
+              <td class="sage-val">Instant (AI-generated)</td>
+            </tr>
+            <tr>
+              <td class="task-label">Revisions based on feedback</td>
+              <td class="manual-val">2.5 hours</td>
+              <td class="sage-val">1.5 hours</td>
+            </tr>
+            <tr class="total-row">
+              <td class="task-label">⏱ Total time</td>
+              <td class="manual-val">~4 hours</td>
+              <td class="sage-val">~1.5 hours</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        The most dramatic gap was in initial review: what takes a human 45 minutes to read through, categorize, and start assessing, SlideSage does in 28 seconds. Even the revision phase — which is inherently human-driven work — was meaningfully faster with SlideSage, because the feedback was clearer and more actionable from the start.
+      </p>
+
+      <div class="callout">
+        <p><strong>Bottom line on time:</strong> SlideSage users completed the full review-and-revise cycle in about 62% less time than manual reviewers — saving an average of 2.5 hours per deck.</p>
+      </div>
+
+      <h2 id="quality-results">Quality Results</h2>
+      <p>
+        Speed means nothing if quality suffers. So we were especially interested in what the coach panel had to say. Their verdict:
+      </p>
+
+      <div style="margin: 1.75rem 0;">
+        <div class="score-row">
+          <span class="score-label">SlideSage</span>
+          <div class="score-bar-wrap">
+            <div class="score-bar score-bar-sage" id="sagebar" style="width: 82%"></div>
+          </div>
+          <span class="score-num score-num-sage">8.2 / 10</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Manual Review</span>
+          <div class="score-bar-wrap">
+            <div class="score-bar score-bar-manual" id="manualbar" style="width: 79%"></div>
+          </div>
+          <span class="score-num score-num-manual">7.9 / 10</span>
+        </div>
+      </div>
+
+      <p>
+        SlideSage feedback scored <strong>8.2/10</strong> versus <strong>7.9/10</strong> for manual review. A modest gap — but the coaches highlighted two consistent advantages in the AI-generated feedback: <em>higher consistency</em> and <em>less emotional bias</em>.
+      </p>
+      <p>
+        Manual reviewers often scored similar issues differently depending on their mood, how far into the review they were, or whether they knew the presenter personally. SlideSage applied the same analytical framework every time, producing feedback that was more predictable and fair.
+      </p>
+
+      <h2 id="surprise-finding">The Surprise Finding</h2>
+      <p>
+        Here's where the study got interesting. When coaches drilled into the <em>type</em> of feedback being generated, a clear pattern emerged:
+      </p>
+      <ul>
+        <li><strong>Manual reviewers excelled at "soft" elements</strong> — suggestions around speaker tone, emotional resonance, audience empathy, and reading the room. Human intuition still has an edge on the human side of presenting.</li>
+        <li><strong>SlideSage dominated on everything structural</strong> — slide logic, design consistency, clarity of messaging, narrative flow, and catching contradictions between slides. Areas where objectivity and thoroughness matter most.</li>
+      </ul>
+      <p>
+        This isn't a flaw — it's a feature. It tells you exactly how to use both.
+      </p>
+
+      <h2 id="teams">What This Means for Teams</h2>
+      <p>
+        The optimal workflow isn't AI <em>or</em> human — it's AI <em>first</em>, human <em>when it counts</em>.
+      </p>
+      <p>
+        Use SlideSage for <strong>first-pass quality control</strong> on every presentation. Catch the structural problems, fix the clarity issues, and tighten the logic before any human eyes touch it. This alone eliminates the most common and fixable presentation failures.
+      </p>
+      <p>
+        For <strong>high-stakes presentations</strong> — investor pitches, board decks, keynotes — layer in a human review after SlideSage has done its pass. That's when you bring in a coach or a trusted colleague to weigh in on tone, narrative emotion, and the softer elements the coaches flagged. The AI handles the scaffolding; your human collaborator polishes the delivery.
+      </p>
+
+      <h2 id="cost">Cost Comparison</h2>
+      <p>
+        The time savings alone are significant. But the cost difference is what makes this a business decision.
+      </p>
+
+      <div class="cost-compare">
+        <div class="cost-card cost-card-manual">
+          <div class="cost-card-label">Manual Consultant</div>
+          <div class="cost-card-price">$800–$2,000</div>
+          <div class="cost-card-sub">$200–$500/hour × ~4 hours per deck<br>Per presentation. Varies widely.</div>
+        </div>
+        <div class="cost-card cost-card-sage">
+          <div class="cost-card-label">SlideSage Pro</div>
+          <div class="cost-card-price">$19/mo</div>
+          <div class="cost-card-sub">Unlimited decks. Instant results.<br>No scheduling. No waiting.</div>
+        </div>
+      </div>
+
+      <p>
+        At $19/month, a single saved consultant review pays for SlideSage Pro for over three years. For teams shipping multiple decks per month, the math is a clear win.
+      </p>
+
+      <h2 id="conclusion">The Takeaway</h2>
+      <p>
+        Our study confirmed what we suspected — but the surprise finding around soft skills added nuance we didn't expect. SlideSage isn't here to replace the judgment of an experienced presenter or coach. It's here to do the heavy lifting on structural quality so that when human review happens, it can focus on the parts that actually require human insight.
+      </p>
+      <p>
+        Faster. More consistent. Dramatically more affordable. And when paired with human review on high-stakes work, <em>more effective than either alone</em>.
+      </p>
+
+      <div class="cta-banner">
+        <h3>See the difference for yourself — free</h3>
+        <p>Upload any deck and get your AI-powered review in under 30 seconds. No credit card required.</p>
+        <a href="app.html" class="btn btn-primary btn-lg">Start your free analysis →</a>
+      </div>
+
+      <!-- Author Bio -->
+      <div class="author-bio">
+        <img
+          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&auto=format"
+          alt="Marcus Roy"
+          loading="lazy"
+        />
+        <div>
+          <div class="author-bio-name">Marcus Roy</div>
+          <div class="author-bio-title">Head of Product, SlideSage</div>
+          <p>Marcus leads product strategy at SlideSage, obsessing over the gap between how AI performs in benchmarks and how it performs in the real world. He designed the time study methodology in this post and has reviewed more presentation decks than he cares to count.</p>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="post-sidebar">
+      <div class="toc-card">
+        <h4>Table of Contents</h4>
+        <ul class="toc-list" id="toc">
+          <li><a href="#the-study">The Study</a></li>
+          <li><a href="#time-results">Time Results</a></li>
+          <li><a href="#quality-results">Quality Results</a></li>
+          <li><a href="#surprise-finding">The Surprise Finding</a></li>
+          <li><a href="#teams">What This Means for Teams</a></li>
+          <li><a href="#cost">Cost Comparison</a></li>
+          <li><a href="#conclusion">The Takeaway</a></li>
+        </ul>
+      </div>
+
+      <div class="share-card">
+        <h4>Share This Post</h4>
+        <div class="share-btns">
+          <button class="share-btn share-btn-twitter" onclick="shareTwitter()">𝕏 Twitter</button>
+          <button class="share-btn share-btn-linkedin" onclick="shareLinkedIn()">in LinkedIn</button>
+          <button class="share-btn share-btn-copy" id="copyBtn" onclick="copyLink()">🔗 Copy</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ── Related Articles ── -->
+  <section class="related-section">
+    <h2>Related Articles</h2>
+    <div class="related-grid">
+      <a href="blog-post.html" class="related-card">
+        <img
+          src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&auto=format&fit=crop&q=80"
+          alt="GPT-4 presentations"
+          loading="lazy"
+        />
+        <div class="related-card-body">
+          <div class="related-card-cat">AI &amp; Tech</div>
+          <h3>How GPT-4 is Transforming Business Presentations in 2026</h3>
+          <p>The AI shift that's changing how teams create, review, and deliver decks.</p>
+        </div>
+      </a>
+      <a href="blog.html" class="related-card">
+        <img
+          src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&auto=format&fit=crop&q=80"
+          alt="Pitch deck structure"
+          loading="lazy"
+        />
+        <div class="related-card-body">
+          <div class="related-card-cat">Strategy</div>
+          <h3>How to Structure a Pitch Deck Investors Actually Read</h3>
+          <p>The exact slide order and narrative arc that resonates with VCs in 2026.</p>
+        </div>
+      </a>
+      <a href="blog.html" class="related-card">
+        <img
+          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=80"
+          alt="Team productivity"
+          loading="lazy"
+        />
+        <div class="related-card-body">
+          <div class="related-card-cat">Productivity</div>
+          <h3>Why Your Team Spends 40% More Time on Slides Than They Should</h3>
+          <p>And how a smarter review process can give those hours back.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Comments ── -->
+  <section class="related-section" style="padding-top: 0;">
+    <div class="comments-section">
+      <h3>💬 Comments</h3>
+      <div class="comment-empty">
+        <span class="comment-empty-icon">✨</span>
+        <p>Be the first to comment on this post.</p>
+      </div>
+      <div class="comment-form">
+        <textarea placeholder="Share your thoughts..."></textarea>
+        <br />
+        <button type="button">Post Comment</button>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="newsletter-section">
+      <h3>📬 Stay in the Loop</h3>
+      <p>Get the latest presentation tips, AI insights, and SlideSage updates in your inbox. No spam, ever.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+        <input type="email" placeholder="you@company.com" required />
+        <button type="submit">Subscribe →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-logo">Slide<span>Sage</span></a>
+        <p class="footer-copy">© 2026 SlideSage. All rights reserved.</p>
+        <nav class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="blog.html">Blog</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // ── Reading Progress Bar ──
+    const progressBar = document.getElementById('progress-bar');
+    function updateProgress() {
+      const article = document.getElementById('article');
+      const articleTop = article.offsetTop;
+      const articleHeight = article.offsetHeight;
+      const scrolled = window.scrollY - articleTop + window.innerHeight * 0.1;
+      const pct = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+      progressBar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    // ── Navbar Scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Mobile Menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+    // ── Table of Contents Active State ──
+    const headings = document.querySelectorAll('article h2[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const observerOptions = { rootMargin: '-20% 0px -70% 0px' };
+    const headingObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, observerOptions);
+    headings.forEach(h => headingObserver.observe(h));
+
+    // ── Share Buttons ──
+    function shareTwitter() {
+      const text = encodeURIComponent('SlideSage vs Manual Presentation Review: A Real Time Study — the numbers are in via @slidesage');
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'width=600,height=400');
+    }
+    function shareLinkedIn() {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=500');
+    }
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => btn.textContent = '🔗 Copy', 2000);
+      });
+    }
+
+    // ── Newsletter Signup ──
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button');
+      btn.textContent = '✅ Subscribed!';
+      btn.style.background = '#15803d';
+      form.querySelector('input').value = '';
+      setTimeout(() => {
+        btn.textContent = 'Subscribe →';
+        btn.style.background = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
