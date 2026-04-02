@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — SlideSage</title>
+  <!-- SEO -->
+  <meta name="description" content="SlideSage Privacy Policy. Learn how we collect, use, and protect your data when you use our AI-powered presentation analysis service." />
+  <meta name="keywords" content="SlideSage privacy policy, data protection, GDPR, privacy, presentation analyzer privacy" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/privacy.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Privacy Policy — SlideSage" />
+  <meta property="og:description" content="Learn how SlideSage collects, uses, and protects your data." />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/privacy.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="Privacy Policy — SlideSage" />
+  <meta name="twitter:description" content="Learn how SlideSage collects, uses, and protects your data." />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dim: #16a34a;
+      --green-glow: rgba(34,197,94,0.18);
+      --green-glow-strong: rgba(34,197,94,0.35);
+      --navy: #080c14;
+      --navy2: #0d1117;
+      --navy3: #111827;
+      --surface: rgba(255,255,255,0.04);
+      --surface2: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(34,197,94,0.25);
+      --text: #f1f5f9;
+      --text-muted: #64748b;
+      --text-muted2: #94a3b8;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy2); }
+    ::-webkit-scrollbar-thumb { background: #1e3a2e; border-radius: 3px; }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(8,12,20,0.7);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1rem,4vw,2.5rem);
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+    }
+    .navbar.scrolled { background: rgba(8,12,20,0.92); }
+
+    .nav-logo {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.35rem; font-weight: 800;
+      background: linear-gradient(135deg, #22c55e 0%, #86efac 50%, #22c55e 100%);
+      background-size: 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 4s linear infinite;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo::before {
+      content: '';
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 12px var(--green-glow-strong);
+      flex-shrink: 0;
+    }
+
+    @keyframes shimmerText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted2); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      position: relative; padding-bottom: 2px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--green);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta { display: flex; align-items: center; gap: 1rem; }
+    .btn-ghost {
+      color: var(--text-muted2); background: none; border: none;
+      font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .btn-ghost:hover { color: var(--text); }
+
+    .btn-primary {
+      position: relative; display: inline-flex; align-items: center; gap: 6px;
+      padding: 0.5rem 1.25rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; font-size: 0.9rem; font-weight: 600;
+      border: none; border-radius: 10px; cursor: pointer;
+      text-decoration: none;
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 24px var(--green-glow-strong), 0 4px 16px rgba(0,0,0,0.4);
+      transform: translateY(-1px);
+    }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      padding: 120px clamp(1rem,5vw,3rem) 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(34,197,94,0.1) 0%, transparent 70%),
+        var(--navy);
+    }
+    .page-hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 80%);
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+    .page-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.1); border: 1px solid var(--border2);
+      color: var(--green); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; border-radius: 100px; padding: 6px 16px;
+      margin-bottom: 1.5rem;
+    }
+    .page-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .page-subtitle {
+      color: var(--text-muted2);
+      font-size: 1.05rem;
+      margin-bottom: 0;
+    }
+    .updated-badge {
+      display: inline-block;
+      margin-top: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── CONTENT WRAPPER ─── */
+    .content-wrapper {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .content-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px clamp(1.5rem, 5vw, 3rem) 80px;
+    }
+
+    /* ─── TABLE OF CONTENTS ─── */
+    .toc {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 56px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .toc-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+    .toc ol {
+      padding-left: 1.4em;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 2rem;
+    }
+    .toc ol li a {
+      color: #0f172a;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .toc ol li a:hover { color: #16a34a; }
+
+    /* ─── LEGAL SECTIONS ─── */
+    .legal-section {
+      margin-bottom: 52px;
+      scroll-margin-top: 88px;
+    }
+    .legal-section:last-of-type { margin-bottom: 0; }
+
+    .section-num {
+      display: inline-block;
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: 6px;
+      padding: 3px 10px;
+      margin-bottom: 0.75rem;
+    }
+
+    .legal-section h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .legal-section p {
+      font-size: 0.96rem;
+      line-height: 1.8;
+      color: #334155;
+      margin-bottom: 1rem;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+
+    .legal-section ul, .legal-section ol {
+      padding-left: 1.5em;
+      margin-bottom: 1rem;
+    }
+    .legal-section ul li, .legal-section ol li {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #334155;
+      margin-bottom: 0.3rem;
+    }
+
+    .legal-section strong { color: #0f172a; font-weight: 600; }
+
+    .info-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #22c55e;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 1.25rem 0;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: #15803d;
+    }
+    .info-box strong { color: #14532d; }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .data-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 10px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .data-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      vertical-align: top;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: #f8fafc; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #e2e8f0;
+      margin: 52px 0;
+    }
+
+    /* ─── CONTACT CARD ─── */
+    .contact-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .contact-card p { margin-bottom: 0.5rem; }
+    .contact-card a { color: #16a34a; font-weight: 500; text-decoration: none; }
+    .contact-card a:hover { text-decoration: underline; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      padding: 4rem clamp(1.5rem,5vw,3rem) 2rem;
+    }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-brand p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-top: 0.75rem; max-width: 260px; }
+    .footer-col h4 { font-size: 0.82rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul li a { color: var(--text-muted); font-size: 0.88rem; text-decoration: none; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-col ul li a.active { color: var(--green); }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { color: var(--text-muted); font-size: 0.82rem; }
+    .footer-socials { display: flex; gap: 1rem; }
+    .footer-socials a {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text-muted2); text-decoration: none; font-size: 0.85rem;
+      transition: var(--transition);
+    }
+    .footer-socials a:hover { border-color: var(--border2); color: var(--green); transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .toc ol { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar" id="navbar">
+  <a href="/" class="nav-logo">SlideSage</a>
+  <ul class="nav-links">
+    <li><a href="features.html">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#" class="btn-ghost">Sign in</a>
+    <a href="app.html" class="btn-primary">Analyze Free ↗</a>
+  </div>
+</nav>
+
+<!-- ─── PAGE HERO ─── -->
+<section class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-inner">
+    <div class="page-label">🔒 Legal</div>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-subtitle">We respect your privacy and are committed to protecting your personal data. This policy explains exactly what we collect, why, and how.</p>
+    <div class="updated-badge">Last updated: April 2, 2026</div>
+  </div>
+</section>
+
+<!-- ─── CONTENT ─── -->
+<div class="content-wrapper">
+  <div class="content-inner">
+
+    <!-- Table of Contents -->
+    <nav class="toc" aria-label="Table of Contents">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#what-we-collect">What We Collect</a></li>
+        <li><a href="#how-we-use">How We Use Your Data</a></li>
+        <li><a href="#data-storage">Data Storage &amp; Security</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#third-parties">Third Parties</a></li>
+        <li><a href="#your-rights">Your Rights</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#updates">Policy Updates</a></li>
+      </ol>
+    </nav>
+
+    <!-- Section 1: What We Collect -->
+    <section class="legal-section" id="what-we-collect">
+      <span class="section-num">Section 1</span>
+      <h2>What We Collect</h2>
+      <p>We collect only the information necessary to provide and improve the SlideSage service. Below is a complete breakdown of what we collect and why.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Data Type</th>
+            <th>Examples</th>
+            <th>Basis for Collection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Presentation Files</strong></td>
+            <td>Uploaded .pptx, .ppt, .pdf files</td>
+            <td>Service delivery — required to perform analysis</td>
+          </tr>
+          <tr>
+            <td><strong>Account Data</strong></td>
+            <td>Email address, name (if provided)</td>
+            <td>Account creation and communication</td>
+          </tr>
+          <tr>
+            <td><strong>Usage Data</strong></td>
+            <td>Pages visited, features used, analysis count, upload frequency</td>
+            <td>Service improvement and abuse prevention</td>
+          </tr>
+          <tr>
+            <td><strong>Session Identifiers</strong></td>
+            <td>Anonymous session tokens, temporary user IDs</td>
+            <td>Maintaining session state for free (no-login) users</td>
+          </tr>
+          <tr>
+            <td><strong>Technical Data</strong></td>
+            <td>Browser type, OS, IP address, device type</td>
+            <td>Security, fraud detection, and analytics</td>
+          </tr>
+          <tr>
+            <td><strong>Payment Data</strong></td>
+            <td>Billing postal code, last 4 card digits</td>
+            <td>Processed by Stripe — we never store full card details</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <strong>Free / no-account users:</strong> If you use SlideSage without creating an account, we do not collect your email address. We assign you an anonymous session ID stored in your browser. Your uploaded files are still deleted within 24 hours.
+      </div>
+
+      <p>We do <strong>not</strong> collect any special categories of personal data (e.g., health information, political opinions, or biometric data). We do not knowingly collect data from children under the age of 13.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Section 2: How We Use Your Data -->
+    <section class="legal-section" id="how-we-use">
+      <span class="section-num">Section 2</span>
+      <h2>How We Use Your Data</h2>
+      <p>We use your data exclusively to provide and improve SlideSage. Here is a plain-language breakdown of every use:</p>
+
+      <ul>
+        <li><strong>AI Analysis:</strong> Your uploaded presentation file is sent to OpenAI's API for analysis (see Section 5). The file is transmitted securely and is not stored by OpenAI beyond the request lifecycle, per our data processing agreement.</li>
+        <li><strong>Delivering Results:</strong> Analysis results are stored temporarily (up to 24 hours) so you can view and share your report. After 24 hours, both the file and results are permanently deleted from our servers.</li>
+        <li><strong>Service Communications:</strong> If you have an account, we may send you transactional emails (e.g., analysis complete, account notifications). We do not send marketing emails without your explicit opt-in consent.</li>
+        <li><strong>Improving the Service:</strong> Aggregated and anonymised usage patterns help us identify bugs, improve UX, and prioritise features. We never use individual presentation content for model training.</li>
+        <li><strong>Fraud Prevention &amp; Security:</strong> IP addresses and session data are used to detect abuse, prevent free-tier circumvention, and protect the platform.</li>
+        <li><strong>Legal Compliance:</strong> We may process or retain data where required by applicable law.</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>We will never sell your data.</strong> Your presentation content, email address, and usage data are never sold, rented, or shared with advertisers, data brokers, or third parties for marketing purposes.
+      </div>
+
+      <p>We do not use automated decision-making that produces legal or similarly significant effects without human review.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Section 3: Data Storage -->
+    <section class="legal-section" id="data-storage">
+      <span class="section-num">Section 3</span>
+      <h2>Data Storage &amp; Security</h2>
+
+      <p>We take security seriously. Here is how your data is stored and protected:</p>
+
+      <ul>
+        <li><strong>Infrastructure:</strong> SlideSage uses Supabase (hosted on AWS in the United States) for database storage. All data is stored in PostgreSQL and encrypted at rest using AES-256. Data in transit is protected using TLS 1.2 or higher.</li>
+        <li><strong>File Storage:</strong> Uploaded presentation files are stored in Supabase Storage (backed by S3-compatible object storage). Each file is assigned a unique, non-guessable identifier and is accessible only to authenticated requests.</li>
+        <li><strong>Retention Policy:</strong> Uploaded files and their analysis results are automatically and permanently deleted 24 hours after upload. Account data is retained for as long as your account is active, or until you request deletion.</li>
+        <li><strong>Access Controls:</strong> Access to production data is restricted to authorised SlideSage personnel only, using role-based access control and multi-factor authentication.</li>
+        <li><strong>Server Location:</strong> All data is stored on servers located in the United States. If you are located outside the US, your data will be transferred internationally. By using SlideSage, you consent to this transfer.</li>
+        <li><strong>Incident Response:</strong> In the event of a data breach that affects your personal data, we will notify you and applicable regulatory authorities within 72 hours as required by applicable law.</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>Automatic 24-hour deletion:</strong> Your presentation file is automatically deleted from all our systems — including backups — within 24 hours of upload. This is a hard technical limit, not a policy promise.
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Section 4: Cookies -->
+    <section class="legal-section" id="cookies">
+      <span class="section-num">Section 4</span>
+      <h2>Cookies</h2>
+
+      <p>SlideSage uses a minimal number of cookies. We do <strong>not</strong> use advertising cookies, tracking pixels, or third-party analytics cookies. Our cookie usage is limited to what is strictly necessary for the service to function.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Cookie Name</th>
+            <th>Purpose</th>
+            <th>Duration</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ss_session</code></td>
+            <td>Maintains your session state (login status, anonymous user ID)</td>
+            <td>Session (deleted on browser close)</td>
+            <td>Strictly Necessary</td>
+          </tr>
+          <tr>
+            <td><code>ss_auth</code></td>
+            <td>Authentication token for logged-in users (Supabase Auth)</td>
+            <td>7 days (refreshed on activity)</td>
+            <td>Strictly Necessary</td>
+          </tr>
+          <tr>
+            <td><code>ss_prefs</code></td>
+            <td>Stores your UI preferences (e.g., theme, report view)</td>
+            <td>1 year</td>
+            <td>Functional</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Because we only use strictly necessary and functional cookies, we do not display a cookie consent banner. If this changes, we will update this policy and implement appropriate consent mechanisms.</p>
+      <p>You can control cookies through your browser settings. Disabling strictly necessary cookies may prevent SlideSage from functioning correctly.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Section 5: Third Parties -->
+    <section class="legal-section" id="third-parties">
+      <span class="section-num">Section 5</span>
+      <h2>Third Parties</h2>
+
+      <p>SlideSage works with a small number of trusted third-party service providers. These providers process your data only as instructed by us and under written data processing agreements.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Role</th>
+            <th>Data Shared</th>
+            <th>Privacy Policy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>OpenAI</strong></td>
+            <td>AI processing — your presentation is sent to OpenAI's GPT-4o API for analysis</td>
+            <td>Presentation file content (text, image representations of slides)</td>
+            <td><a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer" style="color:#16a34a">openai.com/policies</a></td>
+          </tr>
+          <tr>
+            <td><strong>Supabase</strong></td>
+            <td>Database, authentication, and file storage</td>
+            <td>Account data, session data, uploaded files, analysis results</td>
+            <td><a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" style="color:#16a34a">supabase.com/privacy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Netlify</strong></td>
+            <td>Web hosting and serverless functions (CDN, edge network)</td>
+            <td>IP address, request metadata (standard web logs)</td>
+            <td><a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer" style="color:#16a34a">netlify.com/privacy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Stripe</strong></td>
+            <td>Payment processing for paid plans</td>
+            <td>Name, email, billing address (paid users only)</td>
+            <td><a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" style="color:#16a34a">stripe.com/privacy</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>We do not share data with social media platforms, advertising networks, or data brokers. We do not use Google Analytics or similar tracking services.</p>
+      <p>If we add a new third-party provider that materially changes how your data is processed, we will update this policy and notify users with active accounts by email.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Section 6: Your Rights -->
+    <section class="legal-section" id="your-rights">
+      <span class="section-num">Section 6</span>
+      <h2>Your Rights</h2>
+
+      <p>Depending on your location, you may have the following rights regarding your personal data. We honour these rights regardless of where you are located.</p>
+
+      <ul>
+        <li><strong>Right to Access:</strong> You can request a copy of all personal data we hold about you at any time.</li>
+        <li><strong>Right to Deletion:</strong> You can request that we permanently delete your account and all associated data. We will complete deletion within 30 days and confirm in writing. Note: presentation files are already deleted within 24 hours regardless.</li>
+        <li><strong>Right to Correction:</strong> If any of your personal data is inaccurate, you can update it in your account settings or contact us to correct it.</li>
+        <li><strong>Right to Data Portability:</strong> You can request an export of your account data (email, usage history, saved analysis results) in JSON format.</li>
+        <li><strong>Right to Opt-Out of Communications:</strong> You can unsubscribe from any marketing emails at any time using the unsubscribe link in the email, or by updating your preferences in account settings. Transactional emails related to your account cannot be opted out of while your account is active.</li>
+        <li><strong>Right to Restrict Processing:</strong> You can request that we limit how we use your data while a complaint or correction request is being resolved.</li>
+        <li><strong>Right to Object:</strong> You can object to processing based on legitimate interests. We will honour this unless we have compelling legal grounds to continue.</li>
+        <li><strong>Right to Lodge a Complaint:</strong> If you believe we have handled your data unlawfully, you have the right to lodge a complaint with a supervisory authority (e.g., your national data protection authority).</li>
+      </ul>
+
+      <div class="info-box">
+        To exercise any of these rights, email us at <strong>privacy@slidesage.io</strong>. We will respond within 30 days and will never charge you for making a request.
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Section 7: Contact -->
+    <section class="legal-section" id="contact">
+      <span class="section-num">Section 7</span>
+      <h2>Contact Us</h2>
+
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy or how we handle your data, please reach out. We take privacy seriously and will respond promptly.</p>
+
+      <div class="contact-card">
+        <p>📧 <strong>Privacy enquiries:</strong> <a href="mailto:privacy@slidesage.io">privacy@slidesage.io</a></p>
+        <p>📋 <strong>Data deletion requests:</strong> <a href="mailto:privacy@slidesage.io">privacy@slidesage.io</a></p>
+        <p>⚖️ <strong>Legal enquiries:</strong> <a href="mailto:legal@slidesage.io">legal@slidesage.io</a></p>
+        <p style="margin-top:1rem;font-size:0.88rem;color:#64748b">We aim to respond to all privacy-related enquiries within 5 business days.</p>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Section 8: Updates -->
+    <section class="legal-section" id="updates">
+      <span class="section-num">Section 8</span>
+      <h2>Policy Updates</h2>
+
+      <p>We may update this Privacy Policy from time to time to reflect changes to our practices, technology, legal requirements, or other factors. When we make material changes, we will:</p>
+
+      <ul>
+        <li>Update the "Last updated" date at the top of this page</li>
+        <li>Post a notice on the SlideSage website for at least 30 days</li>
+        <li>Send an email notification to users with registered accounts (for significant changes)</li>
+      </ul>
+
+      <p>We encourage you to review this policy periodically. Your continued use of SlideSage after any updates constitutes your acceptance of the revised policy. If you disagree with changes, you may close your account and cease using the service.</p>
+
+      <p>The current version of this policy is always accessible at <a href="https://slidesage-app.netlify.app/privacy.html" style="color:#16a34a">slidesage-app.netlify.app/privacy.html</a>.</p>
+
+      <p><strong>Last updated: April 2, 2026</strong></p>
+    </section>
+
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="text-decoration:none">SlideSage</a>
+      <p>AI-powered presentation analysis for professionals who need to get it right the first time.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="app.html">Analyzer</a></li>
+        <li><a href="#">API</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy.html" class="active">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 SlideSage. All rights reserved. — <a href="terms.html" style="color:var(--text-muted);text-decoration:none">Terms of Service</a></p>
+    <div class="footer-socials">
+      <a href="#" title="Twitter/X">𝕏</a>
+      <a href="#" title="LinkedIn">in</a>
+      <a href="#" title="GitHub">⌥</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+</script>
+</body>
+</html>
