@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlideSage for Startup Founders — Fix Your Pitch Deck Before You Pitch</title>
+  <!-- SEO -->
+  <meta name="description" content="Investors decide in 3 minutes. SlideSage gives startup founders an objective 0–100 pitch deck score with slide-by-slide feedback. Fix your deck before you pitch." />
+  <meta name="keywords" content="pitch deck analyzer, startup pitch deck, investor pitch feedback, SlideSage for startups, pitch deck score, pitch deck checklist, AI pitch deck review" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/startups.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="SlideSage for Startup Founders — Fix Your Pitch Deck Before You Pitch" />
+  <meta property="og:description" content="Investors see 1,000 decks a year. Yours needs to be in the top 1%. SlideSage tells you exactly what to fix." />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/startups.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="SlideSage for Startup Founders" />
+  <meta name="twitter:description" content="Fix your pitch deck before you walk in the room. Get an objective score + slide-by-slide feedback." />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       STARTUPS PAGE — PREMIUM DARK STYLES
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --g: #4ade80;
+      --gd: #16a34a;
+      --bg: #020804;
+      --bg2: #060e06;
+      --card: #0d160d;
+      --card2: #111a11;
+      --border: rgba(255,255,255,0.08);
+      --border-g: rgba(74,222,128,0.22);
+      --text: #f1f5f1;
+      --muted: #9ca39c;
+      --muted2: #6b7b6b;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; border-radius: 10px; transition: all 0.2s; text-decoration: none; cursor: pointer; border: none; font-family: inherit; font-size: 0.875rem; }
+    .btn-primary { background: linear-gradient(135deg, #4ade80, #16a34a); color: #020804; padding: 0.55rem 1.25rem; box-shadow: 0 0 20px rgba(74,222,128,0.25); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 28px rgba(74,222,128,0.4); }
+    .btn-outline { background: transparent; color: var(--text); padding: 0.55rem 1.25rem; border: 1.5px solid rgba(255,255,255,0.18); }
+    .btn-outline:hover { border-color: var(--g); color: var(--g); background: rgba(74,222,128,0.06); }
+    .btn-lg { padding: 0.9rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .btn-xl { padding: 1rem 2.5rem; font-size: 1.05rem; border-radius: 14px; }
+    .btn-green-xl { background: linear-gradient(135deg, #4ade80, #16a34a); color: #020804; padding: 1rem 2.5rem; font-size: 1.05rem; border-radius: 14px; font-weight: 700; box-shadow: 0 0 40px rgba(74,222,128,0.4); }
+    .btn-green-xl:hover { transform: translateY(-2px); box-shadow: 0 6px 40px rgba(74,222,128,0.6); }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0.9rem 0;
+      background: rgba(2,8,4,0.72);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(74,222,128,0.08);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .navbar.scrolled { background: rgba(2,8,4,0.97); box-shadow: 0 2px 24px rgba(0,0,0,0.6); }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text); }
+    .nav-logo span { color: var(--g); }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; }
+    .nav-links a { padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; color: var(--muted); transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; background: none; border: none; cursor: pointer; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999; background: rgba(2,8,4,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(74,222,128,0.1); padding: 1.5rem; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 0.5rem; }
+    .mobile-menu ul li a { display: block; padding: 0.75rem 1rem; border-radius: 8px; color: var(--muted); font-weight: 500; }
+    .mobile-menu ul li a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 1rem; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(74,222,128,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 15% 80%, rgba(74,222,128,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 25% at 85% 70%, rgba(74,222,128,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(74,222,128,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,222,128,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(74,222,128,0.12); color: var(--g);
+      border: 1px solid rgba(74,222,128,0.3);
+      border-radius: 999px; padding: 0.4rem 1.1rem;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 900; line-height: 1.1; letter-spacing: -1.5px;
+      color: var(--text); margin-bottom: 1.5rem;
+    }
+    .hero h1 .highlight { color: var(--g); }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--muted); max-width: 660px; margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-trust { margin-top: 3rem; display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+    .trust-label { font-size: 0.8rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em; }
+    .trust-badge {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 6px; padding: 0.3rem 0.8rem;
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+    }
+
+    /* ── Urgency Bar ── */
+    .urgency-bar {
+      background: #070f07;
+      border-top: 1px solid rgba(74,222,128,0.1);
+      border-bottom: 1px solid rgba(74,222,128,0.1);
+      padding: 3.5rem 0;
+      text-align: center;
+    }
+    .urgency-bar .eyebrow {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--g); margin-bottom: 0.75rem;
+    }
+    .urgency-bar h2 {
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 800; color: var(--text); margin-bottom: 2.5rem;
+      letter-spacing: -0.5px;
+    }
+    .urgency-stats { display: flex; gap: 0; justify-content: center; flex-wrap: wrap; }
+    .urgency-stat {
+      flex: 1; min-width: 220px; max-width: 340px;
+      padding: 2rem 2.5rem;
+      border-right: 1px solid rgba(74,222,128,0.1);
+    }
+    .urgency-stat:last-child { border-right: none; }
+    .urgency-num {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 900; color: var(--g);
+      letter-spacing: -2px; display: block; margin-bottom: 0.4rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .urgency-label { font-size: 0.95rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── Section Base ── */
+    .section { padding: 100px 0; }
+    .section-alt { background: #050d05; }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-eyebrow {
+      display: inline-block; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--g); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; color: var(--text); letter-spacing: -0.5px;
+      line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+    /* ── Investor Signals Grid ── */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .signal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .signal-card:hover { border-color: var(--border-g); transform: translateY(-3px); }
+    .signal-icon {
+      font-size: 2rem; margin-bottom: 1rem; display: block;
+    }
+    .signal-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .signal-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Alternating Feature Rows ── */
+    .feature-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .feature-row:last-child { border-bottom: none; }
+    .feature-row.reverse .feature-text { order: 2; }
+    .feature-row.reverse .feature-visual { order: 1; }
+    .feature-eyebrow {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--g); margin-bottom: 0.75rem;
+    }
+    .feature-text h3 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 800; color: var(--text); letter-spacing: -0.5px;
+      margin-bottom: 1.5rem; line-height: 1.2;
+    }
+    .feature-points { display: flex; flex-direction: column; gap: 1rem; }
+    .feature-point {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .feature-point-icon {
+      flex-shrink: 0; width: 22px; height: 22px; margin-top: 1px;
+      background: rgba(74,222,128,0.15); color: var(--g);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 800;
+    }
+    .feature-point p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+    .feature-point strong { color: var(--text); }
+
+    .feature-visual {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .feature-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(74,222,128,0.08) 0%, transparent 60%);
+    }
+    .score-display {
+      text-align: center; position: relative; z-index: 1;
+    }
+    .score-ring {
+      width: 140px; height: 140px; margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: conic-gradient(#4ade80 0% 79%, rgba(255,255,255,0.06) 79% 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .score-ring::after {
+      content: '';
+      position: absolute; inset: 10px;
+      background: var(--card); border-radius: 50%;
+    }
+    .score-ring-inner {
+      position: relative; z-index: 1; text-align: center;
+    }
+    .score-num { font-size: 2.2rem; font-weight: 900; color: var(--g); }
+    .score-label-sm { font-size: 0.65rem; color: var(--muted2); display: block; }
+    .score-dims { display: flex; flex-direction: column; gap: 0.6rem; }
+    .score-dim { display: flex; align-items: center; gap: 0.75rem; }
+    .score-dim-label { font-size: 0.8rem; color: var(--muted); flex: 1; }
+    .score-dim-bar { flex: 2; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .score-dim-fill { height: 100%; background: linear-gradient(90deg, #4ade80, #16a34a); border-radius: 3px; }
+    .score-dim-val { font-size: 0.75rem; color: var(--g); font-weight: 700; width: 28px; text-align: right; }
+
+    .slide-list { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 0.75rem; }
+    .slide-item {
+      display: flex; align-items: center; gap: 0.85rem;
+      background: rgba(255,255,255,0.04); border-radius: 10px; padding: 0.9rem 1rem;
+      border: 1px solid var(--border);
+    }
+    .slide-name { flex: 1; font-size: 0.85rem; color: var(--text); font-weight: 500; }
+    .slide-score { font-size: 0.8rem; font-weight: 700; }
+    .slide-score.good { color: #4ade80; }
+    .slide-score.mid { color: #fbbf24; }
+    .slide-score.low { color: #f87171; }
+    .slide-tag { font-size: 0.7rem; background: rgba(74,222,128,0.12); color: var(--g); border-radius: 6px; padding: 0.15rem 0.5rem; }
+
+    .mckinsey-visual { position: relative; z-index: 1; }
+    .report-preview {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem;
+    }
+    .report-preview-title { font-size: 0.75rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .report-preview-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--muted); padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .report-preview-row:last-child { border-bottom: none; }
+    .report-preview-row strong { color: var(--text); }
+    .report-badge { background: rgba(74,222,128,0.12); color: var(--g); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px; }
+    .report-badge.warn { background: rgba(251,191,36,0.12); color: #fbbf24; }
+    .report-share { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--muted); }
+    .report-share-icon { font-size: 1.2rem; }
+
+    /* ── Testimonials ── */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .testimonial-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 2.25rem;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .testimonial-card:hover { border-color: var(--border-g); transform: translateY(-3px); }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute; top: -0.5rem; left: 1.5rem;
+      font-size: 5rem; color: rgba(74,222,128,0.15);
+      font-family: Georgia, serif; line-height: 1;
+      pointer-events: none;
+    }
+    .testimonial-text { font-size: 1rem; color: var(--text); line-height: 1.75; margin-bottom: 1.5rem; font-style: italic; }
+    .testimonial-score-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 999px; padding: 0.25rem 0.75rem;
+      font-size: 0.78rem; color: var(--g); font-weight: 600; margin-bottom: 1.25rem;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+    .testimonial-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(74,222,128,0.3), rgba(22,163,74,0.3));
+      border: 2px solid rgba(74,222,128,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .testimonial-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .testimonial-role { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── Checklist Preview ── */
+    .checklist-section {
+      background: #050d05;
+      padding: 100px 0;
+    }
+    .checklist-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin: 2.5rem 0;
+    }
+    .checklist-preview-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.9rem 1.1rem;
+      font-size: 0.9rem; color: var(--muted);
+      transition: border-color 0.2s;
+    }
+    .checklist-preview-item:hover { border-color: rgba(74,222,128,0.2); color: var(--text); }
+    .checklist-check {
+      width: 20px; height: 20px; border-radius: 6px;
+      border: 2px solid rgba(74,222,128,0.3); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .checklist-more {
+      grid-column: 1 / -1; text-align: center;
+      background: rgba(74,222,128,0.05); border: 1px dashed rgba(74,222,128,0.2);
+      border-radius: 10px; padding: 1rem;
+      font-size: 0.9rem; color: var(--muted2);
+    }
+    .checklist-cta-wrap { text-align: center; margin-top: 1.5rem; }
+
+    /* ── Final CTA ── */
+    .final-cta {
+      background: linear-gradient(135deg, #0a1f0a 0%, #051305 50%, #020804 100%);
+      border-top: 1px solid rgba(74,222,128,0.15);
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(74,222,128,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .final-cta .content { position: relative; z-index: 1; }
+    .final-cta h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900; color: var(--text); letter-spacing: -1px;
+      margin-bottom: 1.25rem; line-height: 1.15;
+    }
+    .final-cta p { font-size: 1.1rem; color: var(--muted); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .final-cta-note { margin-top: 1.25rem; font-size: 0.85rem; color: var(--muted2); }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #020804;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.25rem;
+    }
+    .footer-logo { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+    .footer-logo span { color: var(--g); }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.85rem; color: var(--muted); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--g); }
+    .footer-copy { font-size: 0.8rem; color: var(--muted2); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .signals-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-row { gap: 3rem; }
+    }
+    @media (max-width: 900px) {
+      .feature-row { grid-template-columns: 1fr; gap: 2.5rem; }
+      .feature-row.reverse .feature-text { order: 0; }
+      .feature-row.reverse .feature-visual { order: 0; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .checklist-preview-grid { grid-template-columns: 1fr; }
+      .urgency-stats { flex-direction: column; align-items: center; }
+      .urgency-stat { border-right: none; border-bottom: 1px solid rgba(74,222,128,0.1); }
+      .urgency-stat:last-child { border-bottom: none; }
+    }
+    @media (max-width: 768px) {
+      .signals-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding-top: 120px; padding-bottom: 80px; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas .btn { width: 100%; max-width: 340px; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Slide<span>Sage</span> 📊</a>
+      <ul class="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="enterprise.html">Enterprise</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="app.html" class="btn btn-outline">Try Free</a>
+        <a href="app.html" class="btn btn-primary">Analyze My Deck →</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="enterprise.html">Enterprise</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="app.html" class="btn btn-primary">Analyze My Deck →</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-grid-overlay"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">🚀 For Startup Founders</div>
+      <h1>Your Pitch Deck Is <span class="highlight">Costing You Funding.</span><br/>Fix It Before You Pitch.</h1>
+      <p class="hero-sub">Investors see 1,000 decks a year. Yours needs to be in the top 1%. SlideSage tells you exactly what to fix.</p>
+      <div class="hero-ctas">
+        <a href="app.html" class="btn btn-primary btn-xl">Analyze Your Pitch Deck →</a>
+        <a href="#how-it-helps" class="btn btn-outline btn-xl">See How It Works</a>
+      </div>
+      <div class="hero-trust">
+        <span class="trust-label">Used before pitching to</span>
+        <span class="trust-badge">Y Combinator</span>
+        <span class="trust-badge">a16z</span>
+        <span class="trust-badge">Sequoia</span>
+        <span class="trust-badge">500 Startups</span>
+        <span class="trust-badge">Techstars</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ URGENCY BAR ═══ -->
+<div class="urgency-bar">
+  <div class="container">
+    <div class="eyebrow">The Clock Is Ticking</div>
+    <h2>The average investor decides in the first 3 minutes.<br/>Is your deck ready?</h2>
+    <div class="urgency-stats">
+      <div class="urgency-stat">
+        <span class="urgency-num">3 min</span>
+        <span class="urgency-label">average investor first impression time</span>
+      </div>
+      <div class="urgency-stat">
+        <span class="urgency-num">94%</span>
+        <span class="urgency-label">of pitches fail due to weak presentation</span>
+      </div>
+      <div class="urgency-stat">
+        <span class="urgency-num">80+</span>
+        <span class="urgency-label">SlideSage score of top-funded decks</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WHAT INVESTORS LOOK FOR ═══ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">The Investor Lens</span>
+      <h2 class="section-title">What Investors Actually Look For</h2>
+      <p class="section-sub">Before you walk in the room, know what they're scanning for. SlideSage checks every one of these — automatically.</p>
+    </div>
+    <div class="signals-grid">
+      <div class="signal-card">
+        <span class="signal-icon">🎯</span>
+        <h3>Clear problem and market size</h3>
+        <p>TAM/SAM/SOM breakdowns that demonstrate you understand the opportunity — not just that one exists.</p>
+      </div>
+      <div class="signal-card">
+        <span class="signal-icon">⚡</span>
+        <h3>Differentiated solution</h3>
+        <p>"We're better" is not a moat. Investors want to see a defensible, specific edge that competitors can't easily copy.</p>
+      </div>
+      <div class="signal-card">
+        <span class="signal-icon">📈</span>
+        <h3>Proof it works</h3>
+        <p>Traction numbers, growth metrics, paying customers, testimonials — evidence beats promises every time.</p>
+      </div>
+      <div class="signal-card">
+        <span class="signal-icon">🧠</span>
+        <h3>A fundable team</h3>
+        <p>Domain expertise, relevant credentials, and complementary skills. Why are you the people to win this market?</p>
+      </div>
+      <div class="signal-card">
+        <span class="signal-icon">💰</span>
+        <h3>Realistic but ambitious financials</h3>
+        <p>Projections that are bold enough to justify the ask, grounded enough to survive a follow-up question in the room.</p>
+      </div>
+      <div class="signal-card">
+        <span class="signal-icon">🔢</span>
+        <h3>A specific, justified ask</h3>
+        <p>The amount, the runway it buys, and how you'll deploy it. Vague asks signal a founder who hasn't done the math.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW SLIDESAGE HELPS FOUNDERS ═══ -->
+<section class="section section-alt" id="how-it-helps">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">How It Works</span>
+      <h2 class="section-title">How SlideSage Helps Founders</h2>
+      <p class="section-sub">Upload your deck. Get a score. Fix what's broken. Walk in confident.</p>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="feature-row">
+      <div class="feature-text">
+        <div class="feature-eyebrow">Scoring</div>
+        <h3>Know your score before you pitch</h3>
+        <div class="feature-points">
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p>Get an objective <strong>0–100 score</strong> across 4 sub-dimensions: Clarity, Structure, Design, and Engagement.</p>
+          </div>
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p><strong>Fix weaknesses before the room judges you</strong> — know exactly where your deck falls short, not after the meeting.</p>
+          </div>
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p>Set a goal: <strong>target 80+ before any investor meeting</strong>. Top-funded decks consistently hit this threshold.</p>
+          </div>
+        </div>
+      </div>
+      <div class="feature-visual">
+        <div class="score-display">
+          <div class="score-ring">
+            <div class="score-ring-inner">
+              <div class="score-num">79</div>
+              <span class="score-label-sm">/100</span>
+            </div>
+          </div>
+          <div class="score-dims">
+            <div class="score-dim">
+              <span class="score-dim-label">Clarity</span>
+              <div class="score-dim-bar"><div class="score-dim-fill" style="width:84%"></div></div>
+              <span class="score-dim-val">84</span>
+            </div>
+            <div class="score-dim">
+              <span class="score-dim-label">Structure</span>
+              <div class="score-dim-bar"><div class="score-dim-fill" style="width:77%"></div></div>
+              <span class="score-dim-val">77</span>
+            </div>
+            <div class="score-dim">
+              <span class="score-dim-label">Design</span>
+              <div class="score-dim-bar"><div class="score-dim-fill" style="width:71%"></div></div>
+              <span class="score-dim-val">71</span>
+            </div>
+            <div class="score-dim">
+              <span class="score-dim-label">Engagement</span>
+              <div class="score-dim-bar"><div class="score-dim-fill" style="width:82%"></div></div>
+              <span class="score-dim-val">82</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="feature-row reverse">
+      <div class="feature-text">
+        <div class="feature-eyebrow">Slide-Level Feedback</div>
+        <h3>Slide-by-slide precision</h3>
+        <div class="feature-points">
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p><strong>Every slide scored individually</strong> — not just a blanket assessment, but a grade for each slide in your deck.</p>
+          </div>
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p>Specific, actionable feedback on your <strong>problem, solution, traction, and team slides</strong> — the ones investors scrutinize most.</p>
+          </div>
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p><strong>Quick wins you can implement tonight</strong> — no waiting for a deck coach. Ship improvements before tomorrow's meeting.</p>
+          </div>
+        </div>
+      </div>
+      <div class="feature-visual">
+        <div class="slide-list">
+          <div class="slide-item">
+            <span>📋</span>
+            <span class="slide-name">Problem Statement</span>
+            <span class="slide-score good">91</span>
+            <span class="slide-tag">Strong</span>
+          </div>
+          <div class="slide-item">
+            <span>💡</span>
+            <span class="slide-name">Solution</span>
+            <span class="slide-score mid">68</span>
+            <span class="slide-tag">Improve</span>
+          </div>
+          <div class="slide-item">
+            <span>📊</span>
+            <span class="slide-name">Market Size</span>
+            <span class="slide-score good">85</span>
+            <span class="slide-tag">Strong</span>
+          </div>
+          <div class="slide-item">
+            <span>📈</span>
+            <span class="slide-name">Traction</span>
+            <span class="slide-score low">54</span>
+            <span class="slide-tag">Fix Now</span>
+          </div>
+          <div class="slide-item">
+            <span>👥</span>
+            <span class="slide-name">Team</span>
+            <span class="slide-score good">88</span>
+            <span class="slide-tag">Strong</span>
+          </div>
+          <div class="slide-item">
+            <span>💰</span>
+            <span class="slide-name">The Ask</span>
+            <span class="slide-score mid">72</span>
+            <span class="slide-tag">Improve</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="feature-row">
+      <div class="feature-text">
+        <div class="feature-eyebrow">AI-Powered Analysis</div>
+        <h3>Look like you worked with McKinsey</h3>
+        <div class="feature-points">
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p>AI feedback <strong>trained on thousands of successful pitch decks</strong> — including decks that actually closed rounds.</p>
+          </div>
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p>Covers everything: <strong>clarity, design, structure, engagement</strong> — every dimension that makes investors lean in or tune out.</p>
+          </div>
+          <div class="feature-point">
+            <div class="feature-point-icon">✓</div>
+            <p><strong>Share the report with your co-founder</strong> for alignment before you both walk into the room together.</p>
+          </div>
+        </div>
+      </div>
+      <div class="feature-visual">
+        <div class="mckinsey-visual">
+          <div class="report-preview">
+            <div class="report-preview-title">SlideSage Analysis Report</div>
+            <div class="report-preview-row"><span>Overall Score</span><strong>79 / 100</strong></div>
+            <div class="report-preview-row"><span>Clarity</span><span class="report-badge">Strong</span></div>
+            <div class="report-preview-row"><span>Traction slide needs work</span><span class="report-badge warn">Fix</span></div>
+            <div class="report-preview-row"><span>Financial model</span><span class="report-badge warn">Improve</span></div>
+            <div class="report-preview-row"><span>Top recommendation</span><strong>Add cohort retention data</strong></div>
+          </div>
+          <div class="report-share">
+            <span class="report-share-icon">🔗</span>
+            <span>Share report with co-founder →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Founder Stories</span>
+      <h2 class="section-title">Founders Who Fixed Their Decks</h2>
+      <p class="section-sub">Real founders. Real scores. Real term sheets.</p>
+    </div>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="testimonial-score-pill">📈 61 → 79 after fixes</div>
+        <p class="testimonial-text">"We scored 61 on our first run. Fixed the 3 worst slides. Rescored 79. Got our first term sheet that same week."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">R</div>
+          <div>
+            <div class="testimonial-name">Ryan K.</div>
+            <div class="testimonial-role">Founder, Series-A startup</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-score-pill">✅ Pre-pitch ritual</div>
+        <p class="testimonial-text">"I use SlideSage before every investor meeting. It's the last check before I walk in the door."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">P</div>
+          <div>
+            <div class="testimonial-name">Priya S.</div>
+            <div class="testimonial-role">Founder</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHECKLIST PREVIEW ═══ -->
+<section class="checklist-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Quick Self-Assessment</span>
+      <h2 class="section-title">Is your pitch deck investor-ready?</h2>
+      <p class="section-sub">Run through the top 10 signals investors look for. Check off what you have — then let SlideSage handle the rest.</p>
+    </div>
+    <div class="checklist-preview-grid">
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Clear, one-sentence problem statement</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Market size with TAM / SAM / SOM breakdown</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Differentiated solution (not just "we're better")</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Real traction metrics (users, revenue, growth)</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Credible team slide with relevant domain expertise</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Competitive landscape positioned clearly</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Financial projections with clear assumptions</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Specific funding ask with use-of-funds breakdown</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>Go-to-market strategy with concrete first steps</span>
+      </div>
+      <div class="checklist-preview-item">
+        <div class="checklist-check"></div>
+        <span>One clear narrative thread from problem to ask</span>
+      </div>
+      <div class="checklist-more">
+        + SlideSage checks 20 more dimensions — automatically, in seconds.
+      </div>
+    </div>
+    <div class="checklist-cta-wrap">
+      <a href="app.html" class="btn btn-primary btn-lg">Analyze My Full Deck →</a>
+      <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--muted2);">Get your full score + slide-by-slide report. No signup required to start.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<section class="final-cta">
+  <div class="container">
+    <div class="content">
+      <h2>Don't pitch without running it<br/>through SlideSage first.</h2>
+      <p>One hour of fixes now can change the outcome of a conversation that determines your company's future. Know your score before you walk in.</p>
+      <a href="app.html" class="btn btn-green-xl">Analyze My Pitch Deck →</a>
+      <p class="final-cta-note">Free to start · No deck left behind · Results in under 60 seconds</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Slide<span>Sage</span> 📊</div>
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+      <div class="footer-copy">© 2026 SlideSage Inc. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu toggle
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  });
+
+  // Close mobile menu on link click
+  document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+    });
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Intersection Observer for entrance animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.signal-card, .testimonial-card, .urgency-stat, .feature-row').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+    observer.observe(el);
+  });
+
+  // Checklist preview interactivity
+  document.querySelectorAll('.checklist-preview-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const check = item.querySelector('.checklist-check');
+      const isChecked = item.dataset.checked === 'true';
+      if (isChecked) {
+        item.dataset.checked = 'false';
+        check.innerHTML = '';
+        check.style.background = '';
+        check.style.borderColor = 'rgba(74,222,128,0.3)';
+        item.style.borderColor = '';
+        item.style.color = '';
+      } else {
+        item.dataset.checked = 'true';
+        check.innerHTML = '<span style="color:#020804;font-size:0.7rem;font-weight:900;">✓</span>';
+        check.style.background = '#4ade80';
+        check.style.borderColor = '#4ade80';
+        item.style.borderColor = 'rgba(74,222,128,0.35)';
+        item.style.color = '#f1f5f1';
+      }
+    });
+    item.style.cursor = 'pointer';
+  });
+
+  // Animate score ring on scroll
+  const scoreRing = document.querySelector('.score-ring');
+  if (scoreRing) {
+    const scoreObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          scoreRing.style.background = 'conic-gradient(#4ade80 0% 79%, rgba(255,255,255,0.06) 79% 100%)';
+          scoreRing.style.transition = 'background 1.5s ease';
+        }
+      });
+    }, { threshold: 0.5 });
+    scoreObserver.observe(scoreRing);
+  }
+</script>
+
+</body>
+</html>
