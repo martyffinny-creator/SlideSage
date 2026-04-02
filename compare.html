@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlideSage vs The Alternatives | AI Presentation Analysis Comparison</title>
+  <meta name="description" content="How does SlideSage compare to manual review, Grammarly, and ChatGPT for presentation feedback? See why SlideSage wins every time." />
+  <meta name="keywords" content="SlideSage vs Grammarly, SlideSage vs ChatGPT, SlideSage vs manual review, AI presentation feedback, presentation analysis tool" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #020804;
+      --bg-card:   #0a1208;
+      --bg-table:  #070f05;
+      --border:    #1a2e18;
+      --accent:    #4ade80;
+      --accent-dim:#2d7a4f;
+      --accent-glow: rgba(74, 222, 128, 0.15);
+      --text:      #e8f5e3;
+      --text-muted:#7a9e72;
+      --text-dim:  #3d5c38;
+      --red:       #f87171;
+      --red-bg:    rgba(248,113,113,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      background: rgba(2, 8, 4, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--text); font-weight: 400; }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--accent);
+      color: #020804;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section { padding: 6rem 0; }
+
+    /* ── Hero ── */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(74,222,128,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.25);
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+    }
+
+    .hero-sub em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── Section headers ── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title .vs-badge {
+      display: inline-block;
+      font-size: 0.6em;
+      font-weight: 700;
+      color: var(--text-dim);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 0.15em 0.5em;
+      border-radius: 6px;
+      vertical-align: middle;
+      margin: 0 0.3em;
+      letter-spacing: 0.05em;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      max-width: 600px;
+    }
+
+    /* ── Comparison Table ── */
+    .compare-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-table);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+
+    thead th:first-child { color: var(--text-dim); }
+
+    thead th.col-them {
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.02);
+    }
+
+    thead th.col-us {
+      color: var(--accent);
+      background: rgba(74,222,128,0.06);
+      border-left: 1px solid rgba(74,222,128,0.2);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(74,222,128,0.03); }
+
+    tbody td {
+      padding: 1.1rem 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    tbody td:first-child {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    tbody td.col-them {
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.01);
+    }
+
+    tbody td.col-us {
+      color: var(--text);
+      font-weight: 600;
+      background: rgba(74,222,128,0.04);
+      border-left: 1px solid rgba(74,222,128,0.15);
+    }
+
+    .check { color: var(--accent); font-size: 1.1em; }
+    .cross { color: var(--red); font-size: 1.1em; }
+    .neutral { color: var(--text-muted); }
+
+    /* ── Grammarly comparison ── */
+    .grammarly-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .grammarly-grid { grid-template-columns: 1fr; }
+    }
+
+    .grammarly-card {
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      background: var(--bg-card);
+    }
+
+    .grammarly-card.them {
+      border-color: var(--border);
+      opacity: 0.8;
+    }
+
+    .grammarly-card.us {
+      border-color: rgba(74,222,128,0.3);
+      background: rgba(74,222,128,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grammarly-card.us::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .grammarly-card h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .grammarly-card.them h3 { color: var(--text-dim); }
+    .grammarly-card.us h3 { color: var(--accent); }
+
+    .grammarly-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .grammarly-item:last-child { border-bottom: none; }
+
+    .grammarly-item .icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      margin-top: 0.1rem;
+    }
+
+    .grammarly-card.them .icon {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-muted);
+    }
+    .grammarly-card.us .icon {
+      background: rgba(74,222,128,0.15);
+      color: var(--accent);
+    }
+
+    .grammarly-item .label { color: var(--text); font-weight: 500; }
+    .grammarly-item .desc { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.1rem; }
+
+    /* ── Why SlideSage Wins ── */
+    .wins-section { background: linear-gradient(180deg, var(--bg) 0%, #030f06 50%, var(--bg) 100%); }
+
+    .wins-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 900px) {
+      .wins-grid { grid-template-columns: 1fr; }
+    }
+
+    .win-card {
+      border-radius: 16px;
+      border: 1px solid rgba(74,222,128,0.2);
+      background: linear-gradient(135deg, rgba(74,222,128,0.06) 0%, rgba(2,8,4,0.8) 100%);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .win-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(74,222,128,0.4);
+    }
+
+    .win-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(74,222,128,0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .win-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(74,222,128,0.15);
+      letter-spacing: -0.05em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .win-card h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .win-card h3 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .win-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Testimonial ── */
+    .testimonial-section { padding: 5rem 0; }
+
+    .testimonial-card {
+      max-width: 760px;
+      margin: 0 auto;
+      border-radius: 20px;
+      border: 1px solid rgba(74,222,128,0.2);
+      background: linear-gradient(135deg, rgba(74,222,128,0.06) 0%, var(--bg-card) 100%);
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem; left: 1.5rem;
+      font-size: 8rem;
+      font-weight: 900;
+      color: rgba(74,222,128,0.07);
+      font-family: Georgia, serif;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .testimonial-quote {
+      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .author-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #020804;
+    }
+
+    .author-info .name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .author-info .role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Stars ── */
+    .stars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .star { color: var(--accent); font-size: 1.1rem; }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(74,222,128,0.08), transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #020804;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.9rem 2.25rem;
+      border-radius: 12px;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 0 30px rgba(74,222,128,0.25);
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .btn-primary .arrow { font-size: 1.15em; }
+
+    .cta-note {
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── Scroll fade-in ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">Slide<span>Sage</span></a>
+    <a href="app.html" class="nav-cta">Try Free <span>→</span></a>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Head-to-Head Comparison</div>
+      <h1>SlideSage vs<br/>The Alternatives</h1>
+      <p class="hero-sub">
+        How does AI presentation analysis stack up against the old ways?
+        <em>Spoiler: it's not close.</em>
+      </p>
+      <a href="app.html" class="btn-primary">
+        Try SlideSage Free <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── Comparison 1: Manual Review ── -->
+  <section id="vs-manual">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">Comparison 01</p>
+        <h2 class="section-title">
+          SlideSage <span class="vs-badge">VS</span> Manual Review
+        </h2>
+        <p class="section-sub">
+          Hiring a consultant or asking a colleague is expensive, slow, and inconsistent.
+          SlideSage delivers objective, slide-level analysis in 30 seconds — every time.
+        </p>
+      </div>
+
+      <div class="compare-wrap fade-in">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th class="col-them">Manual Review</th>
+              <th class="col-us">SlideSage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Time to feedback</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; 2–5 days</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; 30 seconds</td>
+            </tr>
+            <tr>
+              <td>Cost</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; $200–500/hr (consultant)</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Free to $19/mo</td>
+            </tr>
+            <tr>
+              <td>Objectivity</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; Biased, inconsistent</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Always objective</td>
+            </tr>
+            <tr>
+              <td>Slide-level detail</td>
+              <td class="col-them"><span class="neutral">~</span>&nbsp; Sometimes</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Always (14 metrics per slide)</td>
+            </tr>
+            <tr>
+              <td>Available 24/7</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; No</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Yes</td>
+            </tr>
+            <tr>
+              <td>Actionable quick wins</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; Rarely</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Every slide</td>
+            </tr>
+            <tr>
+              <td>Export report</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; Manual</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; PDF + Word</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── Comparison 2: Grammarly ── -->
+  <section id="vs-grammarly">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">Comparison 02</p>
+        <h2 class="section-title">
+          SlideSage <span class="vs-badge">VS</span> Grammarly
+        </h2>
+        <p class="section-sub">
+          Grammarly checks your words. SlideSage checks <em style="font-style:normal;color:var(--accent);font-weight:600;">everything</em> —
+          from narrative arc to audience fit to how long it'll take to deliver.
+        </p>
+      </div>
+
+      <div class="grammarly-grid fade-in">
+        <!-- Grammarly -->
+        <div class="grammarly-card them">
+          <h3>Grammarly</h3>
+
+          <div class="grammarly-item">
+            <div class="icon">→</div>
+            <div>
+              <div class="label">Grammar &amp; spelling</div>
+              <div class="desc">Catches typos and grammatical errors in text.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">→</div>
+            <div>
+              <div class="label">Basic tone detection</div>
+              <div class="desc">Flags if writing sounds too casual or unclear.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">→</div>
+            <div>
+              <div class="label">Word-level suggestions</div>
+              <div class="desc">Rewrites sentences for clarity and style.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">→</div>
+            <div>
+              <div class="label">No structural analysis</div>
+              <div class="desc">Doesn't understand how your slides flow together.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">→</div>
+            <div>
+              <div class="label">No design insight</div>
+              <div class="desc">Can't tell you if your slide is too busy or unreadable.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">→</div>
+            <div>
+              <div class="label">No presentation context</div>
+              <div class="desc">Treats your deck like a document, not a live delivery.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SlideSage -->
+        <div class="grammarly-card us">
+          <h3>SlideSage</h3>
+
+          <div class="grammarly-item">
+            <div class="icon">✓</div>
+            <div>
+              <div class="label">Narrative &amp; structure</div>
+              <div class="desc">Scores how well your deck tells a coherent story end-to-end.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">✓</div>
+            <div>
+              <div class="label">Visual design quality</div>
+              <div class="desc">Flags overcrowded slides, poor contrast, layout issues.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">✓</div>
+            <div>
+              <div class="label">Audience fit scoring</div>
+              <div class="desc">Is your language and complexity right for your audience?</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">✓</div>
+            <div>
+              <div class="label">Engagement analysis</div>
+              <div class="desc">Identifies slides that will lose your audience's attention.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">✓</div>
+            <div>
+              <div class="label">Estimated speaking time</div>
+              <div class="desc">Predicts how long your deck will take to deliver live.</div>
+            </div>
+          </div>
+
+          <div class="grammarly-item">
+            <div class="icon">✓</div>
+            <div>
+              <div class="label">Per-slide quick wins</div>
+              <div class="desc">Specific, actionable fixes for every single slide in your deck.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── Comparison 3: ChatGPT ── -->
+  <section id="vs-chatgpt">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">Comparison 03</p>
+        <h2 class="section-title">
+          SlideSage <span class="vs-badge">VS</span> Asking ChatGPT
+        </h2>
+        <p class="section-sub">
+          ChatGPT is a brilliant generalist. But wrestling it into a presentation coach
+          means hours of manual prompting — with no structured output, no history, and no export.
+        </p>
+      </div>
+
+      <div class="compare-wrap fade-in">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th class="col-them">ChatGPT</th>
+              <th class="col-us">SlideSage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>File upload</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; Limited / unreliable</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Native PPTX support</td>
+            </tr>
+            <tr>
+              <td>Structured scoring</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; No</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; 4-dimension scores</td>
+            </tr>
+            <tr>
+              <td>Slide-by-slide analysis</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; Manual prompting</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Automatic</td>
+            </tr>
+            <tr>
+              <td>Export report</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; No</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; PDF + Word</td>
+            </tr>
+            <tr>
+              <td>Saved analysis history</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; No</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Yes</td>
+            </tr>
+            <tr>
+              <td>Purpose-built for slides</td>
+              <td class="col-them"><span class="cross">✗</span>&nbsp; No — general AI</td>
+              <td class="col-us"><span class="check">✓</span>&nbsp; Yes — tuned for presentations</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── Why SlideSage Wins ── -->
+  <section class="wins-section" id="why-slidesage">
+    <div class="container">
+      <div class="fade-in" style="text-align:center; max-width: 680px; margin: 0 auto;">
+        <p class="section-label">The Verdict</p>
+        <h2 class="section-title">Why SlideSage Wins</h2>
+        <p class="section-sub" style="margin: 0 auto 0;">
+          It's not luck — it's a purpose-built tool for a job that everything else handles
+          as an afterthought.
+        </p>
+      </div>
+
+      <div class="wins-grid fade-in">
+
+        <div class="win-card">
+          <div class="win-number">01</div>
+          <h3><em>Purpose-Built</em> for Presentations</h3>
+          <p>
+            SlideSage isn't a general AI that happens to know about slides.
+            Every model, every metric, every score was trained and tuned specifically
+            for presentation analysis. The difference is night and day.
+          </p>
+        </div>
+
+        <div class="win-card">
+          <div class="win-number">02</div>
+          <h3><em>30 Seconds,</em> Not 30 Minutes</h3>
+          <p>
+            No prompting. No back-and-forth. No copying slides one by one.
+            Upload your deck and get a complete, structured report instantly —
+            every time, without fail.
+          </p>
+        </div>
+
+        <div class="win-card">
+          <div class="win-number">03</div>
+          <h3><em>One Click,</em> Complete Report</h3>
+          <p>
+            Score. Summary. Per-slide analysis. Actionable recommendations.
+            PDF and Word export. All in one place, with zero assembly required.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── Testimonial ── -->
+  <section class="testimonial-section">
+    <div class="container">
+      <div class="testimonial-card fade-in">
+        <div class="stars">
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          "I used to paste my slides into ChatGPT one by one. SlideSage does it all
+          automatically and gives me a real score. Game changer."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">TK</div>
+          <div class="author-info">
+            <div class="name">Tom K.</div>
+            <div class="role">Startup Founder</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="fade-in">
+        <h2>See For Yourself</h2>
+        <p>
+          Upload your deck and get a full analysis in 30 seconds.
+          No credit card. No prompting. No waiting.
+        </p>
+        <a href="app.html" class="btn-primary">
+          Analyze My Presentation Free <span class="arrow">→</span>
+        </a>
+        <p class="cta-note">Free tier available · No signup required to try</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <p>
+        © 2025 SlideSage &nbsp;·&nbsp;
+        <a href="index.html">Home</a> &nbsp;·&nbsp;
+        <a href="app.html">App</a> &nbsp;·&nbsp;
+        <a href="compare.html">Compare</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Intersection Observer for scroll-triggered fade-ins
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    fadeEls.forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlideSage — Sample AI Analysis Report</title>
+  <meta name="description" content="See what a SlideSage AI analysis looks like. Explore a live sample report with slide-by-slide feedback, design scores, and actionable recommendations." />
+  <meta name="keywords" content="SlideSage sample report, AI presentation feedback example, slide analysis demo, presentation score" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/sample-report.html" />
+  <meta property="og:title" content="SlideSage Sample Report — AI Presentation Analysis" />
+  <meta property="og:description" content="See a live SlideSage AI report: slide-by-slide feedback, design scores, and actionable improvements." />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/sample-report.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --g: #4ade80; --gd: #16a34a; --bg: #020804; --bg2: #060e06;
+      --card: #0d160d; --card2: #111a11; --border: rgba(255,255,255,0.08);
+      --border-g: rgba(74,222,128,0.22); --text: #f1f5f1;
+      --muted: #9ca39c; --muted2: #6b7b6b;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 0; background: rgba(2,8,4,0.72); backdrop-filter: blur(20px) saturate(160%); border-bottom: 1px solid rgba(74,222,128,0.08); transition: background 0.3s; }
+    .navbar.scrolled { background: rgba(2,8,4,0.97); box-shadow: 0 2px 24px rgba(0,0,0,0.6); }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo { font-size: 1.3rem; font-weight: 800; color: var(--text); }
+    .nav-logo span { color: var(--g); }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; }
+    .nav-links a { padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; color: var(--muted); transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border-g); color: var(--g); }
+    .btn-outline:hover { background: rgba(74,222,128,0.08); }
+    .btn-primary { background: var(--g); color: #030d03; }
+    .btn-primary:hover { background: #6ef09c; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(74,222,128,0.35); }
+    .btn-xl { padding: 0.9rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .mobile-menu { display: none; background: rgba(2,8,4,0.98); border-bottom: 1px solid var(--border-g); padding: 1rem 1.5rem; }
+    .mobile-menu li a { display: block; padding: 0.6rem 0; color: var(--muted); font-size: 1rem; border-bottom: 1px solid var(--border); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; }
+
+    /* Hero */
+    .hero { padding: 9rem 0 4rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 700px; height: 700px; background: radial-gradient(circle, rgba(74,222,128,0.07) 0%, transparent 70%); pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(74,222,128,0.1); border: 1px solid var(--border-g); color: var(--g); padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .hero h1 span { color: var(--g); }
+    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 580px; margin: 0 auto 2rem; }
+
+    /* Report header */
+    .report-wrapper { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin: 2rem 0 5rem; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+    .report-header { background: linear-gradient(135deg, #0d1f0d 0%, #0a170a 100%); border-bottom: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+    .report-file-info { flex: 1; }
+    .report-filename { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .report-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+    .report-meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--muted); }
+    .report-meta-item strong { color: var(--text); }
+    .score-ring-group { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+    .score-ring { text-align: center; }
+    .score-circle { width: 80px; height: 80px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 3px solid var(--border); position: relative; }
+    .score-circle.high { border-color: var(--g); background: rgba(74,222,128,0.08); }
+    .score-circle.mid { border-color: #fbbf24; background: rgba(251,191,36,0.08); }
+    .score-circle.low { border-color: #f87171; background: rgba(248,113,113,0.08); }
+    .score-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+    .score-circle.high .score-num { color: var(--g); }
+    .score-circle.mid .score-num { color: #fbbf24; }
+    .score-circle.low .score-num { color: #f87171; }
+    .score-label { font-size: 0.72rem; color: var(--muted2); margin-top: 0.4rem; text-align: center; }
+
+    /* Tabs */
+    .report-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); overflow-x: auto; }
+    .report-tab { padding: 0.9rem 1.5rem; font-size: 0.875rem; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .report-tab.active { color: var(--g); border-bottom-color: var(--g); background: rgba(74,222,128,0.04); }
+    .report-tab:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.02); }
+
+    /* Summary section */
+    .report-body { padding: 2.5rem; }
+    .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+    .summary-card { background: var(--card2); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+    .summary-card h3 { font-size: 0.8rem; font-weight: 700; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .summary-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    /* Issues list */
+    .issues-section h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+    .issues-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .issue-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.25rem; background: var(--card2); border: 1px solid var(--border); border-radius: 12px; transition: border-color 0.2s; }
+    .issue-item:hover { border-color: var(--border-g); }
+    .issue-severity { width: 8px; height: 8px; border-radius: 50%; margin-top: 0.35rem; flex-shrink: 0; }
+    .sev-high { background: #f87171; box-shadow: 0 0 6px rgba(248,113,113,0.5); }
+    .sev-mid { background: #fbbf24; box-shadow: 0 0 6px rgba(251,191,36,0.5); }
+    .sev-low { background: var(--g); box-shadow: 0 0 6px rgba(74,222,128,0.4); }
+    .issue-content { flex: 1; }
+    .issue-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .issue-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+    .issue-meta { display: flex; gap: 0.75rem; margin-top: 0.4rem; flex-wrap: wrap; }
+    .issue-tag { font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.06); color: var(--muted); }
+    .issue-slide { font-size: 0.7rem; color: var(--muted2); margin-top: 0.1rem; }
+
+    /* Slide breakdown */
+    .slide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .slide-card { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; cursor: pointer; }
+    .slide-card:hover { border-color: var(--border-g); transform: translateY(-2px); }
+    .slide-thumb { height: 110px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0f1e0f, #0a140a); font-size: 2rem; color: var(--muted2); }
+    .slide-info { padding: 0.75rem; }
+    .slide-num { font-size: 0.72rem; color: var(--muted2); }
+    .slide-title-text { font-size: 0.82rem; font-weight: 600; margin: 0.2rem 0 0.5rem; }
+    .slide-score-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .slide-score-fill { height: 100%; border-radius: 2px; }
+    .fill-high { background: var(--g); }
+    .fill-mid { background: #fbbf24; }
+    .fill-low { background: #f87171; }
+
+    /* CTA */
+    .cta { text-align: center; padding: 5rem 0; }
+    .cta h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .cta h2 span { color: var(--g); }
+    .cta p { color: var(--muted); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* Footer */
+    .footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 3rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 3rem; margin-bottom: 2.5rem; }
+    .footer-logo { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.75rem; display: block; }
+    .footer-logo span { color: var(--g); }
+    .footer-desc { color: var(--muted2); font-size: 0.875rem; line-height: 1.6; }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 700; color: var(--muted2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col ul li { margin-bottom: 0.5rem; }
+    .footer-col ul li a { color: var(--muted); font-size: 0.875rem; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--g); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .footer-copy { color: var(--muted2); font-size: 0.8rem; }
+
+    @media (max-width: 768px) {
+      .summary-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .report-header { padding: 1.5rem; }
+      .report-body { padding: 1.5rem; }
+      .score-ring-group { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Slide<span>Sage</span> 📊</a>
+      <ul class="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="enterprise.html">Enterprise</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="app.html" class="btn btn-outline">Try Free</a>
+        <a href="app.html" class="btn btn-primary">Analyze Your Deck →</a>
+        <button class="hamburger" onclick="document.getElementById('mobileMenu').style.display=document.getElementById('mobileMenu').style.display==='block'?'none':'block'">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="features.html">Features</a></li>
+  <li><a href="pricing.html">Pricing</a></li>
+  <li><a href="enterprise.html">Enterprise</a></li>
+  <li><a href="blog.html">Blog</a></li>
+  <li><a href="about.html">About</a></li>
+</ul>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">📋 Live Sample Report</div>
+    <h1>What does a<br/><span>SlideSage analysis</span> look like?</h1>
+    <p>Browse a real report for a Series A pitch deck. See slide-by-slide feedback, scores, and actionable AI recommendations.</p>
+  </div>
+</section>
+
+<!-- Sample Report -->
+<section style="padding-bottom: 2rem;">
+  <div class="container">
+    <div class="report-wrapper">
+
+      <!-- Report Header -->
+      <div class="report-header">
+        <div class="report-file-info">
+          <div class="report-filename">🗂 Series_A_Pitch_Deck_v3.pptx</div>
+          <p style="color:var(--muted);font-size:0.82rem;margin-top:0.25rem;">Analyzed April 2, 2026 · 22 slides · Full analysis mode</p>
+          <div class="report-meta">
+            <span class="report-meta-item">📄 <strong>22</strong> slides</span>
+            <span class="report-meta-item">⚠️ <strong>14</strong> issues found</span>
+            <span class="report-meta-item">✅ <strong>8</strong> strengths noted</span>
+            <span class="report-meta-item">⏱ Analyzed in <strong>18s</strong></span>
+          </div>
+        </div>
+        <div class="score-ring-group">
+          <div class="score-ring">
+            <div class="score-circle high"><span class="score-num">87</span></div>
+            <div class="score-label">Overall Score</div>
+          </div>
+          <div class="score-ring">
+            <div class="score-circle high"><span class="score-num">91</span></div>
+            <div class="score-label">Design</div>
+          </div>
+          <div class="score-ring">
+            <div class="score-circle mid"><span class="score-num">79</span></div>
+            <div class="score-label">Content</div>
+          </div>
+          <div class="score-ring">
+            <div class="score-circle high"><span class="score-num">85</span></div>
+            <div class="score-label">Narrative</div>
+          </div>
+          <div class="score-ring">
+            <div class="score-circle low"><span class="score-num">68</span></div>
+            <div class="score-label">Clarity</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="report-tabs">
+        <div class="report-tab active">📊 Summary</div>
+        <div class="report-tab">🔍 Issues (14)</div>
+        <div class="report-tab">✅ Strengths (8)</div>
+        <div class="report-tab">📐 Slides</div>
+        <div class="report-tab">💡 AI Recommendations</div>
+      </div>
+
+      <!-- Body -->
+      <div class="report-body">
+
+        <!-- Summary cards -->
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h3>🎯 Executive Summary</h3>
+            <p>Strong narrative arc with a compelling problem-solution structure. The market sizing (Slide 6) is well-evidenced but the financial projections (Slides 18–19) lack supporting assumptions. Design consistency is excellent — the team clearly invested in visual polish.</p>
+          </div>
+          <div class="summary-card">
+            <h3>🧠 AI Verdict</h3>
+            <p>This deck is investor-ready with targeted revisions. Priority: simplify Slide 12 (too much text), add a competitive moat narrative, and break the financial slide into a separate assumptions appendix. Estimated improvement to score: <strong style="color:var(--g)">+9 points</strong>.</p>
+          </div>
+          <div class="summary-card">
+            <h3>📈 Top Strengths</h3>
+            <p>• Consistent color palette and typography<br/>• Clear problem statement on Slide 2<br/>• Strong social proof with logos on Slide 9<br/>• Compelling traction metrics with source citations</p>
+          </div>
+          <div class="summary-card">
+            <h3>⚡ Quick Wins</h3>
+            <p>• Slide 12: Remove 3 of 7 bullet points<br/>• Slide 4: Increase font size to 24px minimum<br/>• Slide 19: Add a footnote with projection assumptions<br/>• Add a "Why Now?" slide after market sizing</p>
+          </div>
+        </div>
+
+        <!-- Issues -->
+        <div class="issues-section">
+          <h3>⚠️ Issues Found <span style="font-size:0.8rem;font-weight:400;color:var(--muted);margin-left:0.5rem;">14 total · sorted by severity</span></h3>
+          <div class="issues-list">
+
+            <div class="issue-item">
+              <div class="issue-severity sev-high"></div>
+              <div class="issue-content">
+                <div class="issue-title">Text overload — slide is unreadable at presentation distance</div>
+                <div class="issue-desc">Slide 12 contains 387 words across 7 bullet points. Investors scanning quickly will skip this. Condense to 3 key points and move detail to speaker notes.</div>
+                <div class="issue-meta">
+                  <span class="issue-tag">Content</span>
+                  <span class="issue-tag">Readability</span>
+                </div>
+                <div class="issue-slide">Slide 12 · Product Deep Dive</div>
+              </div>
+            </div>
+
+            <div class="issue-item">
+              <div class="issue-severity sev-high"></div>
+              <div class="issue-content">
+                <div class="issue-title">Font size below minimum threshold (18px) on 4 slides</div>
+                <div class="issue-desc">Slides 4, 7, 14, 20 contain body text at 14–16px. This fails readability standards and is invisible in large-room presentations.</div>
+                <div class="issue-meta">
+                  <span class="issue-tag">Design</span>
+                  <span class="issue-tag">Accessibility</span>
+                </div>
+                <div class="issue-slide">Slides 4, 7, 14, 20</div>
+              </div>
+            </div>
+
+            <div class="issue-item">
+              <div class="issue-severity sev-mid"></div>
+              <div class="issue-content">
+                <div class="issue-title">Financial projections lack documented assumptions</div>
+                <div class="issue-desc">Slides 18–19 show 3-year revenue projections with no supporting methodology. Sophisticated investors will ask; prepare an appendix slide with assumptions.</div>
+                <div class="issue-meta">
+                  <span class="issue-tag">Content</span>
+                  <span class="issue-tag">Financial</span>
+                </div>
+                <div class="issue-slide">Slides 18–19 · Financials</div>
+              </div>
+            </div>
+
+            <div class="issue-item">
+              <div class="issue-severity sev-mid"></div>
+              <div class="issue-content">
+                <div class="issue-title">Missing "Why Now?" momentum narrative</div>
+                <div class="issue-desc">The deck jumps from market size to solution without establishing urgency. A "Why Now?" slide with market timing catalysts would strengthen the investment thesis.</div>
+                <div class="issue-meta">
+                  <span class="issue-tag">Narrative</span>
+                  <span class="issue-tag">Structure</span>
+                </div>
+                <div class="issue-slide">After Slide 6 · Market</div>
+              </div>
+            </div>
+
+            <div class="issue-item">
+              <div class="issue-severity sev-low"></div>
+              <div class="issue-content">
+                <div class="issue-title">Logo on Slide 3 has misaligned drop shadow</div>
+                <div class="issue-desc">Minor visual inconsistency: the company logo has a 2px vertical offset compared to the version on Slides 1 and 22. Use the same logo asset throughout.</div>
+                <div class="issue-meta">
+                  <span class="issue-tag">Design</span>
+                  <span class="issue-tag">Branding</span>
+                </div>
+                <div class="issue-slide">Slide 3 · Company Overview</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Slide breakdown -->
+        <div style="margin-top: 2.5rem;">
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">📐 Slide Breakdown</h3>
+          <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Score bar shows per-slide quality. Red = critical issues, yellow = improvements available, green = strong.</p>
+          <div class="slide-grid">
+            <!-- Slides 1-8 shown as sample -->
+            <div class="slide-card">
+              <div class="slide-thumb">🖼</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 1</div>
+                <div class="slide-title-text">Title &amp; Tagline</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-high" style="width:95%"></div></div>
+              </div>
+            </div>
+            <div class="slide-card">
+              <div class="slide-thumb">❓</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 2</div>
+                <div class="slide-title-text">The Problem</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-high" style="width:92%"></div></div>
+              </div>
+            </div>
+            <div class="slide-card">
+              <div class="slide-thumb">🏢</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 3</div>
+                <div class="slide-title-text">Company Overview</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-mid" style="width:74%"></div></div>
+              </div>
+            </div>
+            <div class="slide-card">
+              <div class="slide-thumb">💡</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 4</div>
+                <div class="slide-title-text">Our Solution</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-mid" style="width:68%"></div></div>
+              </div>
+            </div>
+            <div class="slide-card">
+              <div class="slide-thumb">🎯</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 5</div>
+                <div class="slide-title-text">Product Demo</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-high" style="width:88%"></div></div>
+              </div>
+            </div>
+            <div class="slide-card">
+              <div class="slide-thumb">📊</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 6</div>
+                <div class="slide-title-text">Market Size</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-high" style="width:90%"></div></div>
+              </div>
+            </div>
+            <div class="slide-card">
+              <div class="slide-thumb">🗺</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 7</div>
+                <div class="slide-title-text">Go-to-Market</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-mid" style="width:72%"></div></div>
+              </div>
+            </div>
+            <div class="slide-card">
+              <div class="slide-thumb">📈</div>
+              <div class="slide-info">
+                <div class="slide-num">Slide 12</div>
+                <div class="slide-title-text">Product Deep Dive</div>
+                <div class="slide-score-bar"><div class="slide-score-fill fill-low" style="width:38%"></div></div>
+              </div>
+            </div>
+          </div>
+          <p style="text-align:center;color:var(--muted2);font-size:0.8rem;margin-top:1rem;">+ 14 more slides in full report</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <h2>Ready to analyze<br/><span>your own deck?</span></h2>
+    <p>Upload your presentation and get a full AI report in under 30 seconds. Free to start.</p>
+    <div class="cta-btns">
+      <a href="app.html" class="btn btn-primary btn-xl">Analyze My Deck — It's Free →</a>
+      <a href="pricing.html" class="btn btn-outline btn-xl">See Pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">Slide<span>Sage</span> 📊</a>
+        <p class="footer-desc">AI-powered presentation analysis for modern teams.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="enterprise.html">Enterprise</a></li>
+        <li><a href="app.html">Try Free</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="api.html">API Docs</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+        <li><a href="status.html">Status</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="customers.html">Customers</a></li>
+        <li><a href="mailto:hello@slidesage.io">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="security.html">Security</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 SlideSage. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+</script>
+</body>
+</html>

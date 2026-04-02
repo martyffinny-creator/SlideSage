@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Presentation Tools – SlideSage</title>
+  <meta name="description" content="Free presentation tools: score your deck, check slide text density, browse 24 expert tips, and use our pitch deck checklist. No signup required." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #020804;
+      color: #e2e8f0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* ── Utilities ────────────────────────────────── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600;
+      border: none; transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: #4ade80; color: #020804;
+    }
+    .btn-primary:hover { background: #22c55e; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: #4ade80;
+      border: 1.5px solid #4ade80;
+    }
+    .btn-outline:hover { background: rgba(74,222,128,0.1); }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; color: #f8fafc;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      color: #94a3b8; font-size: 1rem; margin-bottom: 40px;
+    }
+    .badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px; letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .badge-free  { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+    .badge-example { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+
+    /* ── Navbar ───────────────────────────────────── */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(2,8,4,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(74,222,128,0.1);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; gap: 32px;
+    }
+    .nav-logo {
+      font-size: 1.25rem; font-weight: 800; color: #f8fafc; white-space: nowrap;
+    }
+    .nav-logo span { color: #4ade80; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 0.9rem; font-weight: 500; color: #94a3b8;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #4ade80; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: #e2e8f0; border-radius: 2px; transition: all 0.3s;
+    }
+
+    /* ── Mobile Menu ──────────────────────────────── */
+    .mobile-menu {
+      display: none; flex-direction: column; gap: 4px;
+      padding: 16px 24px 20px;
+      background: #020804;
+      border-bottom: 1px solid rgba(74,222,128,0.1);
+    }
+    .mobile-menu a {
+      font-size: 1rem; font-weight: 500; color: #cbd5e1;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-of-type { border-bottom: none; }
+    .mobile-menu a:hover { color: #4ade80; }
+    .mobile-menu.open { display: flex; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── Hero ─────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 56px;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(74,222,128,0.07) 0%, transparent 70%);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800; color: #f8fafc;
+      line-height: 1.15; margin-bottom: 16px;
+    }
+    .hero h1 span { color: #4ade80; }
+    .hero p {
+      font-size: 1.15rem; color: #94a3b8;
+      max-width: 480px; margin: 0 auto;
+    }
+
+    /* ── Tool Cards Grid ──────────────────────────── */
+    .tools-grid-section { padding: 56px 0; }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .tools-grid { grid-template-columns: 1fr; } }
+
+    .tool-card {
+      background: #0a150c;
+      border: 1px solid rgba(74,222,128,0.12);
+      border-radius: 14px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .tool-card:hover {
+      border-color: rgba(74,222,128,0.35);
+      transform: translateY(-3px);
+    }
+    .tool-card-icon { font-size: 2rem; line-height: 1; }
+    .tool-card-top { display: flex; align-items: center; justify-content: space-between; }
+    .tool-card h3 { font-size: 1.05rem; font-weight: 700; color: #f8fafc; }
+    .tool-card p { font-size: 0.88rem; color: #94a3b8; flex: 1; }
+    .tool-card .btn { align-self: flex-start; font-size: 0.82rem; padding: 8px 16px; }
+
+    /* ── Section Divider ──────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(74,222,128,0.2), transparent);
+      margin: 0 24px;
+    }
+
+    /* ── Inline Tool Sections ─────────────────────── */
+    .tool-section {
+      padding: 72px 0;
+    }
+    .tool-section-inner {
+      background: #0a150c;
+      border: 1px solid rgba(74,222,128,0.12);
+      border-radius: 18px;
+      padding: 48px 40px;
+    }
+    @media (max-width: 640px) { .tool-section-inner { padding: 32px 20px; } }
+
+    /* ── Score Calculator ─────────────────────────── */
+    .quiz-progress-bar {
+      height: 4px; background: rgba(74,222,128,0.15);
+      border-radius: 4px; margin-bottom: 32px; overflow: hidden;
+    }
+    .quiz-progress-fill {
+      height: 100%; background: #4ade80;
+      border-radius: 4px; transition: width 0.4s ease;
+      width: 10%;
+    }
+    .quiz-step { display: none; }
+    .quiz-step.active { display: block; }
+    .quiz-question {
+      font-size: 1.1rem; font-weight: 600; color: #f8fafc;
+      margin-bottom: 6px;
+    }
+    .quiz-counter {
+      font-size: 0.8rem; color: #64748b; margin-bottom: 20px;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .quiz-option {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid rgba(74,222,128,0.1);
+      border-radius: 10px; padding: 14px 18px;
+      cursor: pointer; transition: all 0.2s;
+      font-size: 0.95rem; color: #cbd5e1;
+    }
+    .quiz-option:hover { border-color: rgba(74,222,128,0.4); background: rgba(74,222,128,0.05); }
+    .quiz-option input[type="radio"] { accent-color: #4ade80; width: 16px; height: 16px; flex-shrink: 0; }
+    .quiz-option.selected { border-color: #4ade80; background: rgba(74,222,128,0.08); color: #f8fafc; }
+    .quiz-nav { display: flex; gap: 12px; align-items: center; }
+    #quiz-next { min-width: 120px; }
+    #quiz-back { background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1); }
+    #quiz-back:hover { background: rgba(255,255,255,0.08); color: #f8fafc; }
+
+    .quiz-result { display: none; text-align: center; padding: 16px 0; }
+    .quiz-result.show { display: block; }
+    .quiz-score-display {
+      font-size: 4rem; font-weight: 800; color: #4ade80;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .quiz-score-label { font-size: 1.5rem; font-weight: 700; color: #f8fafc; margin-bottom: 8px; }
+    .quiz-score-sub { color: #94a3b8; margin-bottom: 28px; }
+    .quiz-retry {
+      background: rgba(255,255,255,0.05); color: #94a3b8;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 8px 18px; border-radius: 8px; font-size: 0.85rem;
+      margin-left: 10px;
+    }
+    .quiz-retry:hover { background: rgba(255,255,255,0.08); color: #f8fafc; }
+
+    /* ── Text Checker ─────────────────────────────── */
+    .text-checker-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    @media (max-width: 640px) { .text-checker-layout { grid-template-columns: 1fr; } }
+    .tc-textarea {
+      width: 100%; min-height: 160px; resize: vertical;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid rgba(74,222,128,0.12);
+      border-radius: 10px; padding: 16px;
+      color: #e2e8f0; font-family: inherit; font-size: 0.95rem;
+      line-height: 1.6; transition: border-color 0.2s;
+    }
+    .tc-textarea:focus { outline: none; border-color: rgba(74,222,128,0.45); }
+    .tc-textarea::placeholder { color: #475569; }
+    #tc-check { margin-top: 12px; }
+    .tc-result-box {
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid rgba(74,222,128,0.1);
+      border-radius: 10px; padding: 24px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; min-height: 160px;
+    }
+    .tc-word-count {
+      font-size: 3rem; font-weight: 800; color: #4ade80;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .tc-word-label { font-size: 0.8rem; color: #64748b; margin-bottom: 16px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .tc-rating { font-size: 1.2rem; font-weight: 700; color: #f8fafc; }
+    .tc-placeholder { color: #475569; font-size: 0.9rem; }
+
+    /* ── Tips Library ─────────────────────────────── */
+    .tips-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+    .tips-tab {
+      padding: 9px 20px; border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      color: #94a3b8; font-size: 0.88rem; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .tips-tab:hover { border-color: rgba(74,222,128,0.3); color: #e2e8f0; }
+    .tips-tab.active {
+      background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.4);
+      color: #4ade80;
+    }
+    .tips-panel { display: none; }
+    .tips-panel.active { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 640px) { .tips-panel.active { grid-template-columns: 1fr; } }
+
+    .tip-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 20px;
+      transition: border-color 0.2s;
+    }
+    .tip-card:hover { border-color: rgba(74,222,128,0.2); }
+    .tip-badge {
+      font-size: 0.65rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      margin-bottom: 10px; display: inline-block;
+    }
+    .badge-design  { background: rgba(129,140,248,0.15); color: #818cf8; border: 1px solid rgba(129,140,248,0.3); }
+    .badge-content { background: rgba(251,191,36,0.15);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+    .badge-delivery{ background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+    .badge-structure{background: rgba(74,222,128,0.15);  color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+
+    .tip-card h4 { font-size: 0.95rem; font-weight: 700; color: #f8fafc; margin-bottom: 6px; }
+    .tip-card p  { font-size: 0.85rem; color: #94a3b8; line-height: 1.55; }
+
+    /* ── Checklist ────────────────────────────────── */
+    .checklist-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .checklist-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 560px) { .checklist-grid { grid-template-columns: 1fr; } }
+
+    .checklist-item {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 14px 16px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .checklist-item:hover { border-color: rgba(74,222,128,0.2); }
+    .checklist-item.checked {
+      background: rgba(74,222,128,0.06);
+      border-color: rgba(74,222,128,0.3);
+    }
+    .checklist-item input[type="checkbox"] {
+      accent-color: #4ade80; width: 18px; height: 18px; flex-shrink: 0;
+    }
+    .checklist-item label {
+      font-size: 0.88rem; color: #cbd5e1; cursor: pointer; line-height: 1.4;
+    }
+    .checklist-item.checked label { color: #4ade80; }
+    .checklist-progress {
+      margin-top: 20px; font-size: 0.85rem; color: #64748b; text-align: right;
+    }
+    .checklist-progress span { color: #4ade80; font-weight: 700; }
+    .print-btn {
+      background: rgba(255,255,255,0.05); color: #94a3b8;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 9px 18px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.2s;
+    }
+    .print-btn:hover { background: rgba(255,255,255,0.08); color: #f8fafc; }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer {
+      background: #0d1a00;
+      border-top: 1px solid rgba(74,222,128,0.1);
+      padding: 40px 0 28px;
+      margin-top: 80px;
+    }
+    .footer-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      text-align: center;
+    }
+    .footer-logo { font-size: 1.1rem; font-weight: 800; color: #f8fafc; }
+    .footer-logo span { color: #4ade80; }
+    .footer-links {
+      display: flex; flex-wrap: wrap; gap: 6px 20px;
+      justify-content: center;
+    }
+    .footer-links a {
+      font-size: 0.85rem; color: #64748b; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #4ade80; }
+    .footer-copy { font-size: 0.8rem; color: #475569; }
+
+    /* ── Print Styles ─────────────────────────────── */
+    @media print {
+      .navbar, .hero, .tools-grid-section, #score-calculator, #text-checker, #tips-library, footer { display: none !important; }
+      #checklist { padding: 0 !important; }
+      .tool-section-inner { border: none; padding: 0; }
+      body { background: white; color: #000; }
+      .checklist-item { border: 1px solid #ccc; }
+      .checklist-item label { color: #000; }
+      .section-title { color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navbar ───────────────────────────────────── -->
+<nav class="navbar" id="navbar"><div class="container"><div class="nav-inner">
+  <a href="index.html" class="nav-logo">Slide<span>Sage</span> 📊</a>
+  <ul class="nav-links"><li><a href="features.html">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="blog.html">Blog</a></li><li><a href="about.html">About</a></li></ul>
+  <div class="nav-right"><a href="app.html" class="btn btn-primary">Try Free →</a><button class="hamburger" id="hamburger"><span></span><span></span><span></span></button></div>
+</div></div></nav>
+<div class="mobile-menu" id="mobile-menu"><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="about.html">About</a><a href="app.html" class="btn btn-primary" style="margin-top:12px">Try Free →</a></div>
+
+<!-- ── Hero ─────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <h1>Free Presentation <span>Tools</span></h1>
+    <p>No signup required. Use everything below, instantly.</p>
+  </div>
+</section>
+
+<!-- ── Tool Cards ────────────────────────────────── -->
+<section class="tools-grid-section">
+  <div class="container">
+    <div class="tools-grid">
+
+      <div class="tool-card">
+        <div class="tool-card-top">
+          <div class="tool-card-icon">🤖</div>
+          <span class="badge badge-free">Free</span>
+        </div>
+        <h3>AI Analyzer</h3>
+        <p>Upload your deck and get an instant AI-powered score with actionable slide-by-slide feedback.</p>
+        <a href="app.html" class="btn btn-primary">Launch Tool →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-top">
+          <div class="tool-card-icon">🎯</div>
+          <span class="badge badge-free">Free</span>
+        </div>
+        <h3>Score Calculator</h3>
+        <p>Answer 10 quick questions about your presentation and get a quality score in under 60 seconds.</p>
+        <a href="#score-calculator" class="btn btn-outline">Start Quiz →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-top">
+          <div class="tool-card-icon">📝</div>
+          <span class="badge badge-free">Free</span>
+        </div>
+        <h3>Slide Text Checker</h3>
+        <p>Paste your slide text and instantly find out if you're within the ideal word count range.</p>
+        <a href="#text-checker" class="btn btn-outline">Check Text →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-top">
+          <div class="tool-card-icon">📊</div>
+          <span class="badge badge-example">Example</span>
+        </div>
+        <h3>Sample Report</h3>
+        <p>See a full SlideSage analysis report before uploading your own deck.</p>
+        <a href="sample-report.html" class="btn btn-outline">View Report →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-top">
+          <div class="tool-card-icon">💡</div>
+          <span class="badge badge-free">Free</span>
+        </div>
+        <h3>Tips Library</h3>
+        <p>Browse 24 expert tips across Design, Content, Delivery, and Structure categories.</p>
+        <a href="#tips-library" class="btn btn-outline">Browse Tips →</a>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-card-top">
+          <div class="tool-card-icon">✅</div>
+          <span class="badge badge-free">Free</span>
+        </div>
+        <h3>Pitch Deck Checklist</h3>
+        <p>20-point checklist covering everything investors expect to see in a funding deck.</p>
+        <a href="#checklist" class="btn btn-outline">Open Checklist →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ── Score Calculator ──────────────────────────── -->
+<section class="tool-section" id="score-calculator">
+  <div class="container">
+    <h2 class="section-title">🎯 Presentation Score Calculator</h2>
+    <p class="section-sub">10 questions · instant score · no signup</p>
+    <div class="tool-section-inner">
+
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quiz-progress"></div>
+      </div>
+
+      <!-- Questions -->
+      <div class="quiz-step active" data-step="1">
+        <div class="quiz-counter">Question 1 of 10</div>
+        <div class="quiz-question">How many slides does your presentation have?</div>
+        <div class="quiz-options" data-key="q1">
+          <label class="quiz-option"><input type="radio" name="q1" value="10"> Under 10 slides</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="10"> 10–20 slides</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="5"> 20–30 slides</label>
+          <label class="quiz-option"><input type="radio" name="q1" value="0"> 30+ slides</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" id="quiz-next" onclick="quizNext()">Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="2">
+        <div class="quiz-counter">Question 2 of 10</div>
+        <div class="quiz-question">Does each slide communicate one clear message?</div>
+        <div class="quiz-options" data-key="q2">
+          <label class="quiz-option"><input type="radio" name="q2" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="5"> Mostly</label>
+          <label class="quiz-option"><input type="radio" name="q2" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="3">
+        <div class="quiz-counter">Question 3 of 10</div>
+        <div class="quiz-question">Are there under 50 words per slide on average?</div>
+        <div class="quiz-options" data-key="q3">
+          <label class="quiz-option"><input type="radio" name="q3" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="5"> Mostly</label>
+          <label class="quiz-option"><input type="radio" name="q3" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="4">
+        <div class="quiz-counter">Question 4 of 10</div>
+        <div class="quiz-question">Does your opening slide have a strong hook?</div>
+        <div class="quiz-options" data-key="q4">
+          <label class="quiz-option"><input type="radio" name="q4" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q4" value="5"> Not sure</label>
+          <label class="quiz-option"><input type="radio" name="q4" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="5">
+        <div class="quiz-counter">Question 5 of 10</div>
+        <div class="quiz-question">Is the visual design consistent throughout?</div>
+        <div class="quiz-options" data-key="q5">
+          <label class="quiz-option"><input type="radio" name="q5" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q5" value="5"> Mostly</label>
+          <label class="quiz-option"><input type="radio" name="q5" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="6">
+        <div class="quiz-counter">Question 6 of 10</div>
+        <div class="quiz-question">Do you use data or evidence to support key claims?</div>
+        <div class="quiz-options" data-key="q6">
+          <label class="quiz-option"><input type="radio" name="q6" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q6" value="5"> Some</label>
+          <label class="quiz-option"><input type="radio" name="q6" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="7">
+        <div class="quiz-counter">Question 7 of 10</div>
+        <div class="quiz-question">Is there a clear call-to-action at the end?</div>
+        <div class="quiz-options" data-key="q7">
+          <label class="quiz-option"><input type="radio" name="q7" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q7" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="8">
+        <div class="quiz-counter">Question 8 of 10</div>
+        <div class="quiz-question">Have you practiced your delivery?</div>
+        <div class="quiz-options" data-key="q8">
+          <label class="quiz-option"><input type="radio" name="q8" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q8" value="5"> A little</label>
+          <label class="quiz-option"><input type="radio" name="q8" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="9">
+        <div class="quiz-counter">Question 9 of 10</div>
+        <div class="quiz-question">Are your fonts 24pt or larger for body text?</div>
+        <div class="quiz-options" data-key="q9">
+          <label class="quiz-option"><input type="radio" name="q9" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q9" value="5"> Some smaller</label>
+          <label class="quiz-option"><input type="radio" name="q9" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizNext()">Next →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="10">
+        <div class="quiz-counter">Question 10 of 10</div>
+        <div class="quiz-question">Does your presentation tell a clear story?</div>
+        <div class="quiz-options" data-key="q10">
+          <label class="quiz-option"><input type="radio" name="q10" value="10"> Yes</label>
+          <label class="quiz-option"><input type="radio" name="q10" value="5"> Somewhat</label>
+          <label class="quiz-option"><input type="radio" name="q10" value="0"> No</label>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" onclick="quizFinish()">See My Score →</button>
+          <button class="btn quiz-retry" onclick="quizBack()">← Back</button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="quiz-result" id="quiz-result">
+        <div class="quiz-score-display" id="quiz-score-num">--</div>
+        <div class="quiz-score-label" id="quiz-score-label"></div>
+        <div class="quiz-score-sub" id="quiz-score-sub"></div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+          <a href="app.html" class="btn btn-primary">Get Full AI Analysis →</a>
+          <button class="quiz-retry" onclick="quizReset()">↺ Retake Quiz</button>
+        </div>
+      </div>
+
+    </div><!-- /tool-section-inner -->
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ── Text Checker ───────────────────────────────── -->
+<section class="tool-section" id="text-checker">
+  <div class="container">
+    <h2 class="section-title">📝 Slide Text Checker</h2>
+    <p class="section-sub">Paste the text from one slide to check density</p>
+    <div class="tool-section-inner">
+      <div class="text-checker-layout">
+        <div>
+          <textarea class="tc-textarea" id="tc-input" placeholder="Paste your slide text here…"></textarea>
+          <button class="btn btn-primary" id="tc-check" onclick="checkTextDensity()">Check Density →</button>
+        </div>
+        <div class="tc-result-box" id="tc-result">
+          <div class="tc-placeholder">Your results will appear here</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ── Tips Library ───────────────────────────────── -->
+<section class="tool-section" id="tips-library">
+  <div class="container">
+    <h2 class="section-title">💡 Tips Library</h2>
+    <p class="section-sub">24 expert tips across 4 categories</p>
+    <div class="tool-section-inner">
+
+      <div class="tips-tabs">
+        <button class="tips-tab active" onclick="switchTab('design', this)">🎨 Design</button>
+        <button class="tips-tab" onclick="switchTab('content', this)">📋 Content</button>
+        <button class="tips-tab" onclick="switchTab('delivery', this)">🎤 Delivery</button>
+        <button class="tips-tab" onclick="switchTab('structure', this)">🏗️ Structure</button>
+      </div>
+
+      <!-- Design -->
+      <div class="tips-panel active" id="tab-design">
+        <div class="tip-card">
+          <span class="tip-badge badge-design">Design</span>
+          <h4>Font Consistency</h4>
+          <p>Stick to a maximum of two typefaces throughout your entire deck. Mixing too many fonts creates visual noise and undermines your credibility.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-design">Design</span>
+          <h4>3-Color Palette Rule</h4>
+          <p>Limit yourself to three brand colors: one dominant, one accent, one neutral. More than three makes slides feel chaotic and hard to scan.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-design">Design</span>
+          <h4>Embrace Whitespace</h4>
+          <p>Empty space is not wasted space — it guides the eye and reduces cognitive load. Let your content breathe with generous margins and padding.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-design">Design</span>
+          <h4>One Visual Per Slide</h4>
+          <p>Each slide should contain a single hero image, chart, or diagram that supports the message. Multiple visuals compete for attention and dilute impact.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-design">Design</span>
+          <h4>Align to a Grid</h4>
+          <p>Use your software's alignment and distribution tools to snap elements to an invisible grid. Precise alignment signals professionalism at a subconscious level.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-design">Design</span>
+          <h4>Check Contrast Ratios</h4>
+          <p>Ensure text-to-background contrast meets at least a 4.5:1 ratio for readability. Low contrast forces your audience to squint — and they'll tune out instead.</p>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="tips-panel" id="tab-content">
+        <div class="tip-card">
+          <span class="tip-badge badge-content">Content</span>
+          <h4>One Message Per Slide</h4>
+          <p>Every slide should answer one question or make one point. If you can't summarize the slide in a single sentence, it probably needs to be split.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-content">Content</span>
+          <h4>Lead With Data</h4>
+          <p>Anchor key claims with a specific number, study, or case study. Concrete evidence makes arguments memorable and dramatically increases audience trust.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-content">Content</span>
+          <h4>Start With the Problem</h4>
+          <p>Open by articulating a pain point your audience already feels before introducing your solution. This creates immediate emotional buy-in.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-content">Content</span>
+          <h4>End With a Clear CTA</h4>
+          <p>Tell your audience exactly what to do next — schedule a call, sign up, vote yes. A vague "thank you" slide squanders the momentum you built.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-content">Content</span>
+          <h4>Avoid Jargon</h4>
+          <p>Write every slide as if your smartest non-specialist friend will read it. Jargon creates distance; plain language builds connection and comprehension.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-content">Content</span>
+          <h4>Use Active Voice</h4>
+          <p>Write "We increased revenue by 40%" not "Revenue was increased by 40%." Active voice sounds confident, direct, and is 20–30% easier to read quickly.</p>
+        </div>
+      </div>
+
+      <!-- Delivery -->
+      <div class="tips-panel" id="tab-delivery">
+        <div class="tip-card">
+          <span class="tip-badge badge-delivery">Delivery</span>
+          <h4>Practice Out Loud</h4>
+          <p>Reading silently is not practicing. Your mouth, pace, and breathing need real rehearsal time to feel natural under the pressure of a live audience.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-delivery">Delivery</span>
+          <h4>Pause for Emphasis</h4>
+          <p>A two-second pause after a key point feels much longer to you than to your audience. Use deliberate silence — it signals importance and lets ideas land.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-delivery">Delivery</span>
+          <h4>Make Eye Contact</h4>
+          <p>Pick three or four people in different parts of the room and rotate your gaze between them. This creates the illusion of individual connection with everyone.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-delivery">Delivery</span>
+          <h4>Use Speaker Notes Wisely</h4>
+          <p>Write your speaker notes as conversational prompts, not scripts. Full sentences encourage reading aloud, which kills engagement instantly.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-delivery">Delivery</span>
+          <h4>Time Yourself</h4>
+          <p>Record a full run-through and measure each section. Most presenters run 20% over time — knowing this in advance lets you cut before you're on stage.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-delivery">Delivery</span>
+          <h4>Prepare for Q&A</h4>
+          <p>Anticipate the three hardest questions you might face and rehearse concise answers. Confident Q&A handling often does more for credibility than the main talk.</p>
+        </div>
+      </div>
+
+      <!-- Structure -->
+      <div class="tips-panel" id="tab-structure">
+        <div class="tip-card">
+          <span class="tip-badge badge-structure">Structure</span>
+          <h4>Problem–Solution–Proof Arc</h4>
+          <p>The most persuasive presentations follow this three-act structure: establish pain, offer relief, then prove it works. It mirrors how humans naturally make decisions.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-structure">Structure</span>
+          <h4>Keep It to 10 Slides</h4>
+          <p>Ten slides force you to ruthlessly prioritize and prevent audience fatigue. If you need more, you likely have a document, not a presentation.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-structure">Structure</span>
+          <h4>Use an Agenda Slide</h4>
+          <p>For talks over 15 minutes, a brief agenda slide reduces anxiety and lets your audience relax into the content instead of wondering what's coming next.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-structure">Structure</span>
+          <h4>Group Related Topics</h4>
+          <p>Cluster related slides into sections with clear visual transitions. Cognitive chunking makes complex material feel manageable and easier to retain.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-structure">Structure</span>
+          <h4>Strong Opener and Closer</h4>
+          <p>Audiences remember the first and last 90 seconds most clearly. Invest disproportionate effort in your opening hook and your closing call-to-action.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-badge badge-structure">Structure</span>
+          <h4>Logical Flow Between Slides</h4>
+          <p>Each slide should feel like a natural consequence of the previous one. If a slide can be removed without disrupting flow, it probably doesn't belong.</p>
+        </div>
+      </div>
+
+    </div><!-- /tool-section-inner -->
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ── Checklist ──────────────────────────────────── -->
+<section class="tool-section" id="checklist">
+  <div class="container">
+    <h2 class="section-title">✅ Pitch Deck Checklist</h2>
+    <p class="section-sub">20 elements investors expect to see</p>
+    <div class="tool-section-inner">
+
+      <div class="checklist-header">
+        <div style="font-size:0.9rem;color:#64748b;">Check off each item as you complete it</div>
+        <button class="print-btn" onclick="window.print()">🖨️ Print Checklist</button>
+      </div>
+
+      <div class="checklist-grid" id="checklist-grid">
+
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Clear problem statement</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Market size (TAM / SAM / SOM)</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Solution explained clearly</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Business model</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Traction metrics</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Team credentials</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Competition landscape</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Financial projections</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Specific funding ask</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Use of funds</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Customer quotes / testimonials</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Product screenshots</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Revenue model</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Unit economics</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Go-to-market plan</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Key partnerships</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Risks addressed</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Exit potential</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>Contact info</span>
+        </label>
+        <label class="checklist-item" onclick="toggleCheck(this)">
+          <input type="checkbox" />
+          <span>One clear narrative thread</span>
+        </label>
+
+      </div>
+
+      <div class="checklist-progress">
+        <span id="checklist-count">0</span> / 20 complete
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Slide<span>Sage</span> 📊</div>
+      <nav class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+      <div class="footer-copy">© 2026 SlideSage Inc. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+/* ──────────────────────────────────────────────────
+   Hamburger Menu
+────────────────────────────────────────────────── */
+document.getElementById('hamburger').addEventListener('click', function () {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+});
+
+/* ──────────────────────────────────────────────────
+   Score Calculator Quiz
+────────────────────────────────────────────────── */
+let quizCurrentStep = 1;
+const QUIZ_TOTAL = 10;
+const quizAnswers = {};
+
+function quizGetSelected(step) {
+  const radios = document.querySelectorAll(`input[name="q${step}"]`);
+  for (const r of radios) { if (r.checked) return parseInt(r.value); }
+  return null;
+}
+
+function quizUpdateProgress() {
+  const pct = (quizCurrentStep / QUIZ_TOTAL) * 100;
+  document.getElementById('quiz-progress').style.width = pct + '%';
+}
+
+function quizNext() {
+  const val = quizGetSelected(quizCurrentStep);
+  if (val === null) {
+    // Highlight: briefly shake the options
+    const opts = document.querySelector(`.quiz-step[data-step="${quizCurrentStep}"] .quiz-options`);
+    opts.style.animation = 'none';
+    opts.style.outline = '1.5px solid rgba(248,113,113,0.5)';
+    opts.style.borderRadius = '10px';
+    setTimeout(() => { opts.style.outline = 'none'; }, 1200);
+    return;
+  }
+  quizAnswers[quizCurrentStep] = val;
+  document.querySelector(`.quiz-step[data-step="${quizCurrentStep}"]`).classList.remove('active');
+  quizCurrentStep++;
+  document.querySelector(`.quiz-step[data-step="${quizCurrentStep}"]`).classList.add('active');
+  quizUpdateProgress();
+}
+
+function quizBack() {
+  if (quizCurrentStep <= 1) return;
+  document.querySelector(`.quiz-step[data-step="${quizCurrentStep}"]`).classList.remove('active');
+  quizCurrentStep--;
+  document.querySelector(`.quiz-step[data-step="${quizCurrentStep}"]`).classList.add('active');
+  quizUpdateProgress();
+}
+
+function quizFinish() {
+  const val = quizGetSelected(quizCurrentStep);
+  if (val === null) {
+    const opts = document.querySelector(`.quiz-step[data-step="${quizCurrentStep}"] .quiz-options`);
+    opts.style.outline = '1.5px solid rgba(248,113,113,0.5)';
+    opts.style.borderRadius = '10px';
+    setTimeout(() => { opts.style.outline = 'none'; }, 1200);
+    return;
+  }
+  quizAnswers[quizCurrentStep] = val;
+
+  // Calculate score
+  let total = 0;
+  for (const k in quizAnswers) { total += quizAnswers[k]; }
+
+  // Hide all steps
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-progress').style.width = '100%';
+
+  // Show result
+  const result = document.getElementById('quiz-result');
+  const numEl  = document.getElementById('quiz-score-num');
+  const lblEl  = document.getElementById('quiz-score-label');
+  const subEl  = document.getElementById('quiz-score-sub');
+
+  numEl.textContent = total;
+
+  if (total >= 80) {
+    lblEl.textContent = 'Presentation Ready ✅';
+    subEl.textContent = 'Your deck is in great shape. Consider an AI analysis to polish the final details.';
+    numEl.style.color = '#4ade80';
+  } else if (total >= 60) {
+    lblEl.textContent = 'Almost There 🟡';
+    subEl.textContent = "You're close! A few targeted improvements will push your deck over the line.";
+    numEl.style.color = '#fbbf24';
+  } else if (total >= 40) {
+    lblEl.textContent = 'Needs Work 🔴';
+    subEl.textContent = 'There are some meaningful gaps. Use our tips library and AI analysis to address them.';
+    numEl.style.color = '#f87171';
+  } else {
+    lblEl.textContent = 'Major Revisions ❌';
+    subEl.textContent = "Don't worry — our AI analyzer will pinpoint exactly what to fix and how.";
+    numEl.style.color = '#f87171';
+  }
+
+  result.classList.add('show');
+}
+
+function quizReset() {
+  // Clear answers
+  for (const k in quizAnswers) { delete quizAnswers[k]; }
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+
+  // Hide result
+  document.getElementById('quiz-result').classList.remove('show');
+
+  // Reset to step 1
+  quizCurrentStep = 1;
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.querySelector('.quiz-step[data-step="1"]').classList.add('active');
+  quizUpdateProgress();
+}
+
+// Style selected radio options
+document.querySelectorAll('.quiz-option input[type="radio"]').forEach(radio => {
+  radio.addEventListener('change', function () {
+    const name = this.getAttribute('name');
+    document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+      r.closest('.quiz-option').classList.remove('selected');
+    });
+    this.closest('.quiz-option').classList.add('selected');
+  });
+});
+
+/* ──────────────────────────────────────────────────
+   Text Density Checker
+────────────────────────────────────────────────── */
+function checkTextDensity() {
+  const text  = document.getElementById('tc-input').value.trim();
+  const words = text === '' ? 0 : text.split(/\s+/).filter(w => w.length > 0).length;
+  const box   = document.getElementById('tc-result');
+
+  let rating, ratingColor;
+  if (words < 30) {
+    rating = '✅ Perfect';
+    ratingColor = '#4ade80';
+  } else if (words < 50) {
+    rating = '✅ Good';
+    ratingColor = '#4ade80';
+  } else if (words < 75) {
+    rating = '⚠️ Getting Long';
+    ratingColor = '#fbbf24';
+  } else {
+    rating = '❌ Too Much';
+    ratingColor = '#f87171';
+  }
+
+  box.innerHTML = `
+    <div class="tc-word-count" style="color:${ratingColor}">${words}</div>
+    <div class="tc-word-label">words on slide</div>
+    <div class="tc-rating">${rating}</div>
+    <div style="font-size:0.8rem;color:#64748b;margin-top:8px;">Ideal: under 30 words per slide</div>
+  `;
+}
+
+// Allow Enter key to trigger check (Shift+Enter for new line)
+document.getElementById('tc-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    checkTextDensity();
+  }
+});
+
+/* ──────────────────────────────────────────────────
+   Tips Library Tabs
+────────────────────────────────────────────────── */
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tips-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tips-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ──────────────────────────────────────────────────
+   Pitch Deck Checklist
+────────────────────────────────────────────────── */
+function toggleCheck(label) {
+  const cb = label.querySelector('input[type="checkbox"]');
+  // The click on label toggles the checkbox automatically,
+  // but we need to read state after toggle on next tick
+  setTimeout(updateChecklistCount, 0);
+}
+
+function updateChecklistCount() {
+  const total   = document.querySelectorAll('#checklist-grid .checklist-item').length;
+  const checked = document.querySelectorAll('#checklist-grid input[type="checkbox"]:checked').length;
+  document.getElementById('checklist-count').textContent = checked;
+
+  document.querySelectorAll('#checklist-grid .checklist-item').forEach(item => {
+    if (item.querySelector('input[type="checkbox"]').checked) {
+      item.classList.add('checked');
+    } else {
+      item.classList.remove('checked');
+    }
+  });
+}
+
+// Prevent double-toggle from label+checkbox both firing
+document.querySelectorAll('#checklist-grid .checklist-item').forEach(item => {
+  item.addEventListener('click', function(e) {
+    // Let the checkbox handle its own state change
+    setTimeout(updateChecklistCount, 10);
+  });
+});
+</script>
+
+</body>
+</html>

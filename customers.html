@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Stories – SlideSage</title>
+  <meta name="description" content="See how 5,000+ professionals use SlideSage to present with confidence — from startup founders to Fortune 500 executives." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #020804;
+      --bg2: #060f07;
+      --bg3: #0a1a0c;
+      --accent: #4ade80;
+      --accent-dim: rgba(74,222,128,0.15);
+      --accent-glow: rgba(74,222,128,0.35);
+      --text: #e8f5e9;
+      --text-muted: #7a9e7f;
+      --border: rgba(74,222,128,0.12);
+      --card-bg: rgba(10,26,12,0.7);
+      --glass: rgba(6,15,7,0.75);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(2,8,4,0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+    .navbar.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,.5); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: .875rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #020804;
+    }
+    .btn-primary:hover {
+      background: #6ee7a0;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(2,8,4,0.97);
+      backdrop-filter: blur(20px);
+      padding: 24px;
+      z-index: 999;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+    .mobile-menu a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-of-type { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-menu.open { display: flex; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-right .btn { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 148px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(74,222,128,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(74,222,128,.25);
+      color: var(--accent);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--bg3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .stats-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .stat-item {}
+    .stat-number {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -.03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: .85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section { padding: 80px 24px; }
+    .section-header { text-align: center; margin-bottom: 52px; }
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 12px;
+    }
+    .section-header p { color: var(--text-muted); font-size: 1rem; max-width: 520px; margin: 0 auto; }
+
+    /* ── FEATURED TESTIMONIAL ── */
+    .featured-wrap { max-width: 700px; margin: 0 auto; }
+
+    .featured-card {
+      background: linear-gradient(135deg, rgba(74,222,128,.07) 0%, rgba(10,26,12,.9) 100%);
+      border: 1px solid rgba(74,222,128,.25);
+      border-radius: 24px;
+      padding: 48px 48px 40px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 60px rgba(74,222,128,.08);
+    }
+    .featured-card::before {
+      content: '\201C';
+      position: absolute;
+      top: 16px; left: 36px;
+      font-size: 6rem;
+      color: var(--accent);
+      opacity: .25;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+
+    .featured-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      margin-bottom: 24px;
+      box-shadow: 0 0 24px rgba(74,222,128,.3);
+    }
+
+    .featured-quote {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: var(--text);
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 28px;
+    }
+
+    .featured-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .featured-role {
+      font-size: .875rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .stars { font-size: 1.1rem; letter-spacing: 2px; }
+
+    @media (max-width: 640px) {
+      .featured-card { padding: 36px 24px 32px; }
+      .featured-quote { font-size: 1rem; }
+    }
+
+    /* ── TESTIMONIAL GRID ── */
+    .testimonials-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    .tcard {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      backdrop-filter: blur(10px);
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .tcard:hover {
+      transform: translateY(-4px);
+      border-color: rgba(74,222,128,.3);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+
+    .tcard-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .avatar-circle {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      color: #020804;
+    }
+
+    .tcard-info {}
+    .tcard-name { font-weight: 700; font-size: .95rem; color: var(--text); }
+    .tcard-role { font-size: .8rem; color: var(--text-muted); }
+
+    .tcard-quote {
+      font-size: .9rem;
+      color: #c8e6c9;
+      line-height: 1.65;
+      font-style: italic;
+    }
+    .tcard-quote::before { content: '\201C'; color: var(--accent); font-size: 1.2em; }
+    .tcard-quote::after  { content: '\201D'; color: var(--accent); font-size: 1.2em; }
+
+    /* ── CASE STUDIES ── */
+    .case-studies-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+    @media (max-width: 640px) {
+      .case-studies-grid { grid-template-columns: 1fr; }
+    }
+
+    .cs-card {
+      background: linear-gradient(135deg, rgba(10,26,12,.9) 0%, rgba(6,15,7,.95) 100%);
+      border: 1px solid rgba(74,222,128,.2);
+      border-radius: 20px;
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .cs-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(74,222,128,.12);
+    }
+    .cs-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle at top right, rgba(74,222,128,.1), transparent 70%);
+    }
+
+    .cs-label {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .cs-company {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      letter-spacing: -.02em;
+    }
+
+    .cs-metrics { display: flex; flex-direction: column; gap: 14px; }
+    .cs-metric {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .cs-metric-value {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      min-width: 80px;
+      letter-spacing: -.03em;
+    }
+    .cs-metric-desc {
+      font-size: .875rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ── INDUSTRIES ── */
+    .industries-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .industry-pill {
+      background: var(--accent-dim);
+      border: 1px solid rgba(74,222,128,.2);
+      color: var(--accent);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: .875rem;
+      font-weight: 600;
+      transition: all .2s;
+      cursor: default;
+    }
+    .industry-pill:hover {
+      background: rgba(74,222,128,.25);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(74,222,128,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, rgba(74,222,128,.08) 0%, rgba(10,26,12,.7) 100%);
+      border: 1px solid rgba(74,222,128,.2);
+      border-radius: 28px;
+      padding: 60px 40px;
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .cta-box h2 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      margin-bottom: 14px;
+    }
+    .cta-box p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 32px;
+    }
+    .cta-box .btn {
+      font-size: 1rem;
+      padding: 14px 32px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d1a00;
+      border-top: 1px solid rgba(74,222,128,.12);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy {
+      font-size: .8rem;
+      color: #3a5c3e;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp .7s ease both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    .delay-3 { animation-delay: .3s; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Slide<span>Sage</span> 📊</a>
+      <ul class="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="app.html" class="btn btn-primary">Try Free →</a>
+        <button class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="features.html">Features</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="blog.html">Blog</a>
+  <a href="about.html">About</a>
+  <a href="app.html" class="btn btn-primary" style="margin-top:12px">Try Free →</a>
+</div>
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero">
+  <div class="badge fade-up">❤️ Loved by 5,000+ Presenters</div>
+  <h1 class="fade-up delay-1">Customers Who Present<br>with Confidence</h1>
+  <p class="hero-sub fade-up delay-2">From startup founders to Fortune 500 executives.</p>
+</section>
+
+<!-- ═══════════════════════════ STATS BAR ═══════════════════════════ -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number" data-target="5000" data-suffix="+">0</div>
+      <div class="stat-label">Happy Users</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="50000" data-suffix="+">0</div>
+      <div class="stat-label">Presentations Analyzed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="4.9" data-suffix="★" data-decimal="true">0</div>
+      <div class="stat-label">Average Rating</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="30" data-suffix="">0</div>
+      <div class="stat-label">Countries</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ FEATURED TESTIMONIAL ═══════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <h2>A Story That Says It All</h2>
+    <p>Real results from real professionals who trusted SlideSage at a critical moment.</p>
+  </div>
+  <div class="featured-wrap fade-up">
+    <div class="featured-card">
+      <img
+        class="featured-avatar"
+        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&auto=format"
+        alt="James Whitfield"
+        loading="lazy"
+      />
+      <p class="featured-quote">
+        "I've been pitching investors for 3 years. SlideSage gave me feedback in 30 seconds that my advisors couldn't give me in 3 months. We closed our seed round 6 weeks later."
+      </p>
+      <div class="featured-name">James Whitfield</div>
+      <div class="featured-role">CEO, Veridian Technologies</div>
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ TESTIMONIAL GRID ═══════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <h2>What Our Customers Say</h2>
+    <p>Across industries and roles, one thing stays consistent — results.</p>
+  </div>
+
+  <div class="testimonials-grid">
+
+    <!-- Mark T. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#4ade80;">M</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Mark T.</div>
+          <div class="tcard-role">VP Sales</div>
+        </div>
+      </div>
+      <p class="tcard-quote">Our sales team's close rate improved 18% in Q1. Best $19/month we spend.</p>
+    </div>
+
+    <!-- Sophie L. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#60a5fa;">S</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Sophie L.</div>
+          <div class="tcard-role">PhD Candidate</div>
+        </div>
+      </div>
+      <p class="tcard-quote">Used SlideSage before my PhD thesis defense. Got an A.</p>
+    </div>
+
+    <!-- David R. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#f59e0b;">D</div>
+        <div class="tcard-info">
+          <div class="tcard-name">David R.</div>
+          <div class="tcard-role">Strategy Consultant</div>
+        </div>
+      </div>
+      <p class="tcard-quote">Analyzed 47 client decks last month. Saved 80+ hours.</p>
+    </div>
+
+    <!-- Priya K. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#c084fc;">P</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Priya K.</div>
+          <div class="tcard-role">Director of Strategy</div>
+        </div>
+      </div>
+      <p class="tcard-quote">The slide-by-slide feedback is like having a McKinsey coach on demand.</p>
+    </div>
+
+    <!-- Carlos M. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#fb923c;">C</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Carlos M.</div>
+          <div class="tcard-role">Marketing Manager</div>
+        </div>
+      </div>
+      <p class="tcard-quote">Finally a tool that tells me HOW to fix my slides.</p>
+    </div>
+
+    <!-- Linda H. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#34d399;">L</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Linda H.</div>
+          <div class="tcard-role">L&amp;D Manager</div>
+        </div>
+      </div>
+      <p class="tcard-quote">We run SlideSage on every training deck. Quality went through the roof.</p>
+    </div>
+
+    <!-- Rachel S. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#f472b6;">R</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Rachel S.</div>
+          <div class="tcard-role">CFO</div>
+        </div>
+      </div>
+      <p class="tcard-quote">CEO said it was our best board deck ever.</p>
+    </div>
+
+    <!-- Kenji T. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#22d3ee;">K</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Kenji T.</div>
+          <div class="tcard-role">Product Manager</div>
+        </div>
+      </div>
+      <p class="tcard-quote">The clarity scores help me as a non-native English speaker.</p>
+    </div>
+
+    <!-- Alex V. -->
+    <div class="tcard">
+      <div class="tcard-header">
+        <div class="avatar-circle" style="background:#a78bfa;">A</div>
+        <div class="tcard-info">
+          <div class="tcard-name">Alex V.</div>
+          <div class="tcard-role">VC Partner</div>
+        </div>
+      </div>
+      <p class="tcard-quote">I recommend SlideSage to every founder in my portfolio.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ CASE STUDIES ═══════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <h2>Case Studies</h2>
+    <p>Measurable impact at the team and company level.</p>
+  </div>
+
+  <div class="case-studies-grid">
+
+    <!-- GrowthMetrics -->
+    <div class="cs-card">
+      <div class="cs-label">Case Study</div>
+      <div class="cs-company">GrowthMetrics</div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <div class="cs-metric-value">+23%</div>
+          <div class="cs-metric-desc">Higher close rate across the sales team after deploying SlideSage</div>
+        </div>
+        <div class="cs-metric">
+          <div class="cs-metric-value">3h</div>
+          <div class="cs-metric-desc">Saved per sales rep per week on deck preparation and revisions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apex Consulting -->
+    <div class="cs-card">
+      <div class="cs-label">Case Study</div>
+      <div class="cs-company">Apex Consulting</div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <div class="cs-metric-value">−60%</div>
+          <div class="cs-metric-desc">Fewer revision cycles per client deliverable since adopting SlideSage</div>
+        </div>
+        <div class="cs-metric">
+          <div class="cs-metric-value">+15pt</div>
+          <div class="cs-metric-desc">Improvement in client satisfaction scores on presentation quality</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════ INDUSTRIES ═══════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <h2>Trusted Across Every Industry</h2>
+    <p>Wherever great presentations matter, SlideSage delivers.</p>
+  </div>
+
+  <div class="industries-wrap">
+    <div class="industry-pill">💼 Finance</div>
+    <div class="industry-pill">🏥 Healthcare</div>
+    <div class="industry-pill">🎓 Education</div>
+    <div class="industry-pill">🚀 Startups</div>
+    <div class="industry-pill">🏭 Enterprise</div>
+    <div class="industry-pill">🎨 Creative</div>
+    <div class="industry-pill">⚖️ Legal</div>
+    <div class="industry-pill">🔬 Research</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ CTA ═══════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Join 5,000+ Professionals</h2>
+    <p>Start presenting with confidence today. Free to try, no credit card required.</p>
+    <a href="app.html" class="btn btn-primary">Get Started Free →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">Slide<span>Sage</span> 📊</a>
+    <nav class="footer-links">
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="customers.html">Customers</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="app.html">Try Free</a>
+    </nav>
+    <p class="footer-copy">© 2026 SlideSage. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
+<script src="js/app.js" defer></script>
+<script>
+  // ── Navbar scroll shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ── Mobile hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!navbar.contains(e.target) && !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+    }
+  });
+
+  // ── Animated counters
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const isDecimal = el.dataset.decimal === 'true';
+    const duration = 1800;
+    const start = performance.now();
+
+    function step(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const value = target * ease;
+      el.textContent = (isDecimal ? value.toFixed(1) : Math.round(value).toLocaleString()) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const counterEls = document.querySelectorAll('[data-target]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  counterEls.forEach(el => io.observe(el));
+
+  // ── Scroll fade-in for cards
+  const fadeEls = document.querySelectorAll('.tcard, .cs-card, .featured-card, .cta-box');
+  const fadeIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        fadeIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeEls.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    fadeIO.observe(el);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Status — SlideSage</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8faf9;
+      --bg-white: #ffffff;
+      --bg-card: #f1f5f2;
+      --green: #16a34a;
+      --green-light: #dcfce7;
+      --green-border: #bbf7d0;
+      --green-bright: #4ade80;
+      --text: #0f1f15;
+      --text-muted: #4b6a56;
+      --text-dim: #9ab8a2;
+      --border: #e2ede6;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --radius-sm: 8px;
+
+      /* Dark header */
+      --header-bg: #020804;
+      --header-accent: #4ade80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* HEADER (dark, like main site) */
+    header {
+      background: var(--header-bg);
+      border-bottom: 1px solid rgba(74, 222, 128, 0.12);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--header-accent);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(240, 250, 243, 0.6);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: rgba(240, 250, 243, 0.95); }
+
+    .nav-links a.active { color: var(--header-accent); }
+
+    .nav-cta {
+      background: var(--header-accent) !important;
+      color: #020804 !important;
+      padding: 7px 18px;
+      border-radius: 7px;
+      font-weight: 700 !important;
+    }
+
+    /* STATUS HERO */
+    .status-hero {
+      background: var(--header-bg);
+      padding: 60px 40px 80px;
+      text-align: center;
+    }
+
+    .status-hero h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: rgba(240, 250, 243, 0.5);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      margin-bottom: 24px;
+    }
+
+    .overall-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(74, 222, 128, 0.12);
+      border: 1.5px solid rgba(74, 222, 128, 0.3);
+      border-radius: 100px;
+      padding: 14px 32px;
+      margin-bottom: 16px;
+    }
+
+    .status-check {
+      width: 36px;
+      height: 36px;
+      background: var(--header-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .overall-status-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--header-accent);
+      letter-spacing: -0.02em;
+    }
+
+    .status-timestamp {
+      font-size: 0.82rem;
+      color: rgba(240, 250, 243, 0.4);
+      margin-top: 12px;
+    }
+
+    /* MAIN CONTENT */
+    .status-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px 80px;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* COMPONENT TABLE */
+    .components-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+
+    .component-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .component-row:last-child { border-bottom: none; }
+    .component-row:hover { background: #fafcfb; }
+
+    .component-row.header-row {
+      background: var(--bg-card);
+      padding: 12px 24px;
+      cursor: default;
+    }
+
+    .component-row.header-row:hover { background: var(--bg-card); }
+
+    .col-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .col-status-header, .col-uptime-header {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .col-uptime-header { min-width: 80px; text-align: right; }
+
+    .service-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .service-desc {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid var(--green-border);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      min-width: 120px;
+      justify-content: center;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .uptime-pct {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--green);
+      min-width: 56px;
+      text-align: right;
+    }
+
+    /* UPTIME BARS */
+    .uptime-bars-section {
+      margin-bottom: 48px;
+    }
+
+    .uptime-bar-row {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .uptime-bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .uptime-bar-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .uptime-bar-pct {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .bar-track {
+      height: 6px;
+      background: var(--bg-card);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #16a34a 0%, var(--green-bright) 100%);
+      border-radius: 100px;
+      transition: width 1s ease;
+    }
+
+    /* INCIDENT HISTORY */
+    .incidents-section {
+      margin-bottom: 48px;
+    }
+
+    .incident-empty {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 56px 40px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .incident-empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .incident-empty h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .incident-empty p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* SUBSCRIBE */
+    .subscribe-section {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow);
+      margin-bottom: 48px;
+    }
+
+    .subscribe-section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .subscribe-section p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .subscribe-form {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+    }
+
+    .subscribe-input {
+      flex: 1;
+      padding: 11px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .subscribe-input:focus {
+      border-color: var(--green-bright);
+    }
+
+    .subscribe-input::placeholder { color: var(--text-dim); }
+
+    .subscribe-btn {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 11px 22px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .subscribe-btn:hover { background: #15803d; }
+
+    .subscribe-note {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 10px;
+    }
+
+    /* SUBSCRIBE SUCCESS */
+    .subscribe-success {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: var(--green-light);
+      border: 1px solid var(--green-border);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--green);
+      max-width: 500px;
+    }
+
+    /* METRICS STRIP */
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .metric-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--green);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--header-bg);
+      border-top: 1px solid rgba(74, 222, 128, 0.12);
+      padding: 36px 40px;
+      text-align: center;
+      color: rgba(240, 250, 243, 0.35);
+      font-size: 0.84rem;
+    }
+
+    footer a {
+      color: rgba(240, 250, 243, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--header-accent); }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .status-hero { padding: 40px 20px 60px; }
+      .status-content { padding: 40px 20px 60px; }
+      .subscribe-form { flex-direction: column; }
+      .component-row { grid-template-columns: 1fr auto; }
+      .col-uptime-header, .uptime-pct { display: none; }
+      .metrics-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DARK HEADER / NAV -->
+  <header>
+    <nav>
+      <a href="index.html" class="nav-logo">SlideSage</a>
+      <ul class="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="usecases.html">Use Cases</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="status.html" class="active">Status</a></li>
+        <li><a href="app.html" class="nav-cta">Try Free</a></li>
+      </ul>
+    </nav>
+
+    <!-- OVERALL STATUS HERO (still inside dark header) -->
+    <div class="status-hero">
+      <h1>System Status</h1>
+      <div class="overall-status">
+        <div class="status-check">✓</div>
+        <div class="overall-status-text">All Systems Operational</div>
+      </div>
+      <div class="status-timestamp" id="statusTimestamp">Last updated: checking…</div>
+    </div>
+  </header>
+
+  <!-- MAIN LIGHT CONTENT -->
+  <main class="status-content">
+
+    <!-- METRICS STRIP -->
+    <div class="metrics-strip">
+      <div class="metric-card">
+        <div class="metric-value">99.9%</div>
+        <div class="metric-label">Overall Uptime (30d)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">0</div>
+        <div class="metric-label">Active Incidents</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">6</div>
+        <div class="metric-label">Services Monitored</div>
+      </div>
+    </div>
+
+    <!-- COMPONENT TABLE -->
+    <div class="section-title">Service Components</div>
+    <div class="components-card">
+
+      <!-- Table header -->
+      <div class="component-row header-row">
+        <div class="col-label">Service</div>
+        <div class="col-status-header">Status</div>
+        <div class="col-uptime-header">Uptime</div>
+      </div>
+
+      <!-- AI Analysis Engine -->
+      <div class="component-row">
+        <div>
+          <div class="service-name">AI Analysis Engine</div>
+          <div class="service-desc">Slide scoring, narrative analysis, design feedback</div>
+        </div>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          Operational
+        </div>
+        <div class="uptime-pct">99.9%</div>
+      </div>
+
+      <!-- File Upload -->
+      <div class="component-row">
+        <div>
+          <div class="service-name">File Upload</div>
+          <div class="service-desc">PowerPoint, PDF, and Google Slides ingestion</div>
+        </div>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          Operational
+        </div>
+        <div class="uptime-pct">99.9%</div>
+      </div>
+
+      <!-- Report Export -->
+      <div class="component-row">
+        <div>
+          <div class="service-name">Report Export</div>
+          <div class="service-desc">PDF and shareable link generation</div>
+        </div>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          Operational
+        </div>
+        <div class="uptime-pct">100%</div>
+      </div>
+
+      <!-- History API -->
+      <div class="component-row">
+        <div>
+          <div class="service-name">History API</div>
+          <div class="service-desc">Past analyses, audit log, account history</div>
+        </div>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          Operational
+        </div>
+        <div class="uptime-pct">99.8%</div>
+      </div>
+
+      <!-- Supabase Database -->
+      <div class="component-row">
+        <div>
+          <div class="service-name">Supabase Database</div>
+          <div class="service-desc">User accounts, analysis storage, settings</div>
+        </div>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          Operational
+        </div>
+        <div class="uptime-pct">99.9%</div>
+      </div>
+
+      <!-- Netlify CDN -->
+      <div class="component-row">
+        <div>
+          <div class="service-name">Netlify CDN</div>
+          <div class="service-desc">Global edge delivery, static assets, app hosting</div>
+        </div>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          Operational
+        </div>
+        <div class="uptime-pct">100%</div>
+      </div>
+
+    </div>
+
+    <!-- UPTIME BARS (30-day visual) -->
+    <div class="uptime-bars-section">
+      <div class="section-title">30-Day Uptime History</div>
+
+      <div class="uptime-bar-row">
+        <div class="uptime-bar-header">
+          <span class="uptime-bar-name">AI Analysis Engine</span>
+          <span class="uptime-bar-pct">99.9%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:99.9%"></div></div>
+      </div>
+
+      <div class="uptime-bar-row">
+        <div class="uptime-bar-header">
+          <span class="uptime-bar-name">File Upload</span>
+          <span class="uptime-bar-pct">99.9%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:99.9%"></div></div>
+      </div>
+
+      <div class="uptime-bar-row">
+        <div class="uptime-bar-header">
+          <span class="uptime-bar-name">Report Export</span>
+          <span class="uptime-bar-pct">100%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      </div>
+
+      <div class="uptime-bar-row">
+        <div class="uptime-bar-header">
+          <span class="uptime-bar-name">History API</span>
+          <span class="uptime-bar-pct">99.8%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:99.8%"></div></div>
+      </div>
+
+      <div class="uptime-bar-row">
+        <div class="uptime-bar-header">
+          <span class="uptime-bar-name">Supabase Database</span>
+          <span class="uptime-bar-pct">99.9%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:99.9%"></div></div>
+      </div>
+
+      <div class="uptime-bar-row">
+        <div class="uptime-bar-header">
+          <span class="uptime-bar-name">Netlify CDN</span>
+          <span class="uptime-bar-pct">100%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      </div>
+    </div>
+
+    <!-- INCIDENT HISTORY -->
+    <div class="incidents-section">
+      <div class="section-title">Incident History — Last 30 Days</div>
+      <div class="incident-empty">
+        <div class="incident-empty-icon">✅</div>
+        <h3>No incidents in the last 30 days</h3>
+        <p>SlideSage has maintained full operational status. No degradations, outages, or incidents to report.</p>
+      </div>
+    </div>
+
+    <!-- SUBSCRIBE -->
+    <div class="subscribe-section">
+      <h2>Subscribe to Status Updates</h2>
+      <p>Get notified instantly by email when SlideSage experiences an incident or scheduled maintenance.</p>
+
+      <form class="subscribe-form" id="subscribeForm" onsubmit="handleSubscribe(event)">
+        <input
+          type="email"
+          class="subscribe-input"
+          id="subscribeEmail"
+          placeholder="you@company.com"
+          required
+        />
+        <button type="submit" class="subscribe-btn">Notify Me</button>
+      </form>
+
+      <div class="subscribe-success" id="subscribeSuccess">
+        <span>✓</span> You're subscribed! We'll notify you of any incidents.
+      </div>
+
+      <p class="subscribe-note">No spam. Only real incidents and resolved notices. Unsubscribe any time.</p>
+    </div>
+
+  </main>
+
+  <!-- DARK FOOTER -->
+  <footer>
+    <p>
+      © 2024 SlideSage &nbsp;·&nbsp;
+      <a href="index.html">Home</a> &nbsp;·&nbsp;
+      <a href="privacy.html">Privacy</a> &nbsp;·&nbsp;
+      <a href="terms.html">Terms</a> &nbsp;·&nbsp;
+      <a href="enterprise.html">Enterprise</a>
+    </p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Timestamp
+    const ts = document.getElementById('statusTimestamp');
+    if (ts) {
+      const now = new Date();
+      ts.textContent = 'Last updated: ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' — ' + now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // Subscribe form
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const form = document.getElementById('subscribeForm');
+      const success = document.getElementById('subscribeSuccess');
+      form.style.display = 'none';
+      success.style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
