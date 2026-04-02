@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10 Slide Mistakes That Are Killing Your Presentations (And How to Fix Them) — SlideSage Blog</title>
+  <meta name="description" content="Most presentations fail not because of bad ideas, but because of fixable mistakes. Here are the 10 most common slide errors and exactly how to fix each one." />
+  <meta name="keywords" content="presentation mistakes, slide design tips, how to fix presentations, better slides, SlideSage" />
+  <meta name="author" content="Sarah Miller" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/blog-post-2.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="10 Slide Mistakes That Are Killing Your Presentations (And How to Fix Them)" />
+  <meta property="og:description" content="Most presentations fail not because of bad ideas, but because of fixable mistakes. Here are the 10 most common errors and exactly how to fix each one." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/blog-post-2.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="10 Slide Mistakes That Are Killing Your Presentations (And How to Fix Them)" />
+  <meta name="twitter:description" content="Most presentations fail not because of bad ideas, but because of fixable mistakes. Here are the 10 most common errors and exactly how to fix each one." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "10 Slide Mistakes That Are Killing Your Presentations (And How to Fix Them)",
+    "author": { "@type": "Person", "name": "Sarah Miller" },
+    "datePublished": "2026-03-28",
+    "image": "https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?w=1200&auto=format&fit=crop&q=80",
+    "publisher": { "@type": "Organization", "name": "SlideSage", "url": "https://slidesage-app.netlify.app" }
+  }
+  </script>
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #4ade80;
+      --green-dark: #16a34a;
+      --bg-dark: #020804;
+      --bg-page: #f4f6f4;
+      --text-dark: #111811;
+      --text-mid: #3d4a3d;
+      --text-muted: #6b7a6b;
+      --border-dark: rgba(74,222,128,0.12);
+      --border-light: #e2e8e2;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: var(--bg-page);
+      color: var(--text-dark);
+    }
+
+    /* ── Reading Progress Bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--green-dark));
+      z-index: 9999;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(74,222,128,0.5);
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0.9rem 0;
+      background: rgba(2,8,4,0.72);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid var(--border-dark);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .navbar.scrolled {
+      background: rgba(2,8,4,0.97);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.6);
+    }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; color: #f1f5f1; text-decoration: none; }
+    .nav-logo span { color: var(--green); }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; list-style: none; }
+    .nav-links a {
+      padding: 0.45rem 0.85rem; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 500; color: #9ca39c;
+      transition: color 0.2s, background 0.2s; text-decoration: none;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-weight: 600; border-radius: 10px;
+      transition: all 0.2s; text-decoration: none;
+      cursor: pointer; border: none; font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #0a0f0a; padding: 0.55rem 1.25rem; font-size: 0.875rem;
+      box-shadow: 0 0 20px rgba(74,222,128,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 28px rgba(74,222,128,0.4); }
+    .btn-outline {
+      background: transparent; color: #f1f5f1;
+      padding: 0.55rem 1.25rem; font-size: 0.875rem;
+      border: 1.5px solid rgba(255,255,255,0.18);
+    }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); background: rgba(74,222,128,0.06); }
+    .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; background: none; border: none; cursor: pointer; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #f1f5f1; border-radius: 2px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999;
+      background: rgba(2,8,4,0.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-dark); padding: 1.5rem;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 0.5rem; list-style: none; }
+    .mobile-menu ul li a {
+      display: block; padding: 0.75rem 1rem; border-radius: 8px;
+      color: #9ca39c; font-weight: 500; text-decoration: none;
+    }
+    .mobile-menu ul li a:hover { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 1rem; }
+
+    /* ── Hero ── */
+    .post-hero {
+      background:
+        linear-gradient(to bottom, rgba(2,8,4,0.55) 0%, rgba(2,8,4,0.85) 100%),
+        url('https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?w=1200&auto=format&fit=crop&q=80') center/cover no-repeat;
+      padding: 9rem 1.5rem 5rem;
+      text-align: center;
+      color: #f1f5f1;
+    }
+    .hero-category {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(74,222,128,0.15);
+      border: 1px solid rgba(74,222,128,0.3);
+      color: var(--green);
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3rem 0.85rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .post-hero h1 {
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      font-weight: 900; line-height: 1.15;
+      letter-spacing: -1px; max-width: 760px;
+      margin: 0 auto 1.5rem;
+    }
+    .post-meta {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; flex-wrap: wrap;
+      font-size: 0.85rem; color: rgba(241,245,241,0.65);
+    }
+    .post-meta span { display: flex; align-items: center; gap: 0.35rem; }
+
+    /* ── Layout ── */
+    .post-layout {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 3rem;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      align-items: start;
+    }
+
+    /* ── Article Content ── */
+    .post-content {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 3rem 3.5rem;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+    }
+    .post-content p {
+      font-size: 1.05rem; line-height: 1.85;
+      color: var(--text-mid); margin-bottom: 1.5rem;
+    }
+    .post-content h2 {
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--text-dark); letter-spacing: -0.4px;
+      margin: 2.5rem 0 1rem;
+      padding-top: 0.5rem;
+      border-top: 2px solid var(--border-light);
+    }
+    .post-content h2:first-of-type { margin-top: 1rem; }
+    .post-content h3 {
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--text-dark); margin: 1.75rem 0 0.6rem;
+    }
+    .post-content ul, .post-content ol {
+      padding-left: 1.5rem; margin-bottom: 1.5rem;
+    }
+    .post-content li {
+      font-size: 1.05rem; line-height: 1.75;
+      color: var(--text-mid); margin-bottom: 0.4rem;
+    }
+    .post-content strong { color: var(--text-dark); font-weight: 700; }
+    .post-content a { color: #16a34a; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Mistake cards */
+    .mistake-card {
+      background: #f8faf8;
+      border: 1px solid var(--border-light);
+      border-left: 4px solid var(--green);
+      border-radius: 0 14px 14px 0;
+      padding: 1.5rem 1.75rem;
+      margin: 1.75rem 0;
+    }
+    .mistake-number {
+      display: inline-block;
+      background: var(--green);
+      color: #0a0f0a;
+      font-size: 0.7rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.2rem 0.65rem; border-radius: 6px;
+      margin-bottom: 0.65rem;
+    }
+    .mistake-card h3 {
+      font-size: 1.1rem; font-weight: 800;
+      color: var(--text-dark); margin: 0 0 0.75rem;
+    }
+    .mistake-card p {
+      font-size: 0.97rem; line-height: 1.75;
+      color: var(--text-mid); margin-bottom: 0.75rem;
+    }
+    .mistake-card p:last-child { margin-bottom: 0; }
+    .fix-label {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #16a34a; margin-bottom: 0.25rem;
+    }
+
+    /* Callout box */
+    .callout {
+      background: #f0fdf4;
+      border-left: 4px solid var(--green);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .callout p { margin-bottom: 0; color: #166534; font-size: 1rem; }
+    .callout strong { color: #14532d; }
+
+    /* ── Author Bio ── */
+    .author-bio {
+      background: #f8faf8;
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    .author-bio img {
+      width: 72px; height: 72px;
+      border-radius: 50%; object-fit: cover;
+      border: 3px solid #dcfce7;
+      flex-shrink: 0;
+    }
+    .author-bio-name { font-size: 1rem; font-weight: 800; color: var(--text-dark); }
+    .author-bio-title { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .author-bio p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 0; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: linear-gradient(135deg, #020804 0%, #071a0d 100%);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+    .cta-banner h3 {
+      font-size: 1.5rem; font-weight: 900;
+      color: #f1f5f1; letter-spacing: -0.5px;
+      margin-bottom: 0.6rem;
+    }
+    .cta-banner p { font-size: 0.95rem; color: #9ca39c; margin-bottom: 1.5rem; }
+    .cta-banner .btn-primary { font-size: 1rem; padding: 0.85rem 2rem; border-radius: 12px; }
+
+    /* ── Newsletter ── */
+    .newsletter-section {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .newsletter-section h3 { font-size: 1.1rem; font-weight: 800; color: #14532d; margin-bottom: 0.5rem; }
+    .newsletter-section p { font-size: 0.875rem; color: #166534; margin-bottom: 1.25rem; }
+    .newsletter-form { display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto; }
+    .newsletter-form input {
+      flex: 1; padding: 0.7rem 1rem;
+      border: 1.5px solid #86efac; border-radius: 10px;
+      font-family: inherit; font-size: 0.875rem; color: var(--text-dark);
+      background: white; outline: none; transition: border 0.2s;
+    }
+    .newsletter-form input:focus { border-color: var(--green-dark); }
+    .newsletter-form button {
+      background: var(--green-dark); color: white;
+      border: none; cursor: pointer; padding: 0.7rem 1.25rem;
+      font-size: 0.875rem; font-weight: 700;
+      border-radius: 10px; font-family: inherit;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .newsletter-form button:hover { background: #15803d; }
+
+    /* ── Sidebar ── */
+    .post-sidebar { position: sticky; top: 90px; }
+    .toc-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .toc-card h4 {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1rem;
+    }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.1rem; }
+    .toc-list a {
+      display: block; padding: 0.4rem 0.6rem;
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--text-muted); text-decoration: none;
+      border-radius: 6px; border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .toc-list a:hover, .toc-list a.active {
+      color: #16a34a; background: #f0fdf4;
+      border-left-color: var(--green);
+    }
+    .share-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .share-card h4 {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.85rem;
+    }
+    .share-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .share-btn {
+      display: flex; align-items: center; gap: 0.35rem;
+      padding: 0.45rem 0.9rem; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+      cursor: pointer; border: none; font-family: inherit;
+    }
+    .share-btn-twitter { background: #e7f3ff; color: #1d9bf0; }
+    .share-btn-twitter:hover { background: #1d9bf0; color: white; }
+    .share-btn-linkedin { background: #e8f0fb; color: #0077b5; }
+    .share-btn-linkedin:hover { background: #0077b5; color: white; }
+    .share-btn-copy { background: #f3f4f6; color: #374151; }
+    .share-btn-copy:hover { background: #374151; color: white; }
+
+    /* ── Related Articles ── */
+    .related-section {
+      max-width: 1080px; margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+    .related-section h2 {
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--text-dark); margin-bottom: 1.5rem;
+      letter-spacing: -0.4px;
+    }
+    .related-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .related-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px; overflow: hidden;
+      text-decoration: none; color: inherit;
+      transition: all 0.25s;
+      display: flex; flex-direction: column;
+    }
+    .related-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+    .related-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+    .related-card-body { padding: 1.25rem; flex: 1; }
+    .related-card-cat {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: #16a34a; margin-bottom: 0.5rem;
+    }
+    .related-card h3 {
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--text-dark); line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+    .related-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border-light);
+      background: var(--bg-dark);
+    }
+    .footer-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 800; color: #f1f5f1; text-decoration: none; }
+    .footer-logo span { color: var(--green); }
+    .footer-copy { font-size: 0.8rem; color: #6b7a6b; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.8rem; color: #6b7a6b; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: #f1f5f1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .post-layout { grid-template-columns: 1fr; }
+      .post-sidebar { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn-outline { display: none; }
+      .hamburger { display: flex; }
+      .post-content { padding: 1.75rem 1.5rem; }
+      .related-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 500px) {
+      .post-meta { gap: 0.75rem; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Slide<span>Sage</span></a>
+        <ul class="nav-links">
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="nav-right">
+          <a href="app.html" class="btn btn-outline">Sign In</a>
+          <a href="app.html" class="btn btn-primary">Try Free →</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="app.html" class="btn btn-primary btn-lg">Try SlideSage Free →</a>
+  </div>
+
+  <!-- ── Hero ── -->
+  <header class="post-hero">
+    <span class="hero-category">💡 Tips</span>
+    <h1>10 Slide Mistakes That Are Killing Your Presentations (And How to Fix Them)</h1>
+    <div class="post-meta">
+      <span>✍️ Sarah Miller, CTO at SlideSage</span>
+      <span>📅 March 28, 2026</span>
+      <span>⏱️ 9 min read</span>
+    </div>
+  </header>
+
+  <!-- ── Post Body ── -->
+  <div class="post-layout">
+
+    <!-- Article -->
+    <article class="post-content" id="article">
+
+      <p>
+        Most presentations fail not because of bad ideas, but because of fixable mistakes. The strategy is solid. The data is real. The presenter knows their material cold. Yet something about the deck is quietly working against them — eroding attention, creating confusion, or undermining credibility — before the critical message ever lands. After analyzing over 50,000 presentations through SlideSage, I've seen the same ten mistakes appear again and again. The good news: every single one is correctable in under an hour.
+      </p>
+
+      <h2 id="the-mistakes">The 10 Mistakes</h2>
+
+      <!-- Mistake 1 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 01</span>
+        <h3>Too Much Text Per Slide</h3>
+        <p>
+          When a slide is wall-to-wall text, your audience splits their attention between reading and listening — and they can't do both well. Research consistently shows that cognitive load spikes when people are forced to process dense written content while someone talks over it. You lose them by slide three.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Apply the 50-word rule: no slide should carry more than 50 words of body copy. Strip your content down to headlines and key data points. If the detail matters, it belongs in a leave-behind document — not projected on a wall. Use your voice to fill in the context; use the slide to anchor the idea.
+        </p>
+      </div>
+
+      <!-- Mistake 2 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 02</span>
+        <h3>No Visual Hierarchy</h3>
+        <p>
+          When everything on a slide looks equally important — same font, same size, same weight — the eye has nowhere to go. Audiences spend precious seconds trying to figure out what to focus on, and they often land on the wrong thing. A slide without visual hierarchy is a slide without a point of view.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Use a three-tier type system: a large, bold headline (28–36pt) states the core claim; a medium subheader (18–22pt) provides context; and small body copy (14–16pt) supplies supporting detail. Vary font weight — not just size — to signal importance. Headlines should be 2–3× the weight of body text.
+        </p>
+      </div>
+
+      <!-- Mistake 3 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 03</span>
+        <h3>Inconsistent Design</h3>
+        <p>
+          Jumping between five fonts, seven colors, and three different slide layouts tells your audience that nobody was in charge. It feels unprofessional even when the content is excellent, and it creates visual noise that makes information harder to process.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Before you build a single slide, define a 3-color system: one primary brand color, one neutral (white or light gray), and one accent used sparingly for emphasis. Lock in two fonts — one for headings, one for body — and stick to them throughout. Build a master slide template and don't deviate. Design consistency signals credibility.
+        </p>
+      </div>
+
+      <!-- Mistake 4 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 04</span>
+        <h3>Starting With Yourself</h3>
+        <p>
+          "Founded in 2018, our company has grown to 200 employees across 14 countries..." Nobody in that room cares yet. Opening with your own history is one of the fastest ways to lose an audience before you've earned their attention. You haven't given them a reason to care about you.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Start with the audience's problem — not your solution. Lead with a sharp, specific insight about a pain they recognize: "Most sales teams waste 40% of their outreach time on unqualified leads." Now they're leaning in. You've made it about them. Save your company story for slide 3 or 4, after you've established why it's relevant.
+        </p>
+      </div>
+
+      <!-- Mistake 5 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 05</span>
+        <h3>Generic Stock Photos</h3>
+        <p>
+          The staged handshake. The smiling team around a glass table. The person staring thoughtfully at a laptop. These images don't add meaning — they subtract it. They signal "I filled this slide with something" rather than "I chose this image deliberately." Audiences have been conditioned to tune them out entirely.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Replace stock photos with data visualizations, real product screenshots, authentic customer photos (with permission), or genuine behind-the-scenes imagery. If you must use stock, choose candid and editorial-style shots over posed professional imagery. A well-designed chart will always outperform a generic photo on a business slide.
+        </p>
+      </div>
+
+      <!-- Mistake 6 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 06</span>
+        <h3>No Clear Message Per Slide</h3>
+        <p>
+          When a slide contains three separate ideas — a market trend, a competitive insight, and a product feature — your audience retains zero of them. The brain needs a hook to attach new information to. Multiple competing ideas on one slide means none of them stick.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Enforce the one-idea-per-slide rule without exception. Write the core message of each slide as a single declarative sentence before you design anything. If you can't summarize a slide in one sentence, it's two slides. Use your headline to state the conclusion outright — "Churn dropped 34% after onboarding redesign" — and let the slide body prove it.
+        </p>
+      </div>
+
+      <!-- Mistake 7 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 07</span>
+        <h3>Bullet Point Overload</h3>
+        <p>
+          The bullet point graveyard: six items, each a fragment, none with context. Bullet points were designed for reference documents — not live presentations. As a format, they signal "I organized my notes" rather than "I have something to tell you." Audiences don't read bullet lists during a talk; they wait for the presenter to tell them which one matters.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Replace bullet lists with visual alternatives: a 2×2 comparison table, a simple timeline, a single bold statistic with a brief explanation, or a before/after layout. If you genuinely need a list, limit it to three items maximum, and make each one a complete thought. Less hierarchy, more meaning.
+        </p>
+      </div>
+
+      <!-- Mistake 8 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 08</span>
+        <h3>Ignoring the Audience</h3>
+        <p>
+          The same deck doesn't work for a CFO and a CTO. It doesn't work equally for a technical team and an executive committee. Presenting identical content to different audiences is a bet that everyone in the room cares about the same things — and it's almost always wrong.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Before building your deck, write down the top three questions your specific audience will have. Then check: does every slide advance toward answering one of those? For executive audiences, lead with business outcomes and ROI; technical details live in the appendix. For technical teams, flip it. Tailor the vocabulary, the metrics, and the depth of detail to the people in the room — not the people you imagined when you first started the deck.
+        </p>
+      </div>
+
+      <!-- Mistake 9 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 09</span>
+        <h3>Weak Call to Action</h3>
+        <p>
+          "Thank you" is not a call to action. Neither is "Any questions?" Your final slide is the most valuable real estate in the entire presentation — it's the last thing your audience sees, and it should direct their next move. A weak close leaves them with no clear path forward, and most will take no action at all.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          End with a single, specific next step. Not "let's stay in touch" — but "I'm asking for a 30-minute pilot approval by Friday." Make the ask concrete, time-bound, and easy to say yes to. Include your contact details on the final slide, and frame the CTA as a benefit to them, not a favor to you.
+        </p>
+      </div>
+
+      <!-- Mistake 10 -->
+      <div class="mistake-card">
+        <span class="mistake-number">Mistake 10</span>
+        <h3>Skipping the Practice</h3>
+        <p>
+          Even a flawlessly designed deck falls apart in the hands of an unprepared presenter. Reading slides verbatim, fumbling transitions, losing the thread under pressure — these failures aren't caused by bad slides. They're caused by a presenter who's seeing the deck "live" for the first time alongside their audience.
+        </p>
+        <span class="fix-label">✅ The Fix</span>
+        <p>
+          Do at least three full run-throughs out loud before any high-stakes presentation — not in your head, not in a whisper. Time yourself. Record it and watch it back once. Know your transitions so well that you could skip any slide without losing the narrative. The deck is a support structure. You are the presentation.
+        </p>
+      </div>
+
+      <div class="callout">
+        <p><strong>Quick audit:</strong> Go through your last deck and count how many of these 10 mistakes appear. The average SlideSage user finds 4–6 on their first upload. Most take less than 45 minutes to fix once identified.</p>
+      </div>
+
+      <h2 id="conclusion">The Good News</h2>
+      <p>
+        The good news: all of these are fixable. Start with the biggest offenders — typically too much text, missing message hierarchy, and a weak close — and you'll see a measurable difference in how your audience responds. You don't need to redesign from scratch. You need to make deliberate choices about what earns space on each slide and what doesn't. Presentations that convert, persuade, and inspire aren't built by people with better ideas. They're built by people who respected their audience enough to edit ruthlessly and prepare thoroughly.
+      </p>
+      <p>
+        The next time you finish a deck, don't ask "does this look good?" Ask: "Would I sit through this?" If the honest answer is no, you know where to start.
+      </p>
+
+      <div class="cta-banner">
+        <h3>Find Out Which of These Mistakes You're Making</h3>
+        <p>Run your presentation through SlideSage and get an instant, slide-by-slide breakdown of every issue — ranked by impact.</p>
+        <a href="app.html" class="btn btn-primary btn-lg">Analyze My Deck with SlideSage →</a>
+      </div>
+
+      <!-- Author Bio -->
+      <div class="author-bio">
+        <img
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&auto=format"
+          alt="Sarah Miller"
+          loading="lazy"
+        />
+        <div>
+          <div class="author-bio-name">Sarah Miller</div>
+          <div class="author-bio-title">CTO &amp; Co-Founder, SlideSage</div>
+          <p>Sarah leads product and engineering at SlideSage. Before co-founding the company, she spent eight years as a solutions architect at enterprise software companies, sitting through thousands of vendor and internal presentations. That experience — watching great ideas get buried in bad slides — is what drove her to build the analysis engine at the core of SlideSage.</p>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="post-sidebar">
+      <div class="toc-card">
+        <h4>Table of Contents</h4>
+        <ul class="toc-list" id="toc">
+          <li><a href="#the-mistakes">The 10 Mistakes</a></li>
+          <li><a href="#conclusion">The Good News</a></li>
+        </ul>
+      </div>
+
+      <div class="share-card">
+        <h4>Share This Post</h4>
+        <div class="share-btns">
+          <button class="share-btn share-btn-twitter" onclick="shareTwitter()">𝕏 Twitter</button>
+          <button class="share-btn share-btn-linkedin" onclick="shareLinkedIn()">in LinkedIn</button>
+          <button class="share-btn share-btn-copy" id="copyBtn" onclick="copyLink()">🔗 Copy</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ── Related Articles ── -->
+  <section class="related-section">
+    <h2>Related Articles</h2>
+    <div class="related-grid">
+      <a href="blog-post.html" class="related-card">
+        <img
+          src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&auto=format&fit=crop&q=80"
+          alt="GPT-4 presentations"
+          loading="lazy"
+        />
+        <div class="related-card-body">
+          <div class="related-card-cat">AI &amp; Tech</div>
+          <h3>How GPT-4 is Transforming Business Presentations in 2026</h3>
+          <p>AI-powered presentation analysis has moved from novelty to necessity. Here's what that means for you.</p>
+        </div>
+      </a>
+      <a href="blog.html" class="related-card">
+        <img
+          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80"
+          alt="Design rules"
+          loading="lazy"
+        />
+        <div class="related-card-body">
+          <div class="related-card-cat">Design</div>
+          <h3>The 5 Design Rules That Separate Good Slides from Great Ones</h3>
+          <p>Simple principles that immediately elevate any presentation deck, even if you're not a designer.</p>
+        </div>
+      </a>
+      <a href="blog.html" class="related-card">
+        <img
+          src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&auto=format&fit=crop&q=80"
+          alt="Pitch deck"
+          loading="lazy"
+        />
+        <div class="related-card-body">
+          <div class="related-card-cat">Strategy</div>
+          <h3>How to Structure a Pitch Deck Investors Actually Read</h3>
+          <p>The exact slide order and narrative arc that resonates with VCs and angel investors in 2026.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ── -->
+  <section class="related-section" style="padding-top: 0;">
+    <!-- Newsletter -->
+    <div class="newsletter-section">
+      <h3>📬 Stay in the Loop</h3>
+      <p>Get the latest presentation tips, AI insights, and SlideSage updates in your inbox. No spam, ever.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+        <input type="email" placeholder="you@company.com" required />
+        <button type="submit">Subscribe →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-logo">Slide<span>Sage</span></a>
+        <p class="footer-copy">© 2026 SlideSage. All rights reserved.</p>
+        <nav class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="blog.html">Blog</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // ── Reading Progress Bar ──
+    const progressBar = document.getElementById('progress-bar');
+    function updateProgress() {
+      const article = document.getElementById('article');
+      const articleTop = article.offsetTop;
+      const articleHeight = article.offsetHeight;
+      const scrolled = window.scrollY - articleTop + window.innerHeight * 0.1;
+      const pct = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+      progressBar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    // ── Navbar Scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Mobile Menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+    // ── Table of Contents Active State ──
+    const headings = document.querySelectorAll('article h2[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const observerOptions = { rootMargin: '-20% 0px -70% 0px' };
+    const headingObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, observerOptions);
+    headings.forEach(h => headingObserver.observe(h));
+
+    // ── Share Buttons ──
+    function shareTwitter() {
+      const text = encodeURIComponent('10 Slide Mistakes That Are Killing Your Presentations (And How to Fix Them) via @slidesage');
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'width=600,height=400');
+    }
+    function shareLinkedIn() {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=500');
+    }
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => btn.textContent = '🔗 Copy', 2000);
+      });
+    }
+
+    // ── Newsletter Signup ──
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn = form.querySelector('button');
+      btn.textContent = '✅ Subscribed!';
+      btn.style.background = '#15803d';
+      form.querySelector('input').value = '';
+      setTimeout(() => {
+        btn.textContent = 'Subscribe →';
+        btn.style.background = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
