@@ -42,6 +42,11 @@
   status = 200
 
 [[redirects]]
+  from = "/history"
+  to = "/history.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404

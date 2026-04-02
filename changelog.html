@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SlideSage Changelog & Roadmap — See what's new and what's coming next." />
+  <meta property="og:title" content="What's New in SlideSage" />
+  <meta property="og:description" content="We ship fast. Here's everything we've built." />
+  <meta property="og:type" content="website" />
+  <title>Changelog & Roadmap — SlideSage</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="css/main.css" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #020804;
+      --bg-card:   #0a130b;
+      --bg-card2:  #0f1c10;
+      --green:     #4ade80;
+      --green-dim: #22c55e;
+      --green-glow: rgba(74, 222, 128, 0.15);
+      --green-glow-strong: rgba(74, 222, 128, 0.25);
+      --text:      #e8f5e9;
+      --text-muted:#7fa882;
+      --border:    rgba(74, 222, 128, 0.12);
+      --border-strong: rgba(74, 222, 128, 0.3);
+      --radius:    16px;
+      --radius-sm: 8px;
+      --timeline-line: rgba(74, 222, 128, 0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 68px;
+      background: rgba(2, 8, 4, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--green);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--green); }
+
+    .nav-cta {
+      background: var(--green);
+      color: #020804;
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% -10%, rgba(74, 222, 128, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green-glow);
+      border: 1px solid var(--border-strong);
+      color: var(--green);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffffff 30%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    /* ── Section Wrapper ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 3rem);
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-label h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Timeline ── */
+    .timeline-wrap {
+      padding: 0 0 5rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 1rem 0;
+    }
+
+    /* Centre spine */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--timeline-line);
+      transform: translateX(-50%);
+    }
+
+    /* Each entry */
+    .tl-entry {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 0;
+      margin-bottom: 3.5rem;
+      position: relative;
+      align-items: start;
+    }
+
+    /* Dot on spine */
+    .tl-dot {
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 1.75rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tl-dot-inner {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--green-dim);
+      box-shadow: 0 0 12px var(--green-glow-strong);
+      transition: transform 0.2s;
+    }
+
+    .tl-entry.latest .tl-dot-inner {
+      background: var(--green);
+      border-color: var(--green);
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+    }
+
+    /* Cards — alternating */
+    .tl-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+
+    .tl-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 4px 32px rgba(74, 222, 128, 0.08);
+    }
+
+    /* Odd entries: card on LEFT, empty right */
+    .tl-entry:nth-child(odd) .tl-card  { grid-column: 1; margin-right: 1.5rem; }
+    .tl-entry:nth-child(odd) .tl-empty { grid-column: 3; }
+    .tl-entry:nth-child(odd) .tl-dot   { grid-column: 2; }
+
+    /* Even entries: empty left, card on RIGHT */
+    .tl-entry:nth-child(even) .tl-card  { grid-column: 3; margin-left: 1.5rem; }
+    .tl-entry:nth-child(even) .tl-empty { grid-column: 1; }
+    .tl-entry:nth-child(even) .tl-dot   { grid-column: 2; }
+
+    .tl-empty { /* spacer */ }
+
+    /* Card header */
+    .tl-header {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .tl-version {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.02em;
+    }
+
+    .tl-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .badge-latest {
+      background: var(--green);
+      color: #020804;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      margin-left: auto;
+    }
+
+    .badge-launch {
+      background: transparent;
+      border: 1px solid var(--green-dim);
+      color: var(--green-dim);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      margin-left: auto;
+    }
+
+    /* Feature list */
+    .tl-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .tl-features li {
+      font-size: 0.92rem;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
+
+    .tl-features li .emoji {
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    /* ── Roadmap ── */
+    .roadmap-wrap {
+      padding: 0 0 5rem;
+    }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .roadmap-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .roadmap-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--green-glow) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .roadmap-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(74, 222, 128, 0.1);
+    }
+
+    .roadmap-card:hover::before { opacity: 1; }
+
+    .roadmap-eta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.65rem;
+      border-radius: 50px;
+      margin-bottom: 1.25rem;
+    }
+
+    .roadmap-eta .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .roadmap-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.6rem;
+      color: #fff;
+    }
+
+    .roadmap-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .roadmap-card .coming-label {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* ── Newsletter CTA ── */
+    .newsletter-wrap {
+      padding: 0 0 6rem;
+    }
+
+    .newsletter-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: 24px;
+      padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 5vw, 4rem);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newsletter-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 120%, var(--green-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .newsletter-inner h2 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.75rem;
+    }
+
+    .newsletter-inner p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 440px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .newsletter-form input[type="email"] {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-strong);
+      border-radius: 50px;
+      padding: 0.875rem 1.5rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .newsletter-form input[type="email"]::placeholder { color: var(--text-muted); }
+
+    .newsletter-form input[type="email"]:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+    }
+
+    .newsletter-form button {
+      background: var(--green);
+      color: #020804;
+      border: none;
+      border-radius: 50px;
+      padding: 0.875rem 1.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .newsletter-form button:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .newsletter-success {
+      display: none;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer .footer-logo {
+      font-weight: 800;
+      color: var(--green);
+      font-size: 1rem;
+    }
+
+    footer p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    footer nav { /* inline nav */ }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--green); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+
+      .timeline::before { left: 24px; }
+
+      .tl-entry {
+        grid-template-columns: 48px 1fr;
+        grid-template-rows: auto;
+        margin-bottom: 2.5rem;
+      }
+
+      /* All cards go to the right column on mobile */
+      .tl-entry:nth-child(odd) .tl-card,
+      .tl-entry:nth-child(even) .tl-card {
+        grid-column: 2;
+        grid-row: 1;
+        margin: 0;
+      }
+
+      .tl-entry:nth-child(odd) .tl-dot,
+      .tl-entry:nth-child(even) .tl-dot {
+        grid-column: 1;
+        grid-row: 1;
+        padding-top: 1.6rem;
+        justify-content: flex-start;
+        padding-left: 14px;
+      }
+
+      .tl-entry:nth-child(odd) .tl-empty,
+      .tl-entry:nth-child(even) .tl-empty { display: none; }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">SlideSage</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="changelog.html" class="active">Changelog</a></li>
+    </ul>
+    <a href="index.html#upload" class="nav-cta">Analyze Free →</a>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <header class="hero">
+    <div class="hero-eyebrow">
+      <span>📋</span> Changelog & Roadmap
+    </div>
+    <h1>What's New in SlideSage</h1>
+    <p>We ship fast. Here's everything we've built.</p>
+  </header>
+
+  <!-- ── Changelog Timeline ── -->
+  <main>
+    <div class="section timeline-wrap">
+      <div class="section-label">
+        <h2>Release History</h2>
+      </div>
+
+      <div class="timeline">
+
+        <!-- v2.0.0 -->
+        <div class="tl-entry latest">
+          <div class="tl-card">
+            <div class="tl-header">
+              <span class="tl-version">v2.0.0</span>
+              <span class="tl-date">April 2026</span>
+              <span class="badge-latest">Latest</span>
+            </div>
+            <ul class="tl-features">
+              <li><span class="emoji">🤖</span><span>Upgraded to GPT-4o for deeper, more accurate analysis</span></li>
+              <li><span class="emoji">📊</span><span>New 4-dimension scoring: Content, Design, Clarity, Engagement</span></li>
+              <li><span class="emoji">🔗</span><span>Shareable report links</span></li>
+              <li><span class="emoji">📜</span><span>Analysis history dashboard</span></li>
+              <li><span class="emoji">💡</span><span>Contextual tips panel with 50+ curated tips</span></li>
+              <li><span class="emoji">🌍</span><span>Multilingual support (6 languages)</span></li>
+            </ul>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-empty"></div>
+        </div>
+
+        <!-- v1.5.0 -->
+        <div class="tl-entry">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-card">
+            <div class="tl-header">
+              <span class="tl-version">v1.5.0</span>
+              <span class="tl-date">March 2026</span>
+            </div>
+            <ul class="tl-features">
+              <li><span class="emoji">⚡</span><span>2× faster analysis (under 30 seconds)</span></li>
+              <li><span class="emoji">📄</span><span>PDF and Word export</span></li>
+              <li><span class="emoji">📱</span><span>Full mobile optimization</span></li>
+              <li><span class="emoji">🎨</span><span>New dark theme UI</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- v1.2.0 -->
+        <div class="tl-entry">
+          <div class="tl-card">
+            <div class="tl-header">
+              <span class="tl-version">v1.2.0</span>
+              <span class="tl-date">February 2026</span>
+            </div>
+            <ul class="tl-features">
+              <li><span class="emoji">🎯</span><span>Slide-by-slide scoring</span></li>
+              <li><span class="emoji">📝</span><span>Executive summary report</span></li>
+              <li><span class="emoji">💬</span><span>Quick wins for each slide</span></li>
+              <li><span class="emoji">🔄</span><span>Re-analyze after edits</span></li>
+            </ul>
+          </div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-empty"></div>
+        </div>
+
+        <!-- v1.0.0 -->
+        <div class="tl-entry">
+          <div class="tl-empty"></div>
+          <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+          <div class="tl-card">
+            <div class="tl-header">
+              <span class="tl-version">v1.0.0</span>
+              <span class="tl-date">January 2026</span>
+              <span class="badge-launch">Initial Launch</span>
+            </div>
+            <ul class="tl-features">
+              <li><span class="emoji">🚀</span><span>Launch! AI-powered presentation analysis</span></li>
+              <li><span class="emoji">📤</span><span>PPTX file upload</span></li>
+              <li><span class="emoji">🏆</span><span>Overall presentation score</span></li>
+              <li><span class="emoji">📋</span><span>Top 5 recommendations</span></li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /timeline -->
+    </div><!-- /section -->
+
+    <!-- ── Roadmap ── -->
+    <div class="section roadmap-wrap">
+      <div class="section-label">
+        <h2>Coming Soon</h2>
+      </div>
+
+      <div class="roadmap-grid">
+
+        <div class="roadmap-card">
+          <span class="coming-label">Soon</span>
+          <div class="roadmap-eta"><span class="dot"></span> Q2 2026</div>
+          <h3>API Access</h3>
+          <p>Integrate SlideSage into your workflow programmatically. Build custom automations, batch-analyze decks, and connect to your existing tools.</p>
+        </div>
+
+        <div class="roadmap-card">
+          <span class="coming-label">Soon</span>
+          <div class="roadmap-eta"><span class="dot"></span> Q3 2026</div>
+          <h3>Real-time Collaboration</h3>
+          <p>Share and annotate presentations with your team. Comment on specific slides, assign fixes, and track improvements together.</p>
+        </div>
+
+        <div class="roadmap-card">
+          <span class="coming-label">Soon</span>
+          <div class="roadmap-eta"><span class="dot"></span> Q3 2026</div>
+          <h3>Google Slides Integration</h3>
+          <p>Analyze directly from Google Drive — no download needed. Connect your account and get feedback without leaving your workflow.</p>
+        </div>
+
+      </div>
+    </div><!-- /section -->
+
+    <!-- ── Newsletter CTA ── -->
+    <div class="section newsletter-wrap">
+      <div class="newsletter-inner">
+        <h2>Stay in the loop</h2>
+        <p>Get notified about new features — no spam, ever.</p>
+        <form
+          class="newsletter-form"
+          id="newsletter-form"
+          action="/.netlify/functions/newsletter"
+          method="POST"
+        >
+          <input
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+            autocomplete="email"
+          />
+          <button type="submit">Notify Me</button>
+        </form>
+        <div class="newsletter-success" id="newsletter-success">
+          ✅ You're on the list — we'll be in touch!
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <span class="footer-logo">SlideSage</span>
+    <p>© 2026 SlideSage. All rights reserved.</p>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="changelog.html">Changelog</a></li>
+      <li><a href="mailto:hello@slidesage.ai">Contact</a></li>
+    </ul>
+  </footer>
+
+  <!-- Site JS -->
+  <script src="js/app.js"></script>
+
+  <script>
+    // Newsletter form — AJAX submit
+    (function () {
+      const form = document.getElementById('newsletter-form');
+      const success = document.getElementById('newsletter-success');
+      if (!form) return;
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = form.querySelector('input[type="email"]').value.trim();
+        if (!email) return;
+
+        const btn = form.querySelector('button');
+        btn.textContent = 'Subscribing…';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch('/.netlify/functions/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+          });
+
+          if (res.ok) {
+            form.style.display = 'none';
+            success.style.display = 'block';
+          } else {
+            btn.textContent = 'Try again';
+            btn.disabled = false;
+          }
+        } catch (err) {
+          btn.textContent = 'Try again';
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

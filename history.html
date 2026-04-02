@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analysis History — SlideSage</title>
+  <meta name="description" content="View your past presentation analyses and track your progress over time with SlideSage." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #4ade80;
+      --green-dim: #22c55e;
+      --green-glow: rgba(74,222,128,0.18);
+      --green-glow-strong: rgba(74,222,128,0.35);
+      --bg: #020804;
+      --navy: #020804;
+      --navy2: #060d08;
+      --navy3: #0a1410;
+      --surface: rgba(255,255,255,0.04);
+      --surface2: rgba(255,255,255,0.07);
+      --surface3: rgba(74,222,128,0.06);
+      --border: rgba(255,255,255,0.08);
+      --border-green: rgba(74,222,128,0.2);
+      --text: #f1f5f9;
+      --text-muted: #64748b;
+      --text-muted2: #94a3b8;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy2); }
+    ::-webkit-scrollbar-thumb { background: #1a3322; border-radius: 3px; }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(2,8,4,0.75);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1rem,4vw,2.5rem);
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+    }
+    .navbar.scrolled { background: rgba(2,8,4,0.95); }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem; font-weight: 800;
+      background: linear-gradient(135deg, #4ade80 0%, #86efac 50%, #4ade80 100%);
+      background-size: 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo::before {
+      content: '';
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 12px var(--green-glow-strong);
+      flex-shrink: 0;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted2); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      position: relative; padding-bottom: 2px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--green);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--green); }
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-cta { display: flex; align-items: center; gap: 0.75rem; }
+
+    .btn-ghost {
+      color: var(--text-muted2); background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.45rem 1rem; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 500;
+      text-decoration: none; cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: var(--surface); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #020804; border: none;
+      padding: 0.5rem 1.1rem; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 0 16px var(--green-glow);
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px var(--green-glow-strong);
+    }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text-muted2); border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 120px clamp(1rem,5vw,3rem) 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(74,222,128,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--surface3); border: 1px solid var(--border-green);
+      border-radius: 999px; padding: 4px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--green);
+      margin-bottom: 1.5rem; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, #4ade80 0%, #86efac 60%, #4ade80 100%);
+      background-size: 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.1rem; color: var(--text-muted2);
+      max-width: 500px; margin: 0 auto;
+    }
+
+    /* ─── STATS BAR ─── */
+    #stats-bar {
+      max-width: 900px; margin: 2rem auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+      padding: 0 clamp(1rem,5vw,3rem);
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .stat-card:hover { background: var(--surface2); border-color: var(--border-green); }
+    .stat-value {
+      font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, #4ade80, #86efac);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 0.78rem; font-weight: 500; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.25rem;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .content {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1rem clamp(1rem,5vw,3rem) 5rem;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.75rem; gap: 1rem; flex-wrap: wrap;
+    }
+    .section-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--text-muted2);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-title .count {
+      background: var(--surface3); border: 1px solid var(--border-green);
+      color: var(--green); border-radius: 999px;
+      font-size: 0.75rem; font-weight: 700; padding: 2px 8px;
+    }
+
+    /* ─── EMPTY STATE ─── */
+    #empty-state {
+      display: none;
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+    #empty-state .empty-emoji {
+      font-size: 5rem; display: block; margin-bottom: 1.5rem;
+      animation: floatEmoji 3s ease-in-out infinite;
+    }
+    @keyframes floatEmoji {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    #empty-state h2 {
+      font-size: 1.75rem; font-weight: 800; margin-bottom: 0.75rem;
+    }
+    #empty-state p {
+      color: var(--text-muted2); margin-bottom: 2rem; font-size: 1rem;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #020804; border: none;
+      padding: 0.85rem 2rem; border-radius: 10px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 0 24px var(--green-glow);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 36px var(--green-glow-strong);
+    }
+
+    /* ─── LOADING STATE ─── */
+    #loading-state {
+      text-align: center; padding: 5rem 2rem;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-state p { color: var(--text-muted2); font-size: 0.9rem; }
+
+    /* ─── HISTORY GRID ─── */
+    #history-grid {
+      display: none;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ─── HISTORY CARD ─── */
+    .history-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.4s ease both;
+    }
+    .history-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--score-color, var(--green)), transparent);
+      opacity: 0.6;
+    }
+    .history-card:hover {
+      background: var(--surface2);
+      border-color: rgba(255,255,255,0.13);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 1rem; margin-bottom: 1.25rem;
+    }
+    .card-filename {
+      font-size: 0.95rem; font-weight: 600; color: var(--text);
+      word-break: break-word; line-height: 1.4;
+      flex: 1;
+    }
+    .card-filename .file-icon {
+      display: inline-block; margin-right: 6px; opacity: 0.7;
+    }
+
+    .score-circle {
+      width: 52px; height: 52px; flex-shrink: 0;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 800;
+      border: 2.5px solid currentColor;
+      position: relative;
+    }
+    .score-circle.green { color: var(--green); background: rgba(74,222,128,0.1); }
+    .score-circle.yellow { color: var(--yellow); background: rgba(251,191,36,0.1); }
+    .score-circle.red { color: var(--red); background: rgba(248,113,113,0.1); }
+
+    .card-meta {
+      display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;
+    }
+    .meta-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--text-muted);
+      font-weight: 500;
+    }
+    .meta-item .icon { opacity: 0.6; font-style: normal; }
+
+    .card-actions {
+      display: flex; gap: 0.75rem;
+    }
+    .btn-view {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(74,222,128,0.08));
+      border: 1px solid var(--border-green);
+      color: var(--green);
+      padding: 0.6rem 1rem; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; text-align: center;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    .btn-view:hover {
+      background: rgba(74,222,128,0.2);
+      box-shadow: 0 0 12px var(--green-glow);
+    }
+    .btn-delete {
+      background: rgba(248,113,113,0.08);
+      border: 1px solid rgba(248,113,113,0.2);
+      color: var(--red);
+      padding: 0.6rem 0.85rem; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-delete:hover {
+      background: rgba(248,113,113,0.18);
+      border-color: rgba(248,113,113,0.4);
+    }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      background: rgba(2,8,4,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #0a1410;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      max-width: 800px; width: 100%;
+      max-height: 85vh;
+      display: flex; flex-direction: column;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .modal-header h2 { font-size: 1.1rem; font-weight: 700; }
+    .modal-close {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.5rem; cursor: pointer; padding: 4px;
+      transition: color var(--transition); line-height: 1;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-body { padding: 1.75rem; overflow-y: auto; flex: 1; }
+
+    .report-score-hero {
+      text-align: center; margin-bottom: 2rem;
+    }
+    .report-score-value {
+      font-size: 4rem; font-weight: 900; line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .report-score-value.green { color: var(--green); }
+    .report-score-value.yellow { color: var(--yellow); }
+    .report-score-value.red { color: var(--red); }
+    .report-score-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+    .report-section { margin-bottom: 1.75rem; }
+    .report-section h3 {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--green); margin-bottom: 0.75rem;
+    }
+    .report-text { color: var(--text-muted2); font-size: 0.9rem; line-height: 1.7; }
+    .report-list { list-style: none; }
+    .report-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.875rem; color: var(--text-muted2); padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .report-list li:last-child { border-bottom: none; }
+    .report-list li::before { content: '›'; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+
+    /* ─── DELETE CONFIRM MODAL ─── */
+    .confirm-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 3000;
+      background: rgba(2,8,4,0.9);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .confirm-modal-overlay.active { display: flex; }
+    .confirm-modal {
+      background: #0a1410;
+      border: 1px solid rgba(248,113,113,0.25);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      max-width: 420px; width: 100%;
+      text-align: center;
+      box-shadow: 0 16px 60px rgba(0,0,0,0.5);
+      animation: modalIn 0.2s ease;
+    }
+    .confirm-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .confirm-modal h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .confirm-modal p { color: var(--text-muted2); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .confirm-btns { display: flex; gap: 0.75rem; justify-content: center; }
+    .btn-cancel {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-muted2); padding: 0.6rem 1.5rem;
+      border-radius: 8px; font-size: 0.875rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-cancel:hover { background: var(--surface2); color: var(--text); }
+    .btn-confirm-delete {
+      background: rgba(248,113,113,0.15);
+      border: 1px solid rgba(248,113,113,0.4);
+      color: var(--red); padding: 0.6rem 1.5rem;
+      border-radius: 8px; font-size: 0.875rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-confirm-delete:hover { background: rgba(248,113,113,0.25); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem clamp(1rem,5vw,3rem);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+      background: #0a1a12; border: 1px solid var(--border-green);
+      color: var(--text); border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.875rem; font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transform: translateY(10px); opacity: 0;
+      transition: var(--transition);
+      max-width: 320px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.error { border-color: rgba(248,113,113,0.4); background: #1a0a0a; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      #stats-bar { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .stat-value { font-size: 1.6rem; }
+    }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999;
+      background: rgba(2,8,4,0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      flex-direction: column; gap: 1.25rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--text-muted2); text-decoration: none;
+      font-size: 1rem; font-weight: 500;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar" id="navbar">
+  <a href="/" class="nav-logo">SlideSage</a>
+  <ul class="nav-links">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#how-it-works">How It Works</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="history.html" class="active">History</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="app.html" class="btn-primary">Analyze Free ↗</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/#features">Features</a>
+  <a href="/#how-it-works">How It Works</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="blog.html">Blog</a>
+  <a href="history.html">History</a>
+  <a href="app.html" style="color: var(--green); font-weight: 700;">Analyze Free ↗</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-eyebrow">📊 Your Dashboard</div>
+  <h1><span class="gradient">Your Analysis History</span></h1>
+  <p>Track your progress over time. Every presentation, every insight, all in one place.</p>
+</section>
+
+<!-- ─── STATS BAR (hidden until history loads) ─── -->
+<div id="stats-bar" style="display:none;">
+  <div class="stat-card">
+    <div class="stat-value" id="stat-total">—</div>
+    <div class="stat-label">Total Analyses</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-avg">—</div>
+    <div class="stat-label">Average Score</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-best">—</div>
+    <div class="stat-label">Best Score</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" id="stat-files">—</div>
+    <div class="stat-label">Files Analyzed</div>
+  </div>
+</div>
+
+<!-- ─── CONTENT ─── -->
+<div class="content">
+
+  <!-- Loading -->
+  <div id="loading-state">
+    <div class="spinner"></div>
+    <p>Loading your analyses…</p>
+  </div>
+
+  <!-- Empty State -->
+  <div id="empty-state">
+    <span class="empty-emoji">📊</span>
+    <h2>No analyses yet</h2>
+    <p>Upload your first presentation and get AI-powered feedback in seconds.</p>
+    <a href="app.html" class="cta-btn">
+      Analyze Your First Presentation →
+    </a>
+  </div>
+
+  <!-- History Grid -->
+  <div id="history-grid">
+    <div class="section-header">
+      <div class="section-title">
+        Recent Analyses
+        <span class="count" id="count-badge">0</span>
+      </div>
+      <a href="app.html" class="btn-primary" style="font-size:0.82rem; padding:0.45rem 1rem;">+ New Analysis</a>
+    </div>
+    <div class="cards-grid" id="cards-grid"></div>
+  </div>
+
+</div>
+
+<!-- ─── REPORT MODAL ─── -->
+<div class="modal-overlay" id="report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Analysis Report</h2>
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ─── DELETE CONFIRM MODAL ─── -->
+<div class="confirm-modal-overlay" id="confirm-overlay" role="dialog" aria-modal="true">
+  <div class="confirm-modal">
+    <div class="confirm-icon">🗑️</div>
+    <h3>Delete this analysis?</h3>
+    <p>This action cannot be undone. The report will be permanently removed.</p>
+    <div class="confirm-btns">
+      <button class="btn-cancel" id="confirm-cancel">Cancel</button>
+      <button class="btn-confirm-delete" id="confirm-delete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TOAST ─── -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>© 2025 SlideSage · <a href="privacy.html">Privacy</a> · <a href="app.html">Analyze Now</a></p>
+</footer>
+
+<link rel="stylesheet" href="css/main.css">
+<script src="js/app.js"></script>
+<script>
+  // ─── UTILITIES ────────────────────────────────────────────────────
+
+  function generateUUID() {
+    if (crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  function getSessionId() {
+    let id = localStorage.getItem('slidesage_session');
+    if (!id) {
+      id = generateUUID();
+      localStorage.setItem('slidesage_session', id);
+    }
+    return id;
+  }
+
+  function scoreColor(score) {
+    if (score >= 75) return 'green';
+    if (score >= 50) return 'yellow';
+    return 'red';
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return 'Unknown date';
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function showToast(msg, isError = false) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast' + (isError ? ' error' : '');
+    void toast.offsetWidth; // reflow
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3200);
+  }
+
+  // ─── NAVBAR SCROLL ────────────────────────────────────────────────
+
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // ─── MOBILE MENU ─────────────────────────────────────────────────
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!navbar.contains(e.target) && !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+    }
+  });
+
+  // ─── MODAL ───────────────────────────────────────────────────────
+
+  const reportModal = document.getElementById('report-modal');
+  document.getElementById('modal-close').addEventListener('click', () => {
+    reportModal.classList.remove('active');
+  });
+  reportModal.addEventListener('click', e => {
+    if (e.target === reportModal) reportModal.classList.remove('active');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      reportModal.classList.remove('active');
+      confirmOverlay.classList.remove('active');
+    }
+  });
+
+  // ─── DELETE CONFIRM ───────────────────────────────────────────────
+
+  const confirmOverlay = document.getElementById('confirm-overlay');
+  const confirmCancel = document.getElementById('confirm-cancel');
+  const confirmDeleteBtn = document.getElementById('confirm-delete');
+  let pendingDeleteId = null;
+  let pendingDeleteCard = null;
+
+  confirmCancel.addEventListener('click', () => {
+    confirmOverlay.classList.remove('active');
+    pendingDeleteId = null;
+    pendingDeleteCard = null;
+  });
+  confirmOverlay.addEventListener('click', e => {
+    if (e.target === confirmOverlay) {
+      confirmOverlay.classList.remove('active');
+      pendingDeleteId = null;
+      pendingDeleteCard = null;
+    }
+  });
+
+  confirmDeleteBtn.addEventListener('click', async () => {
+    if (!pendingDeleteId) return;
+    confirmDeleteBtn.textContent = 'Deleting…';
+    confirmDeleteBtn.disabled = true;
+    try {
+      const resp = await fetch(`/.netlify/functions/history?id=${encodeURIComponent(pendingDeleteId)}`, {
+        method: 'DELETE'
+      });
+      if (!resp.ok) throw new Error('Delete failed');
+      if (pendingDeleteCard) {
+        pendingDeleteCard.style.transition = 'opacity 0.3s, transform 0.3s';
+        pendingDeleteCard.style.opacity = '0';
+        pendingDeleteCard.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          pendingDeleteCard.remove();
+          updateStatsFromDOM();
+          checkEmptyGrid();
+        }, 300);
+      }
+      showToast('Analysis deleted.');
+    } catch (err) {
+      showToast('Could not delete. Please try again.', true);
+      console.error(err);
+    } finally {
+      confirmDeleteBtn.textContent = 'Delete';
+      confirmDeleteBtn.disabled = false;
+      confirmOverlay.classList.remove('active');
+      pendingDeleteId = null;
+      pendingDeleteCard = null;
+    }
+  });
+
+  // ─── RENDER REPORT MODAL ─────────────────────────────────────────
+
+  function openReportModal(analysis) {
+    const score = analysis.overallScore ?? analysis.score ?? 0;
+    const color = scoreColor(score);
+    document.getElementById('modal-title').textContent = analysis.filename || 'Analysis Report';
+
+    const strengths = Array.isArray(analysis.strengths) ? analysis.strengths : [];
+    const improvements = Array.isArray(analysis.improvements) || Array.isArray(analysis.areas_for_improvement)
+      ? (analysis.improvements || analysis.areas_for_improvement)
+      : [];
+    const summary = analysis.summary || analysis.feedback || analysis.executiveSummary || '';
+
+    const body = document.getElementById('modal-body');
+    body.innerHTML = `
+      <div class="report-score-hero">
+        <div class="report-score-value ${color}">${score}</div>
+        <div class="report-score-label">Overall Score</div>
+      </div>
+      ${summary ? `
+      <div class="report-section">
+        <h3>Summary</h3>
+        <p class="report-text">${escHtml(summary)}</p>
+      </div>` : ''}
+      ${strengths.length ? `
+      <div class="report-section">
+        <h3>✅ Strengths</h3>
+        <ul class="report-list">${strengths.map(s => `<li>${escHtml(String(s))}</li>`).join('')}</ul>
+      </div>` : ''}
+      ${improvements.length ? `
+      <div class="report-section">
+        <h3>🔧 Areas for Improvement</h3>
+        <ul class="report-list">${improvements.map(i => `<li>${escHtml(String(i))}</li>`).join('')}</ul>
+      </div>` : ''}
+      <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+        <a href="app.html#results" class="cta-btn" style="display:inline-flex; font-size:0.875rem; padding:0.65rem 1.5rem;"
+           onclick="localStorage.setItem('slidesage_last_analysis', JSON.stringify(${JSON.stringify(JSON.stringify(analysis))}))">
+          Open Full Report ↗
+        </a>
+      </div>
+    `;
+    reportModal.classList.add('active');
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ─── BUILD A CARD ─────────────────────────────────────────────────
+
+  function buildCard(analysis, index) {
+    const score = analysis.overallScore ?? analysis.score ?? 0;
+    const color = scoreColor(score);
+    const date = formatDate(analysis.analyzedAt || analysis.createdAt || analysis.date);
+    const slides = analysis.slideCount ?? analysis.slides ?? '—';
+    const filename = analysis.filename || 'Untitled.pptx';
+
+    const card = document.createElement('div');
+    card.className = 'history-card';
+    card.style.animationDelay = `${index * 60}ms`;
+    card.style.setProperty('--score-color', color === 'green' ? 'var(--green)' : color === 'yellow' ? 'var(--yellow)' : 'var(--red)');
+    card.dataset.id = analysis.id || analysis._id || '';
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-filename">
+          <span class="file-icon">📄</span>${escHtml(filename)}
+        </div>
+        <div class="score-circle ${color}" title="Overall score: ${score}">${score}</div>
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">📅</span>${date}</span>
+        <span class="meta-item"><span class="icon">🖼️</span>${slides} slide${slides === 1 ? '' : 's'}</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-view" data-idx="${index}">View Report</button>
+        <button class="btn-delete" data-id="${card.dataset.id}" title="Delete">🗑️</button>
+      </div>
+    `;
+
+    card.querySelector('.btn-view').addEventListener('click', () => {
+      // Store in localStorage so app.html can pick it up
+      localStorage.setItem('slidesage_last_analysis', JSON.stringify(analysis));
+      openReportModal(analysis);
+    });
+
+    card.querySelector('.btn-delete').addEventListener('click', () => {
+      const id = analysis.id || analysis._id || '';
+      if (!id) { showToast('Cannot delete: missing ID.', true); return; }
+      pendingDeleteId = id;
+      pendingDeleteCard = card;
+      confirmOverlay.classList.add('active');
+    });
+
+    return card;
+  }
+
+  // ─── STATS ────────────────────────────────────────────────────────
+
+  let allAnalyses = [];
+
+  function renderStats(analyses) {
+    const total = analyses.length;
+    const scores = analyses.map(a => a.overallScore ?? a.score ?? 0).filter(s => typeof s === 'number');
+    const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+    const best = scores.length ? Math.max(...scores) : 0;
+    const uniqueFiles = new Set(analyses.map(a => a.filename).filter(Boolean)).size;
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-avg').textContent = avg;
+    document.getElementById('stat-best').textContent = best;
+    document.getElementById('stat-files').textContent = uniqueFiles || total;
+
+    document.getElementById('stats-bar').style.display = 'grid';
+  }
+
+  function updateStatsFromDOM() {
+    const remaining = Array.from(document.querySelectorAll('.history-card'));
+    const ids = new Set(remaining.map(c => c.dataset.id).filter(Boolean));
+    const filtered = allAnalyses.filter(a => ids.has(String(a.id || a._id || '')));
+    if (filtered.length > 0) {
+      renderStats(filtered);
+    } else {
+      document.getElementById('stats-bar').style.display = 'none';
+    }
+    document.getElementById('count-badge').textContent = remaining.length;
+  }
+
+  function checkEmptyGrid() {
+    const remaining = document.querySelectorAll('.history-card');
+    if (remaining.length === 0) {
+      document.getElementById('history-grid').style.display = 'none';
+      document.getElementById('empty-state').style.display = 'block';
+    }
+  }
+
+  // ─── MAIN LOAD ────────────────────────────────────────────────────
+
+  async function loadHistory() {
+    const sessionId = getSessionId();
+
+    try {
+      const resp = await fetch(`/.netlify/functions/history?session=${encodeURIComponent(sessionId)}`);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+
+      const data = await resp.json();
+      // Normalise: API might return { analyses: [...] } or directly []
+      const analyses = Array.isArray(data) ? data
+        : Array.isArray(data.analyses) ? data.analyses
+        : Array.isArray(data.results) ? data.results
+        : Array.isArray(data.data) ? data.data
+        : [];
+
+      document.getElementById('loading-state').style.display = 'none';
+
+      if (analyses.length === 0) {
+        document.getElementById('empty-state').style.display = 'block';
+        return;
+      }
+
+      allAnalyses = analyses;
+
+      // Stats
+      renderStats(analyses);
+
+      // Grid
+      const grid = document.getElementById('history-grid');
+      const cardsContainer = document.getElementById('cards-grid');
+      document.getElementById('count-badge').textContent = analyses.length;
+      grid.style.display = 'block';
+
+      analyses.forEach((analysis, i) => {
+        cardsContainer.appendChild(buildCard(analysis, i));
+      });
+
+    } catch (err) {
+      console.error('History load error:', err);
+      document.getElementById('loading-state').style.display = 'none';
+      // Show empty state on error with a subtle note
+      const emptyEl = document.getElementById('empty-state');
+      emptyEl.style.display = 'block';
+      const note = document.createElement('p');
+      note.style.cssText = 'margin-top:0.5rem; font-size:0.78rem; color:var(--text-muted); opacity:0.7;';
+      note.textContent = 'Could not load history. Check your connection and try again.';
+      emptyEl.appendChild(note);
+    }
+  }
+
+  loadHistory();
+</script>
+</body>
+</html>
