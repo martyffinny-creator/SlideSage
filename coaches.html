@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlideSage for Presentation Coaches & Trainers — AI Slide Analysis for Your Clients</title>
+  <!-- SEO -->
+  <meta name="description" content="SlideSage helps presentation coaches and public speaking trainers send better-prepared clients to every session. AI slide analysis before you meet — so you can focus on coaching, not fixing." />
+  <meta name="keywords" content="presentation coach tool, public speaking trainer AI, slide feedback for coaches, business communication instructor, coaching AI tool, executive presentation coach" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/coaches.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="SlideSage for Coaches & Trainers — The AI Tool Your Clients Will Thank You For" />
+  <meta property="og:description" content="Use SlideSage as your pre-session prep tool. Your clients arrive with better slides. You focus on what only a coach can do." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/coaches.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="SlideSage for Coaches & Trainers" />
+  <meta name="twitter:description" content="Use SlideSage as your pre-session prep tool. Your clients arrive with better slides. You focus on what only a coach can do." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       COACHES PAGE — PREMIUM DARK STYLES
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --g: #4ade80;
+      --gd: #16a34a;
+      --bg: #020804;
+      --bg2: #060e06;
+      --card: #0d160d;
+      --card2: #111a11;
+      --border: rgba(255,255,255,0.08);
+      --border-g: rgba(74,222,128,0.22);
+      --text: #f1f5f1;
+      --muted: #9ca39c;
+      --muted2: #6b7b6b;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; }
+
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0.9rem 0;
+      background: rgba(2,8,4,0.72);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(74,222,128,0.08);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .navbar.scrolled { background: rgba(2,8,4,0.97); box-shadow: 0 2px 24px rgba(0,0,0,0.6); }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text); }
+    .nav-logo span { color: var(--g); }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; }
+    .nav-links a { padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; color: var(--muted); transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; border-radius: 10px; transition: all 0.2s; text-decoration: none; cursor: pointer; border: none; font-family: inherit; font-size: 0.875rem; }
+    .btn-primary { background: linear-gradient(135deg, #4ade80, #16a34a); color: #020804; padding: 0.55rem 1.25rem; box-shadow: 0 0 20px rgba(74,222,128,0.25); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 28px rgba(74,222,128,0.4); }
+    .btn-outline { background: transparent; color: var(--text); padding: 0.55rem 1.25rem; border: 1.5px solid rgba(255,255,255,0.18); }
+    .btn-outline:hover { border-color: var(--g); color: var(--g); background: rgba(74,222,128,0.06); }
+    .btn-lg { padding: 0.9rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .btn-xl { padding: 1rem 2.5rem; font-size: 1.05rem; border-radius: 14px; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; background: none; border: none; cursor: pointer; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999; background: rgba(2,8,4,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(74,222,128,0.1); padding: 1.5rem; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 0.5rem; }
+    .mobile-menu ul li a { display: block; padding: 0.75rem 1rem; border-radius: 8px; color: var(--muted); font-weight: 500; }
+    .mobile-menu ul li a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 1rem; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 140px 0 100px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 30% -10%, rgba(74,222,128,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 90% 60%, rgba(74,222,128,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(74,222,128,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,222,128,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 90% 70% at 40% 0%, black 30%, transparent 80%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .hero-text { max-width: 560px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3);
+      color: var(--g); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900; line-height: 1.08; letter-spacing: -2px;
+      background: linear-gradient(135deg, #ffffff 0%, #d1fae5 40%, #4ade80 80%, #16a34a 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 1.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem; color: var(--muted); line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .hero-ctas { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+
+    .hero-visual { position: relative; }
+    .hero-photo-wrap {
+      position: relative; border-radius: 24px; overflow: hidden;
+      border: 1px solid rgba(74,222,128,0.15);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(74,222,128,0.08);
+    }
+    .hero-photo-wrap img { width: 100%; display: block; object-fit: cover; height: 480px; }
+    .hero-photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(2,8,4,0.6) 100%);
+      pointer-events: none;
+    }
+    .hero-photo-badge {
+      position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+      background: rgba(2,8,4,0.85); backdrop-filter: blur(12px);
+      border: 1px solid rgba(74,222,128,0.2); border-radius: 14px;
+      padding: 1rem 1.25rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .hero-photo-badge-icon { font-size: 2rem; flex-shrink: 0; }
+    .hero-photo-badge-text strong { display: block; color: var(--text); font-size: 0.9rem; font-weight: 700; margin-bottom: 0.15rem; }
+    .hero-photo-badge-text span { color: var(--muted); font-size: 0.8rem; }
+
+    /* ── Problem Section ── */
+    .problem-section {
+      padding: 100px 0;
+      background: linear-gradient(180deg, var(--bg) 0%, rgba(6,14,6,0.8) 50%, var(--bg) 100%);
+      position: relative;
+    }
+    .problem-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(74,222,128,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .problem-header { text-align: center; margin-bottom: 4rem; }
+    .section-eyebrow {
+      display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--g); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1.5px;
+      color: var(--text); line-height: 1.15; margin-bottom: 1rem;
+    }
+    .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 540px; margin: 0 auto; line-height: 1.7; }
+
+    .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; position: relative; z-index: 2; }
+    .pain-card {
+      background: rgba(13,22,13,0.6); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.25rem 2rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .pain-card:hover { transform: translateY(-4px); border-color: rgba(239,68,68,0.25); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .pain-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.5rem;
+    }
+    .pain-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; letter-spacing: -0.2px; }
+    .pain-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── How SlideSage Helps ── */
+    .helps-section { padding: 100px 0; }
+    .helps-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .help-card {
+      background: rgba(13,22,13,0.7); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.5rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .help-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(74,222,128,0.35), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .help-card:hover { transform: translateY(-4px); border-color: var(--border-g); box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(74,222,128,0.06); }
+    .help-card:hover::before { opacity: 1; }
+    .help-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
+      color: var(--g); font-size: 0.9rem; font-weight: 800;
+      margin-bottom: 1.25rem;
+    }
+    .help-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; letter-spacing: -0.2px; }
+    .help-card p { font-size: 0.925rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── Workflow Section ── */
+    .workflow-section {
+      padding: 100px 0;
+      background: rgba(6,14,6,0.6);
+      border-top: 1px solid rgba(74,222,128,0.06);
+      border-bottom: 1px solid rgba(74,222,128,0.06);
+    }
+    .workflow-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; position: relative; margin-top: 4rem;
+    }
+    .workflow-steps::before {
+      content: '';
+      position: absolute; top: 36px; left: 12.5%; right: 12.5%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(74,222,128,0.3) 20%, rgba(74,222,128,0.3) 80%, transparent);
+      z-index: 0;
+    }
+    .workflow-step {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 0 1.5rem; position: relative; z-index: 1;
+    }
+    .step-bubble {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(13,22,13,0.9); border: 2px solid rgba(74,222,128,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.75rem; margin-bottom: 1.5rem;
+      box-shadow: 0 0 30px rgba(74,222,128,0.12);
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .workflow-step:hover .step-bubble { border-color: var(--g); box-shadow: 0 0 40px rgba(74,222,128,0.25); }
+    .step-num {
+      position: absolute; top: -6px; right: calc(50% - 44px);
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--g); color: #020804;
+      font-size: 0.65rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .workflow-step h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.2px; }
+    .workflow-step p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Testimonial ── */
+    .testimonial-section { padding: 100px 0; text-align: center; position: relative; overflow: hidden; }
+    .testimonial-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(74,222,128,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .testimonial-card {
+      max-width: 760px; margin: 0 auto;
+      background: rgba(13,22,13,0.7); border: 1px solid rgba(74,222,128,0.15);
+      border-radius: 28px; padding: 3.5rem;
+      position: relative;
+    }
+    .quote-mark {
+      font-size: 6rem; line-height: 1; font-family: Georgia, serif;
+      color: rgba(74,222,128,0.15); position: absolute; top: 1.5rem; left: 2.5rem;
+      font-weight: 900; pointer-events: none;
+    }
+    .testimonial-text {
+      font-size: 1.25rem; color: var(--text); line-height: 1.75;
+      font-style: italic; font-weight: 500; letter-spacing: -0.2px;
+      margin-bottom: 2rem; position: relative; z-index: 1;
+    }
+    .testimonial-author { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+    .author-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(74,222,128,0.3), rgba(22,163,74,0.3));
+      border: 2px solid rgba(74,222,128,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .author-info strong { display: block; color: var(--text); font-size: 0.95rem; font-weight: 700; }
+    .author-info span { color: var(--g); font-size: 0.82rem; font-weight: 600; }
+    .star-row { display: flex; justify-content: center; gap: 0.25rem; margin-bottom: 2rem; }
+    .star-row span { color: #fbbf24; font-size: 1.1rem; }
+
+    /* ── Pricing Section ── */
+    .pricing-section { padding: 100px 0; background: rgba(6,14,6,0.5); border-top: 1px solid rgba(74,222,128,0.06); }
+    .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 860px; margin: 4rem auto 0; }
+    .pricing-card {
+      background: rgba(13,22,13,0.7); border: 1px solid var(--border);
+      border-radius: 24px; padding: 2.5rem;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .pricing-card.featured {
+      border-color: rgba(74,222,128,0.3);
+      background: rgba(13,22,13,0.9);
+      box-shadow: 0 0 50px rgba(74,222,128,0.08);
+      position: relative;
+    }
+    .pricing-card:hover { transform: translateY(-4px); border-color: var(--border-g); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .pricing-card.featured:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 60px rgba(74,222,128,0.12); }
+    .featured-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.3);
+      color: var(--g); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 0.3rem 0.75rem; border-radius: 100px; margin-bottom: 1.5rem;
+    }
+    .plan-name { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.3px; }
+    .plan-price { margin-bottom: 1.5rem; }
+    .plan-price strong { font-size: 2.75rem; font-weight: 900; letter-spacing: -2px; color: var(--text); }
+    .plan-price span { font-size: 0.9rem; color: var(--muted); font-weight: 500; }
+    .plan-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+    .plan-features { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+    .plan-feature { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: #d1fae5; }
+    .plan-feature::before { content: '✓'; color: var(--g); font-weight: 800; font-size: 0.8rem; flex-shrink: 0; }
+    .plan-cta { display: block; text-align: center; }
+
+    /* ── Final CTA ── */
+    .final-cta-section {
+      padding: 120px 0;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .final-cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(74,222,128,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .final-cta-section::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(74,222,128,0.2), transparent);
+    }
+    .final-cta-inner { position: relative; z-index: 2; }
+    .final-cta-section h2 {
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-weight: 900; letter-spacing: -2px; line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 0%, #d1fae5 50%, #4ade80 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 1.25rem;
+    }
+    .final-cta-section p { font-size: 1.1rem; color: var(--muted); max-width: 500px; margin: 0 auto 2.75rem; line-height: 1.7; }
+
+    /* ── Footer ── */
+    .footer {
+      background: rgba(2,5,2,0.98);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 4rem 0 2.5rem;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand p { font-size: 0.875rem; color: var(--muted2); line-height: 1.7; margin-top: 0.75rem; max-width: 260px; }
+    .footer-col h5 { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-col ul a { font-size: 0.875rem; color: var(--muted2); transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--g); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 1.75rem; display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 0.8rem; color: var(--muted2); }
+    .footer-links-row { display: flex; gap: 1.5rem; }
+    .footer-links-row a { font-size: 0.8rem; color: var(--muted2); transition: color 0.2s; }
+    .footer-links-row a:hover { color: var(--g); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+      .hero h1 { font-size: clamp(2.25rem, 7vw, 3rem); }
+      .hero-ctas { justify-content: center; }
+      .hero-visual { display: none; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .helps-grid { grid-template-columns: 1fr; }
+      .workflow-steps { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+      .workflow-steps::before { display: none; }
+      .pricing-cards { grid-template-columns: 1fr; max-width: 480px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .workflow-steps { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════ NAVBAR ═══════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Slide<span>Sage</span></a>
+        <ul class="nav-links">
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="usecases.html">Use Cases</a></li>
+          <li><a href="enterprise.html">Enterprise</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+        <div class="nav-right">
+          <a href="app.html" class="btn btn-outline">Sign In</a>
+          <a href="app.html" class="btn btn-primary">Try Free →</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="usecases.html">Use Cases</a></li>
+      <li><a href="enterprise.html">Enterprise</a></li>
+      <li><a href="blog.html">Blog</a></li>
+    </ul>
+    <a href="app.html" class="btn btn-primary">Try Free →</a>
+  </div>
+
+  <!-- ═══════ HERO ═══════ -->
+  <section class="hero">
+    <div class="hero-grid-overlay"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="hero-badge">🎤 For Coaches &amp; Trainers</div>
+          <h1>The AI Tool Your Clients Will Thank You For</h1>
+          <p>Use SlideSage as your pre-session prep tool. Your clients arrive with better slides. You focus on what only a coach can do.</p>
+          <div class="hero-ctas">
+            <a href="app.html" class="btn btn-primary btn-xl">Try It With a Client Deck →</a>
+            <a href="pricing.html" class="btn btn-outline btn-lg">View Pricing</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-photo-wrap">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop" alt="Presentation coach working with client" loading="lazy" />
+            <div class="hero-photo-overlay"></div>
+            <div class="hero-photo-badge">
+              <div class="hero-photo-badge-icon">🎯</div>
+              <div class="hero-photo-badge-text">
+                <strong>3x More Productive Sessions</strong>
+                <span>Coaches report dramatic improvements in session quality</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ THE PROBLEM ═══════ -->
+  <section class="problem-section">
+    <div class="container">
+      <div class="problem-header">
+        <div class="section-eyebrow">The Coach's Dilemma</div>
+        <h2 class="section-title">Before they can work on delivery,<br>they have to fix their slides.</h2>
+        <p class="section-sub">You're a skilled coach — but you keep getting derailed by the same basic problems session after session.</p>
+      </div>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="pain-icon">⏱️</div>
+          <h3>Session time wasted on basics</h3>
+          <p>You spend the first half of every session identifying slide mistakes that should have been caught beforehand. That's time you're not coaching delivery, story, or strategy.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-icon">🙈</div>
+          <h3>Clients can't see their own blind spots</h3>
+          <p>Your clients are too close to their material. They can't objectively evaluate their own slides — so they show up not realizing what needs work. It falls on you to break the news.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-icon">📉</div>
+          <h3>No objective benchmark to track progress</h3>
+          <p>It's hard to demonstrate ROI to clients or sponsors when improvement is subjective. You need an objective, repeatable score to show how far they've come.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ HOW SLIDESAGE HELPS ═══════ -->
+  <section class="helps-section">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:4rem;">
+        <div class="section-eyebrow">How SlideSage Helps</div>
+        <h2 class="section-title">Your AI-powered prep partner</h2>
+        <p class="section-sub">Four ways SlideSage makes every coaching session more valuable — before it even starts.</p>
+      </div>
+      <div class="helps-grid">
+        <div class="help-card">
+          <div class="help-num">1</div>
+          <h3>📚 Pre-session homework</h3>
+          <p>Send clients to SlideSage before every session. They arrive with AI feedback already in hand — they've seen their scores, read the recommendations, and ideally fixed the easy stuff. You skip straight to the meaningful work.</p>
+        </div>
+        <div class="help-card">
+          <div class="help-num">2</div>
+          <h3>📊 Objective baseline</h3>
+          <p>Score their deck on day one of your engagement. Then score it again at the midpoint and at the end. Now you have concrete data: their clarity score went from 54 to 87. That's a coaching ROI story that speaks for itself.</p>
+        </div>
+        <div class="help-card">
+          <div class="help-num">3</div>
+          <h3>✅ Concrete to-dos</h3>
+          <p>The AI identifies specific, actionable fixes — overcrowded slides, weak headlines, missing call to action. You focus on high-value coaching: narrative arc, executive presence, delivery. Let the AI handle the diagnostic checklist.</p>
+        </div>
+        <div class="help-card">
+          <div class="help-num">4</div>
+          <h3>📄 Client reports</h3>
+          <p>Share the PDF report with clients as a tangible deliverable from each session. It reinforces your coaching, gives them something to act on between sessions, and positions you as someone who brings structure and rigor to the work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ WORKFLOW SECTION ═══════ -->
+  <section class="workflow-section">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:0;">
+        <div class="section-eyebrow">Your New Workflow</div>
+        <h2 class="section-title">Your new client workflow</h2>
+        <p class="section-sub">Four simple steps that transform how prepared your clients show up.</p>
+      </div>
+      <div class="workflow-steps">
+        <div class="workflow-step">
+          <div class="step-bubble">
+            <span class="step-num">1</span>
+            📅
+          </div>
+          <h4>Client books session</h4>
+          <p>They confirm the appointment and you begin onboarding.</p>
+        </div>
+        <div class="workflow-step">
+          <div class="step-bubble">
+            <span class="step-num">2</span>
+            🔗
+          </div>
+          <h4>You send the SlideSage link</h4>
+          <p>One link in your confirmation email. That's it. Ask them to upload their deck before the session.</p>
+        </div>
+        <div class="workflow-step">
+          <div class="step-bubble">
+            <span class="step-num">3</span>
+            🤖
+          </div>
+          <h4>Client gets their AI report</h4>
+          <p>They upload their deck, receive a full AI analysis with scores, specific feedback, and a PDF they can act on immediately.</p>
+        </div>
+        <div class="workflow-step">
+          <div class="step-bubble">
+            <span class="step-num">4</span>
+            🎯
+          </div>
+          <h4>Your session goes deep</h4>
+          <p>You focus on high-value coaching — not basic fixes. Every minute is spent on strategy, delivery, and story.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ TESTIMONIAL ═══════ -->
+  <section class="testimonial-section">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:3rem;">
+        <div class="section-eyebrow">From the Field</div>
+        <h2 class="section-title">What coaches are saying</h2>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-mark">"</div>
+        <div class="star-row">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testimonial-text">I started requiring SlideSage before every new client engagement. My first sessions are 3x more productive. The basic stuff is already fixed by the time we sit down — so we get straight to the work that actually moves the needle.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">👩‍💼</div>
+          <div class="author-info">
+            <strong>Jennifer M.</strong>
+            <span>Executive Presentation Coach</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ PRICING FOR COACHES ═══════ -->
+  <section class="pricing-section">
+    <div class="container">
+      <div style="text-align:center;">
+        <div class="section-eyebrow">Pricing for Coaches</div>
+        <h2 class="section-title">Choose how you want to use it</h2>
+        <p class="section-sub">Whether you're running a solo practice or a full training firm, there's a plan that fits your workflow.</p>
+      </div>
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <div class="plan-name">Free Plan</div>
+          <div class="plan-price"><strong>$0</strong><span>/month</span></div>
+          <p class="plan-desc">Share the link with each client individually. They sign up for free and run their own analysis. Great for coaches who want to recommend SlideSage without any commitment.</p>
+          <ul class="plan-features">
+            <li class="plan-feature">Send clients a direct link</li>
+            <li class="plan-feature">Each client gets AI feedback instantly</li>
+            <li class="plan-feature">No cost to you or your client</li>
+            <li class="plan-feature">Client manages their own reports</li>
+          </ul>
+          <a href="app.html" class="btn btn-outline btn-lg plan-cta">Get Started Free</a>
+        </div>
+        <div class="pricing-card featured">
+          <div class="featured-badge">⭐ Recommended for Coaches</div>
+          <div class="plan-name">Team Plan</div>
+          <div class="plan-price"><strong>$49</strong><span>/month</span></div>
+          <p class="plan-desc">The best option for coaches with multiple clients. Run analyses yourself, access all client reports in one place, and deliver PDF reports as a professional coaching deliverable.</p>
+          <ul class="plan-features">
+            <li class="plan-feature">Analyze decks on behalf of clients</li>
+            <li class="plan-feature">All reports in one dashboard</li>
+            <li class="plan-feature">PDF export for client deliverables</li>
+            <li class="plan-feature">Objective scoring to track progress</li>
+            <li class="plan-feature">Priority support</li>
+          </ul>
+          <a href="app.html" class="btn btn-primary btn-lg plan-cta">Start Team Plan →</a>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:2rem; font-size:0.875rem; color:var(--muted);">Need something for a large training organization? <a href="enterprise.html" style="color:var(--g); font-weight:600;">Talk to us about Enterprise →</a></p>
+    </div>
+  </section>
+
+  <!-- ═══════ FINAL CTA ═══════ -->
+  <section class="final-cta-section">
+    <div class="container">
+      <div class="final-cta-inner">
+        <div class="hero-badge" style="margin:0 auto 2rem;">🎤 For Coaches &amp; Trainers</div>
+        <h2>Start Sending Better-Prepared Clients →</h2>
+        <p>Your clients deserve to walk in ready to grow — not ready to be corrected. SlideSage makes that happen automatically.</p>
+        <a href="app.html" class="btn btn-primary btn-xl">Try It With a Client Deck →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">Slide<span style="color:var(--g)">Sage</span></a>
+          <p>AI-powered presentation analysis that helps you deliver better slides and better sessions, every time.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Product</h5>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="app.html">Try Free</a></li>
+            <li><a href="changelog.html">Changelog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Use Cases</h5>
+          <ul>
+            <li><a href="coaches.html">Coaches &amp; Trainers</a></li>
+            <li><a href="enterprise.html">Enterprise</a></li>
+            <li><a href="usecases.html">All Use Cases</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="terms.html">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 SlideSage. All rights reserved.</p>
+        <div class="footer-links-row">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="security.html">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
