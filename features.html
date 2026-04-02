@@ -1,18 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Features — SlideSage</title>
-  <meta name="description" content="Every feature you need to present with confidence. AI-powered slide analysis, instant feedback, multilingual support, and easy export.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features — SlideSage AI Presentation Coach</title>
+  <!-- SEO -->
+  <meta name="description" content="Explore SlideSage features: GPT-4o analysis, slide-by-slide scoring, 30-second results, PDF/Word export, multilingual support, and presentation history." />
+  <meta name="keywords" content="SlideSage features, AI presentation coach, slide scoring, PDF export, multilingual presentation, GPT-4o analysis, presentation history" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/features.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Features | SlideSage AI Presentation Coach" />
+  <meta property="og:description" content="Explore SlideSage features: GPT-4o analysis, slide-by-slide scoring, 30-second results, PDF/Word export, multilingual support, and presentation history." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/features.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="Features | SlideSage AI Presentation Coach" />
+  <meta name="twitter:description" content="Explore SlideSage features: GPT-4o analysis, slide-by-slide scoring, 30-second results, PDF/Word export, multilingual support, and presentation history." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ═══════════════════════════════════════
+       FEATURES PAGE — PREMIUM STYLES
+    ═══════════════════════════════════════ */
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0.9rem 0;
+      background: rgba(10,15,10,0.72);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(74,222,128,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(10,15,10,0.92);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.45);
+    }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo {
+      font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px;
+      color: #f1f5f1; white-space: nowrap;
+    }
+    .nav-logo span { color: #4ade80; }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; }
+    .nav-links a {
+      padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.9rem;
+      font-weight: 500; color: #9ca39c; transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; border-radius: 10px; transition: all 0.2s ease; text-decoration: none; cursor: pointer; border: none; font-family: inherit; }
+    .btn-primary {
+      background: linear-gradient(135deg, #4ade80, #16a34a);
+      color: #0a0f0a; padding: 0.55rem 1.25rem; font-size: 0.875rem;
+      box-shadow: 0 0 20px rgba(74,222,128,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 28px rgba(74,222,128,0.4); }
+    .btn-outline {
+      background: transparent; color: #f1f5f1; padding: 0.55rem 1.25rem; font-size: 0.875rem;
+      border: 1.5px solid rgba(255,255,255,0.18);
+    }
+    .btn-outline:hover { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.06); }
+    .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #f1f5f1; border-radius: 2px; transition: all 0.3s; }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999;
+      background: rgba(10,15,10,0.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(74,222,128,0.1); padding: 1.5rem;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { flex-direction: column; gap: 0.5rem; }
+    .mobile-menu ul li a {
+      display: block; padding: 0.75rem 1rem; border-radius: 8px;
+      color: #9ca39c; font-weight: 500;
+    }
+    .mobile-menu ul li a:hover { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 1rem; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 160px 0 100px;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(74,222,128,0.15) 0%, transparent 65%),
+                  radial-gradient(ellipse 50% 40% at 80% 50%, rgba(22,163,74,0.08) 0%, transparent 60%),
+                  #0a0f0a;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234ade80' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-content { position: relative; text-align: center; max-width: 760px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
+      color: #4ade80; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 900;
+      line-height: 1.1; letter-spacing: -2px;
+      background: linear-gradient(135deg, #ffffff 0%, #c3fac8 50%, #4ade80 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 1.25rem;
+    }
+    .hero p {
+      font-size: 1.2rem; color: #9ca39c; max-width: 560px;
+      margin: 0 auto 2.5rem; line-height: 1.7;
+    }
+    .hero-pills { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #d1fae5; font-size: 0.875rem; font-weight: 500;
+      padding: 0.5rem 1.1rem; border-radius: 100px;
+      backdrop-filter: blur(8px);
+    }
+    .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+
+    /* ── Feature Sections ── */
+    .feature-section {
+      padding: 100px 0;
+    }
+    .feature-section.dark { background: #0a0f0a; }
+    .feature-section.light { background: #0d1410; }
+
+    .feature-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    .feature-inner.reverse { direction: rtl; }
+    .feature-inner.reverse > * { direction: ltr; }
+
+    .feature-label {
+      display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #4ade80; margin-bottom: 1rem;
+    }
+    .feature-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800;
+      line-height: 1.2; letter-spacing: -1px; color: #f1f5f1; margin-bottom: 1rem;
+    }
+    .feature-desc { font-size: 1.05rem; color: #9ca39c; line-height: 1.8; margin-bottom: 2rem; }
+    .feature-list { display: flex; flex-direction: column; gap: 0.65rem; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 0.65rem;
+      font-size: 0.95rem; color: #b8c8b8;
+    }
+    .feature-list li::before {
+      content: '✓'; display: flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%; background: rgba(74,222,128,0.15);
+      color: #4ade80; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* ── Mockups ── */
+    .mockup-wrap {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* AI Feedback Panel */
+    .ai-panel {
+      background: rgba(20,26,20,0.9);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 18px;
+      padding: 1.5rem;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(74,222,128,0.05);
+      backdrop-filter: blur(20px);
+    }
+    .ai-panel-header {
+      display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;
+      padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ai-avatar {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #4ade80, #16a34a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .ai-panel-header .name { font-weight: 700; font-size: 0.9rem; color: #f1f5f1; }
+    .ai-panel-header .sub { font-size: 0.75rem; color: #4ade80; }
+    .chat-msg {
+      display: flex; gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .chat-msg.user { flex-direction: row-reverse; }
+    .chat-bubble {
+      max-width: 78%; padding: 0.65rem 1rem; border-radius: 12px;
+      font-size: 0.85rem; line-height: 1.55;
+    }
+    .chat-bubble.ai {
+      background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.15);
+      color: #d1fae5; border-top-left-radius: 4px;
+    }
+    .chat-bubble.user {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      color: #e2e8e2; border-top-right-radius: 4px;
+    }
+    .chat-icon {
+      width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+      margin-top: 2px;
+    }
+    .chat-icon.ai-icon { background: rgba(74,222,128,0.2); }
+    .chat-icon.user-icon { background: rgba(255,255,255,0.08); }
+    .typing-dots { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .typing-dots span {
+      width: 6px; height: 6px; border-radius: 50%; background: #4ade80;
+      animation: typing 1.2s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+
+    /* Score Bars */
+    .score-panel {
+      background: rgba(20,26,20,0.9);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 18px; padding: 1.75rem;
+      width: 100%; max-width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .score-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .score-header h4 { font-size: 1rem; font-weight: 700; color: #f1f5f1; }
+    .overall-score {
+      font-size: 2.2rem; font-weight: 900; color: #4ade80;
+      line-height: 1;
+    }
+    .overall-label { font-size: 0.7rem; color: #9ca39c; text-align: right; }
+    .score-bar-item { margin-bottom: 1.1rem; }
+    .score-bar-top { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+    .score-bar-label { font-size: 0.82rem; font-weight: 600; color: #b8c8b8; }
+    .score-bar-value { font-size: 0.82rem; font-weight: 700; color: #4ade80; }
+    .score-track {
+      height: 6px; background: rgba(255,255,255,0.07); border-radius: 100px; overflow: hidden;
+    }
+    .score-fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, #16a34a, #4ade80);
+      animation: fillBar 1.5s ease forwards;
+      transform-origin: left;
+    }
+    @keyframes fillBar { from{width:0} }
+
+    /* Timer */
+    .timer-panel {
+      background: rgba(20,26,20,0.9);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 18px; padding: 2.5rem;
+      width: 100%; max-width: 340px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .timer-ring {
+      position: relative; width: 140px; height: 140px; margin: 0 auto 1.5rem;
+    }
+    .timer-ring svg { transform: rotate(-90deg); }
+    .timer-ring circle {
+      fill: none; stroke-width: 8; stroke-linecap: round;
+    }
+    .timer-ring .bg { stroke: rgba(255,255,255,0.08); }
+    .timer-ring .progress {
+      stroke: #4ade80;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 0;
+      animation: countdown 30s linear forwards;
+      filter: drop-shadow(0 0 6px rgba(74,222,128,0.6));
+    }
+    @keyframes countdown { to { stroke-dashoffset: 377; } }
+    .timer-number {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .timer-number .num {
+      font-size: 2.8rem; font-weight: 900; color: #f1f5f1; line-height: 1;
+      animation: countNum 30s linear forwards;
+      counter-reset: timer 30;
+    }
+    .timer-number .sec { font-size: 0.75rem; color: #9ca39c; letter-spacing: 0.05em; }
+    .timer-status { font-size: 0.9rem; color: #4ade80; font-weight: 600; margin-bottom: 0.5rem; }
+    .timer-sub { font-size: 0.8rem; color: #9ca39c; }
+    .progress-steps { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; text-align: left; }
+    .progress-step { display: flex; align-items: center; gap: 0.75rem; font-size: 0.8rem; color: #9ca39c; }
+    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); flex-shrink: 0; }
+    .step-dot.done { background: #4ade80; }
+
+    /* PDF Thumbnail */
+    .pdf-panel {
+      background: rgba(20,26,20,0.9);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 18px; overflow: hidden;
+      width: 100%; max-width: 320px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .pdf-topbar {
+      background: linear-gradient(135deg, #16a34a, #166534);
+      padding: 1.1rem 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .pdf-icon { font-size: 1.5rem; }
+    .pdf-topbar h4 { font-size: 0.95rem; font-weight: 700; color: #fff; }
+    .pdf-topbar p { font-size: 0.72rem; color: rgba(255,255,255,0.7); margin-top: 1px; }
+    .pdf-body { padding: 1.25rem 1.5rem; }
+    .pdf-section-title { font-size: 0.7rem; font-weight: 700; color: #4ade80; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .pdf-bar { height: 8px; background: rgba(255,255,255,0.07); border-radius: 100px; margin-bottom: 0.5rem; overflow: hidden; }
+    .pdf-bar .fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #16a34a, #4ade80); }
+    .pdf-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 1rem 0; }
+    .pdf-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+    .pdf-row .label { font-size: 0.78rem; color: #9ca39c; }
+    .pdf-row .val { font-size: 0.78rem; font-weight: 700; color: #4ade80; }
+    .pdf-actions { display: flex; gap: 0.5rem; padding: 0 1.5rem 1.25rem; }
+    .pdf-btn {
+      flex: 1; padding: 0.55rem; border-radius: 8px; font-size: 0.78rem;
+      font-weight: 600; text-align: center; cursor: pointer;
+    }
+    .pdf-btn.primary { background: #16a34a; color: #fff; }
+    .pdf-btn.secondary { background: rgba(255,255,255,0.06); color: #b8c8b8; border: 1px solid rgba(255,255,255,0.1); }
+
+    /* Language Badges */
+    .lang-panel {
+      background: rgba(20,26,20,0.9);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 18px; padding: 1.75rem;
+      width: 100%; max-width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .lang-panel h4 { font-size: 0.95rem; font-weight: 700; color: #f1f5f1; margin-bottom: 1.25rem; }
+    .lang-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+    .lang-badge {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 0.75rem 0.5rem; text-align: center;
+      transition: all 0.2s;
+    }
+    .lang-badge:hover { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.3); }
+    .lang-flag { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+    .lang-code { font-size: 0.75rem; font-weight: 700; color: #4ade80; letter-spacing: 0.08em; }
+    .lang-name { font-size: 0.68rem; color: #9ca39c; margin-top: 1px; }
+    .lang-panel-footer { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8rem; color: #9ca39c; }
+
+    /* Timeline */
+    .timeline-panel {
+      background: rgba(20,26,20,0.9);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 18px; padding: 1.75rem;
+      width: 100%; max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .timeline-panel h4 { font-size: 0.95rem; font-weight: 700; color: #f1f5f1; margin-bottom: 1.25rem; }
+    .timeline-item { display: flex; gap: 1rem; margin-bottom: 1.25rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-left { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .tl-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #4ade80; border: 2px solid #4ade80; flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(74,222,128,0.5);
+    }
+    .tl-dot.muted { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); box-shadow: none; }
+    .tl-line { width: 1px; flex: 1; background: rgba(255,255,255,0.07); min-height: 30px; }
+    .timeline-right { padding-top: 0; }
+    .tl-date { font-size: 0.72rem; color: #9ca39c; margin-bottom: 0.2rem; }
+    .tl-title { font-size: 0.88rem; font-weight: 600; color: #f1f5f1; margin-bottom: 0.25rem; }
+    .tl-score {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      padding: 0.2rem 0.6rem; border-radius: 100px;
+      background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.2);
+    }
+    .tl-score.avg { background: rgba(250,204,21,0.1); color: #facc15; border-color: rgba(250,204,21,0.2); }
+    .share-row { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .share-btn { font-size: 0.75rem; font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 8px; }
+    .share-btn.green { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+    .share-btn.ghost { background: rgba(255,255,255,0.05); color: #9ca39c; border: 1px solid rgba(255,255,255,0.1); }
+    .share-label { font-size: 0.75rem; color: #9ca39c; }
+
+    /* ── Integrations ── */
+    .integrations {
+      padding: 90px 0;
+      background: linear-gradient(180deg, #0a0f0a 0%, #0d1410 100%);
+    }
+    .section-label {
+      display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #4ade80; margin-bottom: 0.75rem;
+      text-align: center;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800;
+      line-height: 1.2; letter-spacing: -1px; color: #f1f5f1;
+      text-align: center; margin-bottom: 0.75rem;
+    }
+    .section-sub {
+      font-size: 1rem; color: #9ca39c; text-align: center;
+      max-width: 500px; margin: 0 auto 3rem;
+    }
+    .integrations-row {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+    }
+    .integration-badge {
+      display: flex; align-items: center; gap: 0.65rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 0.85rem 1.5rem;
+      transition: all 0.25s ease; cursor: default;
+    }
+    .integration-badge:hover {
+      background: rgba(74,222,128,0.07); border-color: rgba(74,222,128,0.2);
+      transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .integration-badge .icon { font-size: 1.5rem; }
+    .integration-badge .name { font-size: 0.9rem; font-weight: 600; color: #d1fae5; }
+
+    /* ── Use Cases ── */
+    .use-cases {
+      padding: 90px 0;
+      background: #0a0f0a;
+    }
+    .tabs-header {
+      display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .tab-btn {
+      padding: 0.6rem 1.4rem; border-radius: 100px; font-size: 0.88rem; font-weight: 600;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #9ca39c; cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.3); color: #4ade80;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .use-case-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .use-case-visual {
+      background: rgba(20,26,20,0.8); border: 1px solid rgba(74,222,128,0.15);
+      border-radius: 20px; padding: 2.5rem; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .use-case-emoji { font-size: 4rem; display: block; margin-bottom: 1rem; }
+    .use-case-tag {
+      display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #4ade80; margin-bottom: 0.5rem;
+    }
+    .use-case-visual h3 { font-size: 1.4rem; font-weight: 800; color: #f1f5f1; }
+    .use-case-text h3 {
+      font-size: 1.8rem; font-weight: 800; color: #f1f5f1;
+      letter-spacing: -0.5px; margin-bottom: 1.25rem;
+    }
+    .use-case-points { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+    .use-case-point { display: flex; gap: 0.85rem; }
+    .uc-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .uc-text strong { display: block; font-size: 0.9rem; color: #f1f5f1; font-weight: 600; margin-bottom: 0.2rem; }
+    .uc-text span { font-size: 0.85rem; color: #9ca39c; line-height: 1.5; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      padding: 90px 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(74,222,128,0.12) 0%, transparent 70%), #0d1410;
+    }
+    .cta-box {
+      background: rgba(20,26,20,0.8); border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 24px; padding: 4rem 3rem; text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 80px rgba(74,222,128,0.06), 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .cta-box h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
+      letter-spacing: -1px; color: #f1f5f1; margin-bottom: 0.75rem;
+    }
+    .cta-box p { font-size: 1.05rem; color: #9ca39c; margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    .footer {
+      background: #0d1a00;
+      border-top: 1px solid rgba(74,222,128,0.1);
+      padding: 72px 0 32px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-brand .footer-logo {
+      font-size: 1.3rem; font-weight: 800; color: #f1f5f1; margin-bottom: 0.75rem;
+      display: block; letter-spacing: -0.5px;
+    }
+    .footer-brand .footer-logo span { color: #4ade80; }
+    .footer-brand p { font-size: 0.875rem; color: #9ca39c; line-height: 1.7; margin-bottom: 1.5rem; }
+    .footer-newsletter { display: flex; gap: 0.5rem; }
+    .footer-newsletter input {
+      flex: 1; padding: 0.6rem 1rem; font-size: 0.875rem;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; color: #f1f5f1;
+    }
+    .footer-newsletter button {
+      padding: 0.6rem 1.1rem; background: #16a34a; color: #fff;
+      border-radius: 10px; font-size: 0.875rem; font-weight: 600;
+      cursor: pointer; white-space: nowrap; border: none; font-family: inherit;
+    }
+    .footer-col h5 { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #4ade80; margin-bottom: 1.1rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-col ul li a { font-size: 0.875rem; color: #9ca39c; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: #f1f5f1; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: 0.825rem; color: #6b7b6b; }
+    .social-links { display: flex; gap: 0.6rem; }
+    .social-link {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: #9ca39c; transition: all 0.2s;
+    }
+    .social-link:hover { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.25); color: #4ade80; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .feature-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .feature-inner.reverse { direction: ltr; }
+      .use-case-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1/-1; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 120px 0 72px; }
+      .feature-section { padding: 64px 0; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- ═══ NAVBAR ═══ -->
 <nav class="navbar" id="navbar">
   <div class="container">
     <div class="nav-inner">
@@ -31,434 +573,517 @@
   </div>
 </nav>
 <div class="mobile-menu" id="mobile-menu">
-  <a href="features.html">Features</a>
-  <a href="pricing.html">Pricing</a>
-  <a href="blog.html">Blog</a>
-  <a href="about.html">About</a>
-  <a href="app.html" class="btn btn-primary" style="margin-top:12px">Try Free →</a>
+  <ul>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="app.html" class="btn btn-primary">Try Free →</a>
 </div>
 
-<!-- HERO -->
-<section class="page-hero features-hero">
+<!-- ═══ HERO ═══ -->
+<section class="hero">
   <div class="container">
-    <div class="page-hero-inner">
-      <div class="hero-badge">✨ Powered by Claude AI</div>
-      <h1>Every Feature You Need to<br><span class="gradient-text">Present with Confidence</span></h1>
-      <p class="hero-sub">From instant AI analysis to multilingual reports and frictionless exports — SlideSage is the complete toolkit for anyone who presents.</p>
-      <a href="app.html" class="btn btn-primary btn-lg">Start Analyzing For Free →</a>
-    </div>
-  </div>
-  <div class="hero-bg-blur hero-blur-1"></div>
-  <div class="hero-bg-blur hero-blur-2"></div>
-</section>
-
-<!-- FEATURES — ALTERNATING LAYOUT -->
-<section class="features-detail">
-  <div class="container">
-
-    <!-- Feature 1: AI-Powered Analysis (image right) -->
-    <div class="feature-row feature-row--normal" id="ai-analysis">
-      <div class="feature-content">
-        <div class="feature-tag">🤖 AI Intelligence</div>
-        <h2>AI-Powered Analysis</h2>
-        <p class="feature-lead">Claude AI doesn't just scan your slides — it <em>reads</em> them the way a seasoned consultant would. It understands context, narrative flow, and the logic connecting your ideas.</p>
-        <ul class="feature-list">
-          <li><span class="check">✓</span> Reads every slide and understands your deck's overall narrative</li>
-          <li><span class="check">✓</span> Identifies logical gaps, unclear arguments, and weak evidence</li>
-          <li><span class="check">✓</span> Gives specific, actionable feedback — not generic tips</li>
-          <li><span class="check">✓</span> Understands industry context (sales, academic, executive, pitch)</li>
-          <li><span class="check">✓</span> Flags tone issues, jargon overload, and readability problems</li>
-        </ul>
-        <a href="app.html" class="btn btn-outline">See It In Action →</a>
+    <div class="hero-content">
+      <div class="hero-badge">✦ Powered by GPT-4o</div>
+      <h1>Everything You Need to<br>Present with Confidence</h1>
+      <p>Six powerful features working together to transform your presentations from good to unforgettable — in 30 seconds flat.</p>
+      <div class="hero-pills">
+        <span class="pill"><span class="dot"></span>50+ AI feedback points per slide</span>
+        <span class="pill"><span class="dot"></span>30 second analysis</span>
       </div>
-      <div class="feature-visual">
-        <div class="feature-mockup mockup-green">
-          <div class="mockup-header">
-            <div class="mockup-dots"><span></span><span></span><span></span></div>
-            <span class="mockup-title">AI Analysis — Slide 3 of 12</span>
-          </div>
-          <div class="mockup-body">
-            <div class="mockup-score-row">
-              <div class="mockup-score-circle">87</div>
-              <div class="mockup-score-label">Overall Score</div>
-            </div>
-            <div class="mockup-feedback-item">
-              <span class="feedback-icon feedback-warn">⚠</span>
-              <span>Your key claim lacks supporting data. Add a statistic or citation.</span>
-            </div>
-            <div class="mockup-feedback-item">
-              <span class="feedback-icon feedback-ok">✓</span>
-              <span>Strong opening hook. Audience attention captured.</span>
-            </div>
-            <div class="mockup-feedback-item">
-              <span class="feedback-icon feedback-warn">⚠</span>
-              <span>Slide 7 is text-heavy. Consider splitting into two slides.</span>
-            </div>
-            <div class="mockup-feedback-item">
-              <span class="feedback-icon feedback-ok">✓</span>
-              <span>Clear call-to-action on final slide.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 2: Slide-Level Feedback (image left) -->
-    <div class="feature-row feature-row--reversed" id="slide-feedback">
-      <div class="feature-visual">
-        <div class="feature-mockup mockup-blue">
-          <div class="mockup-header">
-            <div class="mockup-dots"><span></span><span></span><span></span></div>
-            <span class="mockup-title">Slide Navigator</span>
-          </div>
-          <div class="mockup-body mockup-slides-grid">
-            <div class="mini-slide active-slide">
-              <div class="mini-slide-num">1</div>
-              <div class="mini-slide-bar green-bar"></div>
-            </div>
-            <div class="mini-slide">
-              <div class="mini-slide-num">2</div>
-              <div class="mini-slide-bar green-bar"></div>
-            </div>
-            <div class="mini-slide warn-slide">
-              <div class="mini-slide-num">3</div>
-              <div class="mini-slide-bar yellow-bar"></div>
-            </div>
-            <div class="mini-slide">
-              <div class="mini-slide-num">4</div>
-              <div class="mini-slide-bar green-bar"></div>
-            </div>
-            <div class="mini-slide warn-slide">
-              <div class="mini-slide-num">5</div>
-              <div class="mini-slide-bar red-bar"></div>
-            </div>
-            <div class="mini-slide">
-              <div class="mini-slide-num">6</div>
-              <div class="mini-slide-bar green-bar"></div>
-            </div>
-          </div>
-          <div class="mockup-detail-panel">
-            <strong>Slide 5 — Issues Found</strong>
-            <p class="mockup-detail-text">Font size too small for readability. 3 bullet points exceed recommended length. Missing visual hierarchy.</p>
-          </div>
-        </div>
-      </div>
-      <div class="feature-content">
-        <div class="feature-tag">🔍 Precision Feedback</div>
-        <h2>Slide-Level Feedback</h2>
-        <p class="feature-lead">Don't guess which slide is dragging down your deck. SlideSage scores every single slide and tells you exactly what needs fixing — and why.</p>
-        <ul class="feature-list">
-          <li><span class="check">✓</span> Individual score for every slide (0–100)</li>
-          <li><span class="check">✓</span> Visual navigator highlights weak slides instantly</li>
-          <li><span class="check">✓</span> Specific, prioritized suggestions for each slide</li>
-          <li><span class="check">✓</span> Checks font size, contrast, bullet count, and visual balance</li>
-          <li><span class="check">✓</span> Tracks changes between versions if you re-upload</li>
-        </ul>
-        <a href="app.html" class="btn btn-outline">Analyze Your Slides →</a>
-      </div>
-    </div>
-
-    <!-- Feature 3: 30-Second Results (image right) -->
-    <div class="feature-row feature-row--normal" id="speed">
-      <div class="feature-content">
-        <div class="feature-tag">⚡ Lightning Fast</div>
-        <h2>30-Second Results</h2>
-        <p class="feature-lead">No waiting. No queues. No "we'll email you when it's ready." Upload your deck and get a complete AI analysis report in under 30 seconds.</p>
-        <ul class="feature-list">
-          <li><span class="check">✓</span> Average analysis time: 18 seconds</li>
-          <li><span class="check">✓</span> Handles decks with 100+ slides without slowing down</li>
-          <li><span class="check">✓</span> Real-time progress indicator so you always know what's happening</li>
-          <li><span class="check">✓</span> Priority processing on Pro and Team plans</li>
-          <li><span class="check">✓</span> Results load instantly — no page refresh required</li>
-        </ul>
-        <a href="app.html" class="btn btn-outline">Try It Now →</a>
-      </div>
-      <div class="feature-visual">
-        <div class="feature-mockup mockup-purple">
-          <div class="mockup-header">
-            <div class="mockup-dots"><span></span><span></span><span></span></div>
-            <span class="mockup-title">Analysis Progress</span>
-          </div>
-          <div class="mockup-body mockup-progress-body">
-            <div class="progress-steps">
-              <div class="progress-step done">
-                <span class="step-icon">✓</span>
-                <span class="step-label">File uploaded</span>
-                <span class="step-time">0.3s</span>
-              </div>
-              <div class="progress-step done">
-                <span class="step-icon">✓</span>
-                <span class="step-label">Slides extracted</span>
-                <span class="step-time">1.2s</span>
-              </div>
-              <div class="progress-step done">
-                <span class="step-icon">✓</span>
-                <span class="step-label">AI reading content</span>
-                <span class="step-time">8.7s</span>
-              </div>
-              <div class="progress-step active">
-                <span class="step-icon spin">◌</span>
-                <span class="step-label">Generating feedback</span>
-                <span class="step-time">...</span>
-              </div>
-              <div class="progress-step pending">
-                <span class="step-icon">○</span>
-                <span class="step-label">Report ready</span>
-                <span class="step-time">—</span>
-              </div>
-            </div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar-fill" style="width:75%"></div>
-            </div>
-            <div class="progress-eta">Estimated: 5 seconds remaining</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 4: Export Reports (image left) -->
-    <div class="feature-row feature-row--reversed" id="export">
-      <div class="feature-visual">
-        <div class="feature-mockup mockup-orange">
-          <div class="mockup-header">
-            <div class="mockup-dots"><span></span><span></span><span></span></div>
-            <span class="mockup-title">Export Report</span>
-          </div>
-          <div class="mockup-body mockup-export-body">
-            <div class="export-preview">
-              <div class="export-doc">
-                <div class="export-doc-icon">📄</div>
-                <div class="export-doc-name">Q4_Review_Report.pdf</div>
-              </div>
-              <div class="export-doc">
-                <div class="export-doc-icon">📝</div>
-                <div class="export-doc-name">Q4_Review_Report.docx</div>
-              </div>
-            </div>
-            <div class="export-options">
-              <label class="export-toggle active"><input type="checkbox" checked> Include slide scores</label>
-              <label class="export-toggle active"><input type="checkbox" checked> Include feedback notes</label>
-              <label class="export-toggle"><input type="checkbox"> Include improvement examples</label>
-            </div>
-            <button class="mockup-btn">⬇ Download PDF</button>
-          </div>
-        </div>
-      </div>
-      <div class="feature-content">
-        <div class="feature-tag">📤 Easy Sharing</div>
-        <h2>Export Reports</h2>
-        <p class="feature-lead">Your analysis shouldn't live only on a screen. Export a polished, professional report to PDF or Word and share it with your team, manager, or coach.</p>
-        <ul class="feature-list">
-          <li><span class="check">✓</span> One-click PDF export with branded layout</li>
-          <li><span class="check">✓</span> Word (.docx) export for easy editing and annotation</li>
-          <li><span class="check">✓</span> Customize which sections to include</li>
-          <li><span class="check">✓</span> White-label reports for Team plan</li>
-          <li><span class="check">✓</span> Analysis history saved for 90 days on Pro</li>
-        </ul>
-        <a href="pricing.html" class="btn btn-outline">See Export Plans →</a>
-      </div>
-    </div>
-
-    <!-- Feature 5: Multilingual Support (image right) -->
-    <div class="feature-row feature-row--normal" id="multilingual">
-      <div class="feature-content">
-        <div class="feature-tag">🌍 Global Ready</div>
-        <h2>Multilingual Support</h2>
-        <p class="feature-lead">Great presentations happen in every language. SlideSage analyzes and responds in your language — no translation required, no quality lost.</p>
-        <ul class="feature-list">
-          <li><span class="check">✓</span> English, French, Spanish, German, Japanese, and more</li>
-          <li><span class="check">✓</span> Automatically detects the language of your deck</li>
-          <li><span class="check">✓</span> Feedback delivered in the same language as your slides</li>
-          <li><span class="check">✓</span> Supports mixed-language decks</li>
-          <li><span class="check">✓</span> Culturally aware suggestions for regional audiences</li>
-        </ul>
-        <a href="app.html" class="btn btn-outline">Try in Your Language →</a>
-      </div>
-      <div class="feature-visual">
-        <div class="feature-mockup mockup-teal">
-          <div class="mockup-header">
-            <div class="mockup-dots"><span></span><span></span><span></span></div>
-            <span class="mockup-title">Language Detection</span>
-          </div>
-          <div class="mockup-body mockup-lang-body">
-            <div class="lang-detected">
-              <span class="lang-flag">🇫🇷</span>
-              <span class="lang-name">French detected</span>
-              <span class="lang-conf">98% confidence</span>
-            </div>
-            <div class="lang-feedback-preview">
-              <strong>Retour sur la diapositive 4 :</strong>
-              <p>Cette diapositive contient trop de texte. Essayez de réduire à 3 points clés maximum pour une meilleure lisibilité.</p>
-            </div>
-            <div class="lang-list">
-              <span class="lang-pill active">🇫🇷 FR</span>
-              <span class="lang-pill">🇺🇸 EN</span>
-              <span class="lang-pill">🇪🇸 ES</span>
-              <span class="lang-pill">🇩🇪 DE</span>
-              <span class="lang-pill">🇯🇵 JP</span>
-              <span class="lang-pill">+8</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 6: No Account Required (image left) -->
-    <div class="feature-row feature-row--reversed" id="no-account">
-      <div class="feature-visual">
-        <div class="feature-mockup mockup-pink">
-          <div class="mockup-header">
-            <div class="mockup-dots"><span></span><span></span><span></span></div>
-            <span class="mockup-title">Get Started</span>
-          </div>
-          <div class="mockup-body mockup-noauth-body">
-            <div class="noauth-steps">
-              <div class="noauth-step">
-                <span class="noauth-num">1</span>
-                <span class="noauth-text">Drop your .pptx file</span>
-              </div>
-              <div class="noauth-arrow">↓</div>
-              <div class="noauth-step">
-                <span class="noauth-num">2</span>
-                <span class="noauth-text">AI analyzes in seconds</span>
-              </div>
-              <div class="noauth-arrow">↓</div>
-              <div class="noauth-step active-step">
-                <span class="noauth-num">3</span>
-                <span class="noauth-text">Read your report ✓</span>
-              </div>
-            </div>
-            <div class="noauth-badge">
-              <span>🚫 No signup</span>
-              <span>🚫 No credit card</span>
-              <span>🚫 No friction</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="feature-content">
-        <div class="feature-tag">🚀 Zero Friction</div>
-        <h2>No Account Required</h2>
-        <p class="feature-lead">We think the best products get out of your way. Drop your file, get your report — that's it. No onboarding, no email verification, no credit card wall.</p>
-        <ul class="feature-list">
-          <li><span class="check">✓</span> Start analyzing immediately with zero sign-up</li>
-          <li><span class="check">✓</span> 3 free analyses per month, no strings attached</li>
-          <li><span class="check">✓</span> Optional account to save history and unlock Pro features</li>
-          <li><span class="check">✓</span> No annoying upsell popups on the free tier</li>
-          <li><span class="check">✓</span> Works on any device — phone, tablet, desktop</li>
-        </ul>
-        <a href="app.html" class="btn btn-primary">Analyze Now — It's Free →</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- USE CASES SECTION -->
-<section class="use-cases-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Built for Every Presenter</h2>
-      <p>Whether you're closing a deal, defending a thesis, or presenting to a board — SlideSage speaks your language.</p>
-    </div>
-    <div class="use-case-cards">
-
-      <div class="use-case-card">
-        <div class="use-case-icon">💼</div>
-        <h3>For Sales Teams</h3>
-        <p>Turn every pitch deck into a closing machine. SlideSage spots weak value propositions, confusing pricing slides, and unclear CTAs before your prospect does. Share analysis reports with your manager or coach and improve every rep's deck in parallel.</p>
-        <ul class="use-case-list">
-          <li>Sharpen value proposition clarity</li>
-          <li>Identify objection-triggering slides</li>
-          <li>Standardize decks across the team</li>
-        </ul>
-        <a href="app.html" class="btn btn-outline use-case-cta">Analyze Your Pitch →</a>
-      </div>
-
-      <div class="use-case-card use-case-card--featured">
-        <div class="use-case-icon">🎓</div>
-        <h3>For Students</h3>
-        <p>Stop losing marks on presentation quality. SlideSage acts like a pre-submission coach — flagging readability issues, thin arguments, and design problems so you walk into your presentation with confidence, not nerves.</p>
-        <ul class="use-case-list">
-          <li>Catch weak arguments before submission</li>
-          <li>Fix font and contrast issues</li>
-          <li>Improve structure and flow</li>
-        </ul>
-        <a href="app.html" class="btn btn-primary use-case-cta">Check My Presentation →</a>
-      </div>
-
-      <div class="use-case-card">
-        <div class="use-case-icon">👔</div>
-        <h3>For Executives</h3>
-        <p>Your time is worth too much to spend fixing slides. SlideSage reviews your board decks, investor presentations, and all-hands in seconds — delivering the critical feedback your team might be afraid to give you.</p>
-        <ul class="use-case-list">
-          <li>Board-ready deck review in 30 seconds</li>
-          <li>Honest feedback without politics</li>
-          <li>Export polished reports for stakeholders</li>
-        </ul>
-        <a href="app.html" class="btn btn-outline use-case-cta">Review My Deck →</a>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- BOTTOM CTA SECTION -->
-<section class="bottom-cta-section">
+<!-- ═══ FEATURE 1: GPT-4o Analysis ═══ -->
+<section class="feature-section dark">
   <div class="container">
-    <div class="bottom-cta-inner">
-      <h2>Ready to Present with Confidence?</h2>
-      <p>Join thousands of presenters who already use SlideSage to sharpen their slides before every important moment.</p>
-      <a href="app.html" class="btn btn-primary btn-lg">Start Analyzing For Free →</a>
-      <p class="cta-sub-note">No account needed. 3 free analyses every month.</p>
+    <div class="feature-inner">
+      <div class="feature-text">
+        <span class="feature-label">01 · GPT-4o Analysis</span>
+        <h2 class="feature-title">AI feedback that thinks like your best critic</h2>
+        <p class="feature-desc">SlideSage uses OpenAI's most capable model to analyze every dimension of your presentation — narrative flow, design coherence, clarity of message, and audience impact.</p>
+        <ul class="feature-list">
+          <li>50+ structured feedback points per slide</li>
+          <li>Tone, structure, and persuasiveness scoring</li>
+          <li>Actionable "fix this" recommendations</li>
+          <li>Context-aware analysis for your industry</li>
+        </ul>
+      </div>
+      <div class="mockup-wrap">
+        <div class="ai-panel">
+          <div class="ai-panel-header">
+            <div class="ai-avatar">🤖</div>
+            <div>
+              <div class="name">SlideSage AI</div>
+              <div class="sub">● Analyzing slide 3 of 12</div>
+            </div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-icon user-icon">👤</div>
+            <div class="chat-bubble user">Can you review slide 3? I feel the message is unclear.</div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-icon ai-icon">✨</div>
+            <div class="chat-bubble ai">Slide 3 has strong data but the headline buries the lead. Try leading with your outcome first — "42% revenue growth" — before explaining how. Your audience will stay hooked.</div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-icon ai-icon">✨</div>
+            <div class="chat-bubble ai">
+              <div class="typing-dots"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="site-footer">
+<!-- ═══ FEATURE 2: Slide Scoring ═══ -->
+<section class="feature-section light">
+  <div class="container">
+    <div class="feature-inner reverse">
+      <div class="feature-text">
+        <span class="feature-label">02 · Slide-Level Scoring</span>
+        <h2 class="feature-title">See your score across every dimension</h2>
+        <p class="feature-desc">Get a precise, multi-dimensional score for every single slide. Understand exactly where you're strong and where to improve — no guessing, no vague advice.</p>
+        <ul class="feature-list">
+          <li>Content, Design, Clarity & Engagement scores</li>
+          <li>Slide-by-slide and overall deck scores</li>
+          <li>Benchmark against top-performing decks</li>
+          <li>Track improvement over time</li>
+        </ul>
+      </div>
+      <div class="mockup-wrap">
+        <div class="score-panel">
+          <div class="score-header">
+            <h4>Deck Score</h4>
+            <div>
+              <div class="overall-score">87</div>
+              <div class="overall-label">/ 100</div>
+            </div>
+          </div>
+          <div class="score-bar-item">
+            <div class="score-bar-top"><span class="score-bar-label">Content</span><span class="score-bar-value">91/100</span></div>
+            <div class="score-track"><div class="score-fill" style="width:91%"></div></div>
+          </div>
+          <div class="score-bar-item">
+            <div class="score-bar-top"><span class="score-bar-label">Design</span><span class="score-bar-value">84/100</span></div>
+            <div class="score-track"><div class="score-fill" style="width:84%"></div></div>
+          </div>
+          <div class="score-bar-item">
+            <div class="score-bar-top"><span class="score-bar-label">Clarity</span><span class="score-bar-value">88/100</span></div>
+            <div class="score-track"><div class="score-fill" style="width:88%"></div></div>
+          </div>
+          <div class="score-bar-item">
+            <div class="score-bar-top"><span class="score-bar-label">Engagement</span><span class="score-bar-value">79/100</span></div>
+            <div class="score-track"><div class="score-fill" style="width:79%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURE 3: 30-Second Results ═══ -->
+<section class="feature-section dark">
+  <div class="container">
+    <div class="feature-inner">
+      <div class="feature-text">
+        <span class="feature-label">03 · Speed</span>
+        <h2 class="feature-title">30 seconds to a complete analysis</h2>
+        <p class="feature-desc">Upload your deck, and SlideSage delivers a full, comprehensive AI analysis in under 30 seconds. No waiting rooms. No queues. Just instant, expert-level feedback.</p>
+        <ul class="feature-list">
+          <li>Full deck analysis in &lt;30 seconds</li>
+          <li>Powered by GPT-4o with optimized pipelines</li>
+          <li>Handles decks up to 50 slides</li>
+          <li>Instant preview as slides are processed</li>
+        </ul>
+      </div>
+      <div class="mockup-wrap">
+        <div class="timer-panel">
+          <div class="timer-ring">
+            <svg width="140" height="140" viewBox="0 0 140 140">
+              <circle class="bg" cx="70" cy="70" r="60"/>
+              <circle class="progress" cx="70" cy="70" r="60"/>
+            </svg>
+            <div class="timer-number">
+              <span class="num" id="timerNum">30</span>
+              <span class="sec">seconds</span>
+            </div>
+          </div>
+          <div class="timer-status">⚡ Analyzing your deck…</div>
+          <div class="timer-sub">Full results on the way</div>
+          <div class="progress-steps">
+            <div class="progress-step"><div class="step-dot done"></div>Uploading slides</div>
+            <div class="progress-step"><div class="step-dot done"></div>Extracting content</div>
+            <div class="progress-step"><div class="step-dot done"></div>Running GPT-4o analysis</div>
+            <div class="progress-step"><div class="step-dot"></div>Generating report</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURE 4: Export Reports ═══ -->
+<section class="feature-section light">
+  <div class="container">
+    <div class="feature-inner reverse">
+      <div class="feature-text">
+        <span class="feature-label">04 · Export</span>
+        <h2 class="feature-title">Download polished, shareable reports</h2>
+        <p class="feature-desc">Get your analysis as a beautifully formatted PDF or Word document — ready to share with clients, coaches, or your team with one click.</p>
+        <ul class="feature-list">
+          <li>Export to PDF and Word (.docx)</li>
+          <li>Branded reports with your company logo</li>
+          <li>Shareable links with expiry control</li>
+          <li>Bulk export for multiple decks</li>
+        </ul>
+      </div>
+      <div class="mockup-wrap">
+        <div class="pdf-panel">
+          <div class="pdf-topbar">
+            <div class="pdf-icon">📄</div>
+            <div>
+              <h4>Q4 Investor Deck Analysis</h4>
+              <p>Generated by SlideSage · April 2, 2026</p>
+            </div>
+          </div>
+          <div class="pdf-body">
+            <div class="pdf-section-title">Overall Score</div>
+            <div class="pdf-bar"><div class="fill" style="width:87%"></div></div>
+            <div class="pdf-divider"></div>
+            <div class="pdf-section-title">Key Metrics</div>
+            <div class="pdf-row"><span class="label">Slides analyzed</span><span class="val">12</span></div>
+            <div class="pdf-row"><span class="label">Issues found</span><span class="val">7</span></div>
+            <div class="pdf-row"><span class="label">Recommendations</span><span class="val">23</span></div>
+            <div class="pdf-row"><span class="label">Estimated read time</span><span class="val">4 min</span></div>
+          </div>
+          <div class="pdf-actions">
+            <div class="pdf-btn primary">⬇ Download PDF</div>
+            <div class="pdf-btn secondary">🔗 Share Link</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURE 5: Multilingual ═══ -->
+<section class="feature-section dark">
+  <div class="container">
+    <div class="feature-inner">
+      <div class="feature-text">
+        <span class="feature-label">05 · Multilingual</span>
+        <h2 class="feature-title">Present in any language, get feedback in yours</h2>
+        <p class="feature-desc">SlideSage understands presentations in 6 languages and delivers feedback in your preferred language. Perfect for global teams, international clients, and multilingual speakers.</p>
+        <ul class="feature-list">
+          <li>Analyze decks in EN, FR, ES, DE, JA, ZH</li>
+          <li>Receive feedback in your preferred language</li>
+          <li>Cross-language tone and clarity analysis</li>
+          <li>More languages being added quarterly</li>
+        </ul>
+      </div>
+      <div class="mockup-wrap">
+        <div class="lang-panel">
+          <h4>🌍 Supported Languages</h4>
+          <div class="lang-grid">
+            <div class="lang-badge"><span class="lang-flag">🇺🇸</span><div class="lang-code">EN</div><div class="lang-name">English</div></div>
+            <div class="lang-badge"><span class="lang-flag">🇫🇷</span><div class="lang-code">FR</div><div class="lang-name">French</div></div>
+            <div class="lang-badge"><span class="lang-flag">🇪🇸</span><div class="lang-code">ES</div><div class="lang-name">Spanish</div></div>
+            <div class="lang-badge"><span class="lang-flag">🇩🇪</span><div class="lang-code">DE</div><div class="lang-name">German</div></div>
+            <div class="lang-badge"><span class="lang-flag">🇯🇵</span><div class="lang-code">JA</div><div class="lang-name">Japanese</div></div>
+            <div class="lang-badge"><span class="lang-flag">🇨🇳</span><div class="lang-code">ZH</div><div class="lang-name">Chinese</div></div>
+          </div>
+          <div class="lang-panel-footer">✦ Auto-detected from your uploaded slides</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURE 6: History & Sharing ═══ -->
+<section class="feature-section light">
+  <div class="container">
+    <div class="feature-inner reverse">
+      <div class="feature-text">
+        <span class="feature-label">06 · History &amp; Sharing</span>
+        <h2 class="feature-title">Track every analysis, share with anyone</h2>
+        <p class="feature-desc">Your analysis history is always accessible. See how your presentations improve over time, compare versions, and share results with coaches, managers, or clients in seconds.</p>
+        <ul class="feature-list">
+          <li>Full analysis history, searchable</li>
+          <li>Version comparison side-by-side</li>
+          <li>Shareable links with password protection</li>
+          <li>Team workspace for collaborative review</li>
+        </ul>
+      </div>
+      <div class="mockup-wrap">
+        <div class="timeline-panel">
+          <h4>📋 Recent Analyses</h4>
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="timeline-right">
+              <div class="tl-date">Today · 2:14 PM</div>
+              <div class="tl-title">Q4 Investor Deck v3</div>
+              <span class="tl-score">87 / 100</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="timeline-right">
+              <div class="tl-date">Yesterday · 9:45 AM</div>
+              <div class="tl-title">Sales Kickoff 2026</div>
+              <span class="tl-score">82 / 100</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="tl-dot muted"></div><div class="tl-line"></div></div>
+            <div class="timeline-right">
+              <div class="tl-date">Mar 29 · 11:02 AM</div>
+              <div class="tl-title">Product Demo v1</div>
+              <span class="tl-score avg">68 / 100</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left"><div class="tl-dot muted"></div></div>
+            <div class="timeline-right">
+              <div class="tl-date">Mar 27 · 3:30 PM</div>
+              <div class="tl-title">Onboarding Slides</div>
+              <span class="tl-score">91 / 100</span>
+            </div>
+          </div>
+          <div class="share-row">
+            <span class="share-btn green">🔗 Share Report</span>
+            <span class="share-btn ghost">⬇ Export All</span>
+            <span class="share-label" style="margin-left:auto">4 analyses</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INTEGRATIONS ═══ -->
+<section class="integrations">
+  <div class="container">
+    <span class="section-label">Works Everywhere</span>
+    <h2 class="section-title">Works with your existing tools</h2>
+    <p class="section-sub">Upload directly from your favourite presentation platform — no reformatting needed.</p>
+    <div class="integrations-row">
+      <div class="integration-badge"><span class="icon">📊</span><span class="name">PowerPoint</span></div>
+      <div class="integration-badge"><span class="icon">📑</span><span class="name">Google Slides</span></div>
+      <div class="integration-badge"><span class="icon">🎬</span><span class="name">Keynote</span></div>
+      <div class="integration-badge"><span class="icon">📝</span><span class="name">Notion</span></div>
+      <div class="integration-badge"><span class="icon">💬</span><span class="name">Slack</span></div>
+      <div class="integration-badge"><span class="icon">💼</span><span class="name">Microsoft Teams</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ USE CASES ═══ -->
+<section class="use-cases">
+  <div class="container">
+    <span class="section-label">Use Cases</span>
+    <h2 class="section-title">Built for every presenter</h2>
+    <p class="section-sub">Whether you're closing deals or acing exams, SlideSage has you covered.</p>
+    <div class="tabs-header">
+      <button class="tab-btn active" data-tab="sales">💼 Sales Teams</button>
+      <button class="tab-btn" data-tab="students">🎓 Students</button>
+      <button class="tab-btn" data-tab="executives">👔 Executives</button>
+      <button class="tab-btn" data-tab="coaches">🎯 Coaches</button>
+    </div>
+
+    <!-- Sales -->
+    <div class="tab-content active" id="tab-sales">
+      <div class="use-case-grid">
+        <div class="use-case-visual">
+          <span class="use-case-emoji">💼</span>
+          <div class="use-case-tag">Sales Teams</div>
+          <h3>Close More Deals</h3>
+        </div>
+        <div class="use-case-text">
+          <h3>Turn your deck into a revenue machine</h3>
+          <div class="use-case-points">
+            <div class="use-case-point"><div class="uc-icon">📈</div><div class="uc-text"><strong>Higher close rates</strong><span>Users report a 23% average increase in deal close rates after optimizing with SlideSage.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">🎯</div><div class="uc-text"><strong>Pitch-perfect messaging</strong><span>AI analyzes tone, persuasiveness, and objection handling across every slide.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">⚡</div><div class="uc-text"><strong>Rapid iteration</strong><span>Test multiple versions of your pitch deck and find the winner before the big meeting.</span></div></div>
+          </div>
+          <a href="app.html" class="btn btn-primary btn-lg">Optimize my pitch deck →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Students -->
+    <div class="tab-content" id="tab-students">
+      <div class="use-case-grid">
+        <div class="use-case-visual">
+          <span class="use-case-emoji">🎓</span>
+          <div class="use-case-tag">Students</div>
+          <h3>Ace Every Presentation</h3>
+        </div>
+        <div class="use-case-text">
+          <h3>Grade-worthy feedback, instantly</h3>
+          <div class="use-case-points">
+            <div class="use-case-point"><div class="uc-icon">📚</div><div class="uc-text"><strong>Academic clarity scoring</strong><span>Ensure your argument structure and evidence presentation meet academic standards.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">🗣️</div><div class="uc-text"><strong>Speaking notes</strong><span>Get slide-by-slide talking points to boost confidence during delivery.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">🏆</div><div class="uc-text"><strong>Competitive edge</strong><span>Stand out in class, competitions, and interviews with polished, professional decks.</span></div></div>
+          </div>
+          <a href="app.html" class="btn btn-primary btn-lg">Improve my presentation →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Executives -->
+    <div class="tab-content" id="tab-executives">
+      <div class="use-case-grid">
+        <div class="use-case-visual">
+          <span class="use-case-emoji">👔</span>
+          <div class="use-case-tag">Executives</div>
+          <h3>Board-Level Decks</h3>
+        </div>
+        <div class="use-case-text">
+          <h3>Board-ready decks in minutes, not days</h3>
+          <div class="use-case-points">
+            <div class="use-case-point"><div class="uc-icon">📊</div><div class="uc-text"><strong>Executive summary analysis</strong><span>AI checks your deck tells a compelling story from first slide to last.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">🔍</div><div class="uc-text"><strong>Scrutiny simulation</strong><span>SlideSage anticipates tough board questions and flags slides likely to draw challenges.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">🌐</div><div class="uc-text"><strong>Multi-audience variants</strong><span>Generate different feedback profiles for investors, boards, and all-hands audiences.</span></div></div>
+          </div>
+          <a href="app.html" class="btn btn-primary btn-lg">Prepare my board deck →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coaches -->
+    <div class="tab-content" id="tab-coaches">
+      <div class="use-case-grid">
+        <div class="use-case-visual">
+          <span class="use-case-emoji">🎯</span>
+          <div class="use-case-tag">Coaches</div>
+          <h3>Scale Your Coaching</h3>
+        </div>
+        <div class="use-case-text">
+          <h3>Give every client expert-level feedback</h3>
+          <div class="use-case-points">
+            <div class="use-case-point"><div class="uc-icon">🤝</div><div class="uc-text"><strong>Client-ready reports</strong><span>Export beautifully branded PDF reports to share with your clients after each session.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">📈</div><div class="uc-text"><strong>Progress tracking</strong><span>Compare versions over time and show clients their measurable improvement journey.</span></div></div>
+            <div class="use-case-point"><div class="uc-icon">⏱️</div><div class="uc-text"><strong>10× your throughput</strong><span>Pre-screen decks with SlideSage before sessions so you spend time on what matters most.</span></div></div>
+          </div>
+          <a href="app.html" class="btn btn-primary btn-lg">Start coaching with AI →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BANNER ═══ -->
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready to transform your presentations?</h2>
+      <p>Join 5,000+ presenters who already use SlideSage to land deals, ace exams, and impress every room.</p>
+      <div class="cta-btns">
+        <a href="app.html" class="btn btn-primary btn-lg">Start free — no credit card →</a>
+        <a href="pricing.html" class="btn btn-outline btn-lg">View pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="footer-logo">Slide<span>Sage</span> 📊</a>
-        <p class="footer-tagline">AI feedback for better presentations</p>
-        <p class="footer-desc">Upload your deck. Get instant, actionable feedback powered by Claude AI. No account required.</p>
+        <p>AI-powered presentation coaching that turns your slides into your strongest asset. Trusted by 5,000+ presenters worldwide.</p>
+        <form class="footer-newsletter" action="/.netlify/functions/newsletter" method="POST">
+          <input type="email" name="email" placeholder="Your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
       </div>
-      <div class="footer-links-col">
-        <h4>Product</h4>
+      <div class="footer-col">
+        <h5>Product</h5>
         <ul>
           <li><a href="features.html">Features</a></li>
           <li><a href="pricing.html">Pricing</a></li>
           <li><a href="app.html">Try Free</a></li>
+          <li><a href="#">Changelog</a></li>
         </ul>
       </div>
-      <div class="footer-links-col">
-        <h4>Company</h4>
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
         <ul>
           <li><a href="about.html">About</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="mailto:hello@slidesage.io">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </div>
-      <div class="footer-newsletter-col">
-        <h4>Stay Sharp</h4>
-        <p>Get weekly presentation tips in your inbox.</p>
-        <form class="footer-newsletter-form" onsubmit="return false;">
-          <input type="email" placeholder="you@email.com" aria-label="Email address">
-          <button type="submit" class="btn btn-primary">Subscribe</button>
-        </form>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 SlideSage. All rights reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
+      <span class="footer-copy">© 2026 SlideSage Inc. All rights reserved.</span>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+        <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+        <a href="#" class="social-link" aria-label="GitHub">⌥</a>
       </div>
     </div>
   </div>
 </footer>
 
-<script src="js/app.js"></script>
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Timer countdown animation
+  let t = 30;
+  const numEl = document.getElementById('timerNum');
+  if (numEl) {
+    const interval = setInterval(() => {
+      t--;
+      if (t <= 0) { clearInterval(interval); numEl.textContent = '✓'; return; }
+      numEl.textContent = t;
+    }, 1000);
+  }
+</script>
 </body>
 </html>

@@ -1,384 +1,672 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SlideSage Pricing — Simple, Transparent Plans</title>
-  <meta name="description" content="SlideSage pricing plans: Free, Pro $19/mo, Team $49/mo. Start free, upgrade when you need more.">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
-  <link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — SlideSage AI Presentation Coach</title>
+  <!-- SEO -->
+  <meta name="description" content="Simple, transparent pricing for SlideSage. Start free with 3 analyses per month. Upgrade to Pro for unlimited analyses, exports, and priority AI." />
+  <meta name="keywords" content="SlideSage pricing, presentation analyzer free, Pro plan, unlimited analyses, presentation feedback cost, AI presentation tool" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/pricing.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Pricing | SlideSage AI Presentation Coach" />
+  <meta property="og:description" content="Simple, transparent pricing for SlideSage. Start free with 3 analyses per month. Upgrade to Pro for unlimited analyses, exports, and priority AI." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/pricing.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="Pricing | SlideSage AI Presentation Coach" />
+  <meta name="twitter:description" content="Simple, transparent pricing for SlideSage. Start free with 3 analyses per month. Upgrade to Pro for unlimited analyses, exports, and priority AI." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ═══════════════════════════════════════
+       PRICING PAGE — PREMIUM STYLES
+    ═══════════════════════════════════════ */
+
+    /* Shared base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --g: #4ade80; --gd: #16a34a; --bg: #0a0f0a; --card: #141a14;
+      --border: rgba(255,255,255,0.08); --text: #f1f5f1; --muted: #9ca39c;
+    }
+
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0.9rem 0;
+      background: rgba(10,15,10,0.72);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(74,222,128,0.08);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .navbar.scrolled { background: rgba(10,15,10,0.95); box-shadow: 0 2px 24px rgba(0,0,0,0.5); }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; color: #f1f5f1; }
+    .nav-logo span { color: #4ade80; }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; }
+    .nav-links a { padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; color: #9ca39c; transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; border-radius: 10px; transition: all 0.2s; text-decoration: none; cursor: pointer; border: none; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, #4ade80, #16a34a); color: #0a0f0a; padding: 0.55rem 1.25rem; font-size: 0.875rem; box-shadow: 0 0 20px rgba(74,222,128,0.25); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 28px rgba(74,222,128,0.4); }
+    .btn-outline { background: transparent; color: #f1f5f1; padding: 0.55rem 1.25rem; font-size: 0.875rem; border: 1.5px solid rgba(255,255,255,0.18); }
+    .btn-outline:hover { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.06); }
+    .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .btn-full { width: 100%; justify-content: center; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #f1f5f1; border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999; background: rgba(10,15,10,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(74,222,128,0.1); padding: 1.5rem; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 0.5rem; }
+    .mobile-menu ul li a { display: block; padding: 0.75rem 1rem; border-radius: 8px; color: #9ca39c; font-weight: 500; }
+    .mobile-menu ul li a:hover { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 1rem; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 160px 0 90px;
+      text-align: center;
+      background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(74,222,128,0.14) 0%, transparent 65%), #0a0f0a;
+    }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.75rem; }
+    .hero h1 { font-size: clamp(2.8rem, 6vw, 4.2rem); font-weight: 900; line-height: 1.1; letter-spacing: -2.5px; background: linear-gradient(135deg, #ffffff 0%, #c3fac8 50%, #4ade80 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+    .hero p { font-size: 1.15rem; color: #9ca39c; max-width: 480px; margin: 0 auto 2.5rem; }
+
+    /* ── Toggle ── */
+    .billing-toggle {
+      display: inline-flex; align-items: center; gap: 1rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px; padding: 0.35rem 0.35rem 0.35rem 1rem;
+    }
+    .billing-toggle span { font-size: 0.875rem; font-weight: 600; color: #9ca39c; }
+    .billing-toggle span.active-label { color: #f1f5f1; }
+    .toggle-switch { position: relative; width: 52px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: rgba(255,255,255,0.1);
+      border-radius: 100px; cursor: pointer; transition: background 0.3s;
+    }
+    .toggle-slider::after {
+      content: ''; position: absolute; top: 4px; left: 4px;
+      width: 20px; height: 20px; border-radius: 50%; background: #fff;
+      transition: transform 0.3s;
+    }
+    .toggle-switch input:checked + .toggle-slider { background: #16a34a; }
+    .toggle-switch input:checked + .toggle-slider::after { transform: translateX(24px); }
+    .save-badge { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 100px; }
+
+    /* ── Pricing Cards ── */
+    .pricing-section { padding: 80px 0; background: #0a0f0a; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; align-items: start; }
+
+    .plan-card {
+      background: rgba(20,26,20,0.7); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 22px; padding: 2.25rem;
+      position: relative; overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .plan-card:hover { transform: translateY(-4px); box-shadow: 0 24px 64px rgba(0,0,0,0.5); }
+    .plan-card.featured {
+      background: rgba(22,26,22,0.85);
+      border: 1px solid rgba(74,222,128,0.35);
+      box-shadow: 0 0 60px rgba(74,222,128,0.1), 0 24px 64px rgba(0,0,0,0.5);
+      transform: scale(1.025);
+    }
+    .plan-card.featured:hover { transform: scale(1.025) translateY(-4px); }
+    .featured-glow {
+      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+      width: 300px; height: 120px;
+      background: radial-gradient(ellipse, rgba(74,222,128,0.2), transparent 70%);
+      pointer-events: none;
+    }
+    .popular-badge {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: linear-gradient(135deg, #4ade80, #16a34a);
+      color: #0a0f0a; font-size: 0.72rem; font-weight: 800;
+      padding: 0.3rem 0.75rem; border-radius: 100px; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .plan-name { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #4ade80; margin-bottom: 0.5rem; }
+    .plan-desc { font-size: 0.875rem; color: #9ca39c; margin-bottom: 1.75rem; line-height: 1.6; }
+    .plan-price { margin-bottom: 1.75rem; }
+    .price-row { display: flex; align-items: flex-end; gap: 0.25rem; }
+    .price-currency { font-size: 1.4rem; font-weight: 700; color: #f1f5f1; line-height: 1.4; }
+    .price-amount { font-size: 3.5rem; font-weight: 900; color: #f1f5f1; line-height: 1; letter-spacing: -2px; }
+    .price-amount.free { font-size: 2.5rem; letter-spacing: -1px; }
+    .price-period { font-size: 0.875rem; color: #9ca39c; align-self: flex-end; padding-bottom: 0.4rem; }
+    .price-annual { font-size: 0.8rem; color: #4ade80; margin-top: 0.4rem; font-weight: 500; }
+    .price-annual.hidden { visibility: hidden; }
+    .plan-features { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+    .plan-feature { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.875rem; color: #d1fae5; }
+    .plan-feature .check { color: #4ade80; flex-shrink: 0; font-size: 0.8rem; margin-top: 2px; }
+    .plan-feature .cross { color: #6b7b6b; flex-shrink: 0; font-size: 0.8rem; margin-top: 2px; }
+
+    /* ── Comparison Table ── */
+    .comparison { padding: 80px 0; background: #0d1410; }
+    .comparison h2 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; color: #f1f5f1; text-align: center; margin-bottom: 3rem; }
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table th, .compare-table td { padding: 1.1rem 1.25rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .compare-table thead th { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca39c; background: rgba(255,255,255,0.02); }
+    .compare-table thead th.plan-col { text-align: center; }
+    .compare-table thead th.featured-col { color: #4ade80; }
+    .compare-table td.feature-name { font-size: 0.9rem; color: #d1fae5; font-weight: 500; }
+    .compare-table td.val { text-align: center; font-size: 0.875rem; color: #9ca39c; font-weight: 500; }
+    .compare-table td.val .check-icon { color: #4ade80; font-size: 1rem; }
+    .compare-table td.val .x-icon { color: #374737; font-size: 1rem; }
+    .compare-table td.val .val-str { color: #f1f5f1; font-weight: 600; }
+    .compare-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .compare-table .section-row td { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #4ade80; padding: 1.5rem 1.25rem 0.75rem; background: transparent; border-bottom: none; }
+
+    /* ── FAQ ── */
+    .faq-section { padding: 80px 0; background: #0a0f0a; }
+    .faq-section h2 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; color: #f1f5f1; text-align: center; margin-bottom: 3rem; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .faq-item {
+      background: rgba(20,26,20,0.7); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .faq-item:hover { border-color: rgba(74,222,128,0.2); }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 1.5rem; cursor: pointer; gap: 1rem; font-family: inherit;
+      background: transparent; width: 100%; text-align: left;
+    }
+    .faq-question span { font-size: 0.925rem; font-weight: 600; color: #f1f5f1; }
+    .faq-toggle {
+      width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: #9ca39c; font-size: 1.1rem; font-weight: 400;
+      transition: all 0.25s; line-height: 1;
+    }
+    .faq-item.open .faq-toggle { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.25); color: #4ade80; transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-answer-inner { padding: 0 1.5rem 1.25rem; font-size: 0.875rem; color: #9ca39c; line-height: 1.75; }
+
+    /* ── Trust Section ── */
+    .trust-section { padding: 80px 0; background: #0d1410; }
+    .trust-section h2 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; color: #f1f5f1; text-align: center; margin-bottom: 0.5rem; }
+    .trust-sub { text-align: center; color: #9ca39c; margin-bottom: 3rem; font-size: 1rem; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
+    .testimonial-card {
+      background: rgba(20,26,20,0.7); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 1.75rem; position: relative;
+    }
+    .testimonial-card::before { content: '"'; position: absolute; top: 1rem; right: 1.25rem; font-size: 4rem; color: rgba(74,222,128,0.12); font-family: Georgia, serif; line-height: 1; }
+    .testimonial-stars { color: #facc15; font-size: 0.875rem; margin-bottom: 0.75rem; }
+    .testimonial-text { font-size: 0.9rem; color: #d1fae5; line-height: 1.75; margin-bottom: 1.25rem; }
+    .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+    .author-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #4ade80, #16a34a); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; color: #0a0f0a; flex-shrink: 0; }
+    .author-name { font-size: 0.875rem; font-weight: 700; color: #f1f5f1; }
+    .author-role { font-size: 0.775rem; color: #9ca39c; }
+    .guarantee {
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+      background: rgba(20,26,20,0.7); border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 16px; padding: 1.75rem 2.5rem; max-width: 560px; margin: 0 auto;
+    }
+    .guarantee-badge { font-size: 2.5rem; flex-shrink: 0; }
+    .guarantee-text h4 { font-size: 1rem; font-weight: 800; color: #f1f5f1; margin-bottom: 0.25rem; }
+    .guarantee-text p { font-size: 0.875rem; color: #9ca39c; line-height: 1.6; }
+
+    /* ── CTA Banner ── */
+    .cta-banner { padding: 80px 0; background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(74,222,128,0.1) 0%, transparent 70%), #0a0f0a; }
+    .cta-box { background: rgba(20,26,20,0.8); border: 1px solid rgba(74,222,128,0.2); border-radius: 24px; padding: 4rem 3rem; text-align: center; box-shadow: 0 24px 64px rgba(0,0,0,0.5); }
+    .cta-box h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -1px; color: #f1f5f1; margin-bottom: 0.75rem; }
+    .cta-box p { font-size: 1.05rem; color: #9ca39c; margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    .footer { background: #0d1a00; border-top: 1px solid rgba(74,222,128,0.1); padding: 72px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand .footer-logo { font-size: 1.3rem; font-weight: 800; color: #f1f5f1; margin-bottom: 0.75rem; display: block; letter-spacing: -0.5px; }
+    .footer-brand .footer-logo span { color: #4ade80; }
+    .footer-brand p { font-size: 0.875rem; color: #9ca39c; line-height: 1.7; margin-bottom: 1.5rem; }
+    .footer-newsletter { display: flex; gap: 0.5rem; }
+    .footer-newsletter input { flex: 1; padding: 0.6rem 1rem; font-size: 0.875rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #f1f5f1; }
+    .footer-newsletter button { padding: 0.6rem 1.1rem; background: #16a34a; color: #fff; border-radius: 10px; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; font-family: inherit; }
+    .footer-col h5 { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #4ade80; margin-bottom: 1.1rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 0.5rem; list-style: none; }
+    .footer-col ul li a { font-size: 0.875rem; color: #9ca39c; transition: color 0.2s; text-decoration: none; }
+    .footer-col ul li a:hover { color: #f1f5f1; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.825rem; color: #6b7b6b; }
+    .social-links { display: flex; gap: 0.6rem; }
+    .social-link { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #9ca39c; transition: all 0.2s; text-decoration: none; }
+    .social-link:hover { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.25); color: #4ade80; }
+
+    @media (max-width: 960px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin-left: auto; margin-right: auto; }
+      .plan-card.featured { transform: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .compare-table { font-size: 0.8rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1/-1; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 120px 0 60px; }
+      .cta-box { padding: 2.5rem 1.5rem; }
+      .guarantee { flex-direction: column; text-align: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="navbar">
-  <div class="navbar-inner">
-    <a href="index.html" class="navbar-logo">
-      <div class="navbar-logo-icon">🌿</div>
-      SlideSage
-    </a>
-    <nav class="navbar-nav">
-      <a href="features.html">Features</a>
-      <a href="pricing.html" style="color:var(--color-primary)">Pricing</a>
-      <a href="blog.html">Blog</a>
-      <a href="about.html">About</a>
-    </nav>
-    <div class="navbar-actions">
-      <a href="app.html" class="btn btn-primary">Try Free →</a>
-      <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Slide<span>Sage</span> 📊</a>
+      <ul class="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html" class="active">Pricing</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="app.html" class="btn btn-primary">Try Free →</a>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      </div>
     </div>
   </div>
-  <nav class="navbar-mobile">
-    <a href="features.html">Features</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="blog.html">Blog</a>
-    <a href="about.html">About</a>
-    <a href="app.html" class="btn btn-primary" style="margin-top:0.5rem;justify-content:center">Try Free →</a>
-  </nav>
-</header>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="app.html" class="btn btn-primary">Try Free →</a>
+</div>
 
-<!-- Hero -->
-<section style="background:linear-gradient(180deg,var(--color-light-green) 0%,#fff 100%);padding:5rem 0 4rem;text-align:center">
+<!-- ═══ HERO ═══ -->
+<section class="hero">
   <div class="container">
-    <span class="section-label">Pricing</span>
-    <h1 style="font-size:clamp(2rem,4vw,3.25rem);font-weight:900;letter-spacing:-0.04em;margin:1rem 0 1.25rem">Simple, transparent pricing</h1>
-    <p style="font-size:1.125rem;color:var(--color-muted);max-width:500px;margin:0 auto">
-      Start free. Upgrade when you need more. No hidden fees, no contracts, cancel anytime.
-    </p>
+    <div class="hero-badge">💳 No credit card required</div>
+    <h1>Simple Pricing.<br>Serious Results.</h1>
+    <p>Start free. Upgrade when you're ready. Cancel anytime, no questions asked.</p>
+    <div class="billing-toggle">
+      <span id="monthly-label" class="active-label">Monthly</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="billing-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+      <span id="annual-label">Annual</span>
+      <span class="save-badge">Save 20%</span>
+    </div>
   </div>
 </section>
 
-<!-- Pricing Cards -->
-<section class="section" style="padding-top:3rem">
+<!-- ═══ PRICING CARDS ═══ -->
+<section class="pricing-section">
   <div class="container">
     <div class="pricing-grid">
-      <!-- Free -->
-      <div class="pricing-card">
-        <div class="pricing-name">Free</div>
-        <div class="pricing-price">
-          <span class="currency">$</span>
-          <span class="amount">0</span>
-          <span class="period">/month</span>
+
+      <!-- Starter -->
+      <div class="plan-card">
+        <div class="plan-name">Starter</div>
+        <p class="plan-desc">Perfect for trying out SlideSage and occasional presentations.</p>
+        <div class="plan-price">
+          <div class="price-row">
+            <span class="price-amount free">Free</span>
+          </div>
+          <div class="price-annual" style="color:#9ca39c">Always free, no credit card</div>
         </div>
-        <p class="pricing-desc">Perfect for occasional users and trying out SlideSage. No credit card required.</p>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span>3 analyses per month</div>
-          <div class="pricing-feature"><span class="check">✓</span>Slide-by-slide feedback</div>
-          <div class="pricing-feature"><span class="check">✓</span>Overall score (0-100)</div>
-          <div class="pricing-feature"><span class="check">✓</span>Top 3 recommendations</div>
-          <div class="pricing-feature"><span class="check">✓</span>Basic text report</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>PDF &amp; Word export</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>Priority analysis</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>Analysis history</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>API access</div>
+        <a href="app.html" class="btn btn-outline btn-full" style="padding:0.85rem; font-size:0.925rem; justify-content:center; border-radius:12px; margin-bottom:1.75rem;">Get started free</a>
+        <div class="plan-features">
+          <div class="plan-feature"><span class="check">✓</span>3 analyses per month</div>
+          <div class="plan-feature"><span class="check">✓</span>Basic AI feedback report</div>
+          <div class="plan-feature"><span class="check">✓</span>Slide scoring (Content & Clarity)</div>
+          <div class="plan-feature"><span class="check">✓</span>Community support</div>
+          <div class="plan-feature"><span class="check">✓</span>Up to 10 slides per deck</div>
+          <div class="plan-feature"><span class="cross">✕</span>PDF / Word export</div>
+          <div class="plan-feature"><span class="cross">✕</span>Analysis history</div>
+          <div class="plan-feature"><span class="cross">✕</span>Shareable links</div>
         </div>
-        <div class="pricing-divider"></div>
-        <a href="app.html" class="btn btn-secondary" style="width:100%;justify-content:center">Get Started Free</a>
-        <p style="text-align:center;font-size:0.8125rem;color:var(--color-muted);margin-top:0.875rem">No credit card needed</p>
       </div>
 
       <!-- Pro -->
-      <div class="pricing-card featured" style="position:relative">
-        <div class="pricing-badge">MOST POPULAR</div>
-        <div class="pricing-name">Pro</div>
-        <div class="pricing-price">
-          <span class="currency">$</span>
-          <span class="amount">19</span>
-          <span class="period">/month</span>
+      <div class="plan-card featured">
+        <div class="featured-glow"></div>
+        <div class="popular-badge">Most Popular</div>
+        <div class="plan-name">Pro</div>
+        <p class="plan-desc">For professionals who present regularly and need every edge.</p>
+        <div class="plan-price">
+          <div class="price-row">
+            <span class="price-currency">$</span>
+            <span class="price-amount" id="pro-price">19</span>
+            <span class="price-period">/month</span>
+          </div>
+          <div class="price-annual" id="pro-annual">Billed annually — save $48/yr</div>
         </div>
-        <p class="pricing-desc">For professionals who present regularly and need the complete toolkit.</p>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span>Unlimited analyses</div>
-          <div class="pricing-feature"><span class="check">✓</span>Everything in Free</div>
-          <div class="pricing-feature"><span class="check">✓</span>PDF &amp; Word export</div>
-          <div class="pricing-feature"><span class="check">✓</span>Priority analysis queue</div>
-          <div class="pricing-feature"><span class="check">✓</span>Full analysis history</div>
-          <div class="pricing-feature"><span class="check">✓</span>Email reports</div>
-          <div class="pricing-feature"><span class="check">✓</span>Multilingual support</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>Team collaboration</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>API access</div>
+        <a href="app.html" class="btn btn-primary btn-full" style="padding:0.85rem; font-size:0.925rem; justify-content:center; border-radius:12px; margin-bottom:1.75rem;">Start Pro →</a>
+        <div class="plan-features">
+          <div class="plan-feature"><span class="check">✓</span>Unlimited analyses</div>
+          <div class="plan-feature"><span class="check">✓</span>Full AI feedback (50+ points/slide)</div>
+          <div class="plan-feature"><span class="check">✓</span>All 4 score dimensions</div>
+          <div class="plan-feature"><span class="check">✓</span>PDF & Word export</div>
+          <div class="plan-feature"><span class="check">✓</span>Full analysis history</div>
+          <div class="plan-feature"><span class="check">✓</span>Shareable report links</div>
+          <div class="plan-feature"><span class="check">✓</span>Multilingual (6 languages)</div>
+          <div class="plan-feature"><span class="check">✓</span>Priority AI processing</div>
         </div>
-        <div class="pricing-divider"></div>
-        <a href="app.html" class="btn btn-primary" style="width:100%;justify-content:center">Start 7-Day Free Trial →</a>
-        <p style="text-align:center;font-size:0.8125rem;color:var(--color-muted);margin-top:0.875rem">Cancel anytime. No questions asked.</p>
       </div>
 
       <!-- Team -->
-      <div class="pricing-card">
-        <div class="pricing-name">Team</div>
-        <div class="pricing-price">
-          <span class="currency">$</span>
-          <span class="amount">49</span>
-          <span class="period">/month</span>
+      <div class="plan-card">
+        <div class="plan-name">Team</div>
+        <p class="plan-desc">For organizations that present together and win together.</p>
+        <div class="plan-price">
+          <div class="price-row">
+            <span class="price-currency">$</span>
+            <span class="price-amount" id="team-price">49</span>
+            <span class="price-period">/month</span>
+          </div>
+          <div class="price-annual" id="team-annual">Billed annually — save $120/yr</div>
         </div>
-        <p class="pricing-desc">For teams that present together and need collaboration, API access, and white-label reports.</p>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span>5 team seats (add more $8/seat)</div>
-          <div class="pricing-feature"><span class="check">✓</span>Everything in Pro</div>
-          <div class="pricing-feature"><span class="check">✓</span>Team dashboard</div>
-          <div class="pricing-feature"><span class="check">✓</span>Shared analysis library</div>
-          <div class="pricing-feature"><span class="check">✓</span>REST API access</div>
-          <div class="pricing-feature"><span class="check">✓</span>White-label PDF reports</div>
-          <div class="pricing-feature"><span class="check">✓</span>Priority support</div>
-          <div class="pricing-feature"><span class="check">✓</span>Custom branding</div>
-          <div class="pricing-feature"><span class="check">✓</span>SSO / SAML (enterprise)</div>
+        <a href="app.html" class="btn btn-outline btn-full" style="padding:0.85rem; font-size:0.925rem; justify-content:center; border-radius:12px; margin-bottom:1.75rem;">Start Team trial →</a>
+        <div class="plan-features">
+          <div class="plan-feature"><span class="check">✓</span>Everything in Pro</div>
+          <div class="plan-feature"><span class="check">✓</span>5 team seats included</div>
+          <div class="plan-feature"><span class="check">✓</span>Shared team workspace</div>
+          <div class="plan-feature"><span class="check">✓</span>API access (1,000 calls/mo)</div>
+          <div class="plan-feature"><span class="check">✓</span>White-label PDF reports</div>
+          <div class="plan-feature"><span class="check">✓</span>Dedicated account manager</div>
+          <div class="plan-feature"><span class="check">✓</span>99.9% uptime SLA</div>
+          <div class="plan-feature"><span class="check">✓</span>SAML SSO &amp; audit logs</div>
         </div>
-        <div class="pricing-divider"></div>
-        <a href="about.html#contact" class="btn btn-secondary" style="width:100%;justify-content:center">Start Team Trial</a>
-        <p style="text-align:center;font-size:0.8125rem;color:var(--color-muted);margin-top:0.875rem">7-day free trial included</p>
       </div>
-    </div>
 
-    <!-- Guarantee -->
-    <div style="text-align:center;margin-top:3rem">
-      <div class="guarantee-badge" style="display:inline-flex">
-        <div class="guarantee-icon">🛡️</div>
-        <div class="guarantee-text">
-          <h4>30-Day Money-Back Guarantee</h4>
-          <p>Not happy? Get a full refund within 30 days. No questions asked, no paperwork.</p>
-        </div>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- Comparison Table -->
-<section class="section" style="padding-top:2rem">
+<!-- ═══ COMPARISON TABLE ═══ -->
+<section class="comparison">
   <div class="container">
-    <div class="section-header">
-      <h2>Full Feature Comparison</h2>
-    </div>
-    <div style="overflow-x:auto">
-      <table class="comparison-table">
+    <h2>Compare all features</h2>
+    <div style="overflow-x:auto;">
+      <table class="compare-table">
         <thead>
           <tr>
-            <th>Feature</th>
-            <th>Free</th>
-            <th>Pro</th>
-            <th>Team</th>
+            <th style="width:40%">Feature</th>
+            <th class="plan-col" style="width:20%">Starter</th>
+            <th class="plan-col featured-col" style="width:20%">Pro</th>
+            <th class="plan-col" style="width:20%">Team</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Monthly analyses</td>
-            <td>3</td>
-            <td>Unlimited</td>
-            <td>Unlimited</td>
-          </tr>
-          <tr>
-            <td>Slide-by-slide feedback</td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Overall score (0-100)</td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Top 3 recommendations</td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>PDF export</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Word export</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Priority analysis</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Analysis history</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Email reports</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Team dashboard</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>API access</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>White-label reports</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Custom branding</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
-          <tr>
-            <td>Priority support</td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-no">—</span></td>
-            <td><span class="check-yes">✓</span></td>
-          </tr>
+          <tr class="section-row"><td colspan="4">Core Features</td></tr>
+          <tr><td class="feature-name">Analyses per month</td><td class="val"><span class="val-str">3</span></td><td class="val"><span class="val-str">Unlimited</span></td><td class="val"><span class="val-str">Unlimited</span></td></tr>
+          <tr><td class="feature-name">Slides per deck</td><td class="val"><span class="val-str">10</span></td><td class="val"><span class="val-str">50</span></td><td class="val"><span class="val-str">100</span></td></tr>
+          <tr><td class="feature-name">AI feedback points per slide</td><td class="val"><span class="val-str">10</span></td><td class="val"><span class="val-str">50+</span></td><td class="val"><span class="val-str">50+</span></td></tr>
+          <tr><td class="feature-name">Score dimensions</td><td class="val"><span class="val-str">2</span></td><td class="val"><span class="val-str">4</span></td><td class="val"><span class="val-str">4</span></td></tr>
+          <tr class="section-row"><td colspan="4">Reports &amp; Export</td></tr>
+          <tr><td class="feature-name">PDF export</td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="check-icon">✓</span></td><td class="val"><span class="check-icon">✓</span></td></tr>
+          <tr><td class="feature-name">Word (.docx) export</td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="check-icon">✓</span></td><td class="val"><span class="check-icon">✓</span></td></tr>
+          <tr><td class="feature-name">White-label reports</td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="check-icon">✓</span></td></tr>
+          <tr><td class="feature-name">Shareable links</td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="check-icon">✓</span></td><td class="val"><span class="check-icon">✓</span></td></tr>
+          <tr class="section-row"><td colspan="4">Advanced</td></tr>
+          <tr><td class="feature-name">Analysis history</td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="check-icon">✓</span></td><td class="val"><span class="check-icon">✓</span></td></tr>
+          <tr><td class="feature-name">Multilingual (6 languages)</td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="check-icon">✓</span></td><td class="val"><span class="check-icon">✓</span></td></tr>
+          <tr><td class="feature-name">API access</td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="x-icon">✕</span></td><td class="val"><span class="check-icon">✓</span></td></tr>
+          <tr><td class="feature-name">Team seats</td><td class="val"><span class="val-str">1</span></td><td class="val"><span class="val-str">1</span></td><td class="val"><span class="val-str">5</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="section" style="background:var(--color-surface)">
+<!-- ═══ FAQ ═══ -->
+<section class="faq-section">
   <div class="container">
-    <div class="section-header">
-      <span class="section-label">FAQ</span>
-      <h2>Frequently Asked Questions</h2>
+    <h2>Frequently asked questions</h2>
+    <div class="faq-grid">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Is the free plan really free?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes, 100% free with no credit card required. You get 3 full analyses per month on the Starter plan, forever. We'll never charge you without your consent.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What file formats are supported?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">SlideSage supports PowerPoint (.pptx), Google Slides (via link or export), Keynote (.key), and PDF presentations. More formats are being added regularly.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How accurate is the AI feedback?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Our feedback is powered by GPT-4o with custom presentation-tuned prompts developed with communication experts. Users consistently rate the feedback as highly actionable. That said, AI feedback complements — not replaces — human judgment.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I cancel anytime?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Cancel with one click from your account settings. There's no lock-in, no cancellation fee, and no lengthy process. Your plan stays active until the end of your billing period.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Is my presentation data secure?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Your privacy is our priority. Presentation files are encrypted in transit and at rest. Files are automatically deleted from our servers after analysis completes — we never store your slides long-term. We also never use your content to train AI models.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Do you offer refunds?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes — we offer a full 30-day money-back guarantee, no questions asked. If you're not satisfied within 30 days of your first paid charge, contact us and we'll refund you completely.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Can I use SlideSage for client work?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes! Pro and Team plans allow commercial use, including using SlideSage to analyze and improve presentations for your clients. Team plans include white-label PDF reports you can send directly to clients under your own brand.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Is there an API available?</span>
+          <div class="faq-toggle">+</div>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes, the SlideSage API is available on the Team plan with 1,000 calls/month included. You can programmatically submit presentations and retrieve analysis results. Documentation is available in our developer portal.</div></div>
+      </div>
+
     </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-trigger">
-          Do I need a credit card to start?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          No. The Free plan requires no credit card. You can analyze up to 3 presentations per month completely free. We only ask for payment information when you choose to upgrade to Pro or Team.
+  </div>
+</section>
+
+<!-- ═══ TRUST ═══ -->
+<section class="trust-section">
+  <div class="container">
+    <h2>Join 5,000+ presenters</h2>
+    <p class="trust-sub">Trusted by sales professionals, students, executives, and coaches worldwide.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"SlideSage flagged three structural issues in my investor deck that I'd completely missed. After fixing them, we closed our seed round within two weeks."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JL</div>
+          <div><div class="author-name">Jamie Liu</div><div class="author-role">Co-founder, FinTech startup</div></div>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-trigger">
-          Is my presentation data private?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          Yes. Your presentation files are never stored permanently on our servers. Files are processed in-memory during analysis and immediately discarded. We store only the analysis results, not your actual file content, and only if you're logged in.
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"I use SlideSage before every client pitch. The AI catches things I'm too close to see. My close rate went up 30% in the first quarter I started using it."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MR</div>
+          <div><div class="author-name">Marcus Rodriguez</div><div class="author-role">Senior Account Executive, SaaS</div></div>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-trigger">
-          What file formats are supported?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          Currently SlideSage supports .pptx (PowerPoint) files. Support for .ppt (older PowerPoint), .key (Keynote), and .odp (OpenDocument) is coming soon. Maximum file size is 50MB.
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"As a communication coach, I use SlideSage to pre-screen client decks. It saves me two hours per session and lets me focus on the high-impact coaching moments."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SK</div>
+          <div><div class="author-name">Sophie Kim</div><div class="author-role">Executive Coach, New York</div></div>
         </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-trigger">
-          Can I cancel my subscription anytime?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          Absolutely. Cancel anytime from your account settings with one click. Your subscription remains active until the end of the billing period. We also offer a 30-day money-back guarantee — no questions asked.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">
-          How does the 7-day free trial work?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          When you sign up for Pro or Team, you get 7 full days to try all features for free. You won't be charged until after the trial ends. Cancel before the trial ends and you won't pay anything.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">
-          Does SlideSage support languages other than English?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          Yes! SlideSage analyzes presentations in 20+ languages including Spanish, French, German, Japanese, Chinese, Portuguese, Italian, Dutch, Korean, and more. The AI automatically detects the language of your presentation.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">
-          Is there an API for developers?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          Yes, API access is included in the Team plan. The REST API lets you programmatically analyze presentations, retrieve reports, and integrate SlideSage into your own tools and workflows. Documentation is available in the developer portal.
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-trigger">
-          What payment methods do you accept?
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          We accept all major credit cards (Visa, Mastercard, Amex), as well as PayPal. For Team plans, we also support invoicing and bank transfers. All payments are processed securely through Stripe.
-        </div>
+    </div>
+    <div class="guarantee">
+      <div class="guarantee-badge">🛡️</div>
+      <div class="guarantee-text">
+        <h4>30-Day Money-Back Guarantee</h4>
+        <p>Not satisfied? Get a full refund within 30 days. Zero risk, zero hassle. We stand behind SlideSage completely.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
+<!-- ═══ CTA ═══ -->
+<section class="cta-banner">
   <div class="container">
-    <h2>Start for free today</h2>
-    <p>No credit card. No signup required. Just upload and analyze.</p>
-    <div class="cta-buttons">
-      <a href="app.html" class="btn btn-white btn-lg">Analyze My Slides Free →</a>
+    <div class="cta-box">
+      <h2>Start presenting with confidence today</h2>
+      <p>Join 5,000+ presenters. No credit card. No risk. Just better slides.</p>
+      <div class="cta-btns">
+        <a href="app.html" class="btn btn-primary btn-lg">Get started free →</a>
+        <a href="features.html" class="btn btn-outline btn-lg">See all features</a>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="container">
-    <div class="footer-inner">
+    <div class="footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="navbar-logo">
-          <div class="navbar-logo-icon">🌿</div>
-          SlideSage
-        </a>
-        <p>AI-powered presentation analysis that helps you communicate better, faster.</p>
+        <a href="index.html" class="footer-logo">Slide<span>Sage</span> 📊</a>
+        <p>AI-powered presentation coaching that turns your slides into your strongest asset. Trusted by 5,000+ presenters worldwide.</p>
+        <form class="footer-newsletter" action="/.netlify/functions/newsletter" method="POST">
+          <input type="email" name="email" placeholder="Your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
       </div>
       <div class="footer-col">
-        <h4>Product</h4>
-        <ul><li><a href="features.html">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="app.html">Try Free</a></li></ul>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="app.html">Try Free</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
-        <ul><li><a href="about.html">About</a></li><li><a href="blog.html">Blog</a></li><li><a href="about.html#contact">Contact</a></li></ul>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
       </div>
       <div class="footer-col">
-        <h4>Legal</h4>
-        <ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 SlideSage. All rights reserved.</span>
-      <span>Made with 🌿 for better presentations</span>
+      <span class="footer-copy">© 2026 SlideSage Inc. All rights reserved.</span>
+      <div class="social-links">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">⌥</a>
+      </div>
     </div>
   </div>
 </footer>
 
-<div class="toast-container"></div>
-<script src="js/app.js"></script>
+<script>
+  // Navbar
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('open'));
+
+  // Billing toggle
+  const toggle = document.getElementById('billing-toggle');
+  const proPrice = document.getElementById('pro-price');
+  const teamPrice = document.getElementById('team-price');
+  const proAnnual = document.getElementById('pro-annual');
+  const teamAnnual = document.getElementById('team-annual');
+  const monthlyLabel = document.getElementById('monthly-label');
+  const annualLabel = document.getElementById('annual-label');
+
+  toggle.addEventListener('change', () => {
+    const annual = toggle.checked;
+    proPrice.textContent = annual ? '15' : '19';
+    teamPrice.textContent = annual ? '39' : '49';
+    proAnnual.textContent = annual ? 'Billed as $180/year — you save $48' : 'Billed annually — save $48/yr';
+    teamAnnual.textContent = annual ? 'Billed as $468/year — you save $120' : 'Billed annually — save $120/yr';
+    monthlyLabel.classList.toggle('active-label', !annual);
+    annualLabel.classList.toggle('active-label', annual);
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = '0';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
 </body>
 </html>

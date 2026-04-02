@@ -1,348 +1,1296 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SlideSage — AI Feedback for Your Presentations in 30 Seconds</title>
-  <meta name="description" content="Upload your PowerPoint. Get slide-by-slide AI analysis instantly. No signup required. Trusted by 5,000+ presenters.">
-  <meta property="og:title" content="SlideSage — AI Feedback for Your Presentations in 30 Seconds">
-  <meta property="og:description" content="Upload your PowerPoint and get instant AI-powered slide analysis. No signup required.">
-  <meta property="og:type" content="website">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
-  <link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SlideSage — AI-Powered Presentation Analysis</title>
+  <!-- SEO -->
+  <meta name="description" content="Get instant AI feedback on your PowerPoint presentations. SlideSage analyzes every slide and gives you a professional score in 30 seconds. Free to start." />
+  <meta name="keywords" content="AI presentation analyzer, PowerPoint feedback, presentation score, slide analysis, GPT-4o presentation, presentation coach" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="SlideSage — AI-Powered Presentation Analysis" />
+  <meta property="og:description" content="Get instant AI feedback on your PowerPoint presentations. SlideSage analyzes every slide and gives you a professional score in 30 seconds. Free to start." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="SlideSage — AI-Powered Presentation Analysis" />
+  <meta name="twitter:description" content="Get instant AI feedback on your PowerPoint presentations. SlideSage analyzes every slide and gives you a professional score in 30 seconds. Free to start." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SlideSage",
+    "description": "AI-powered PowerPoint presentation analyzer",
+    "url": "https://slidesage-app.netlify.app",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "5000"
+    }
+  }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dim: #16a34a;
+      --green-glow: rgba(34,197,94,0.18);
+      --green-glow-strong: rgba(34,197,94,0.35);
+      --navy: #080c14;
+      --navy2: #0d1117;
+      --navy3: #111827;
+      --surface: rgba(255,255,255,0.04);
+      --surface2: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(34,197,94,0.25);
+      --text: #f1f5f9;
+      --text-muted: #64748b;
+      --text-muted2: #94a3b8;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy2); }
+    ::-webkit-scrollbar-thumb { background: #1e3a2e; border-radius: 3px; }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(8,12,20,0.7);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1rem,4vw,2.5rem);
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+    }
+    .navbar.scrolled { background: rgba(8,12,20,0.92); }
+
+    .nav-logo {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.35rem; font-weight: 800;
+      background: linear-gradient(135deg, #22c55e 0%, #86efac 50%, #22c55e 100%);
+      background-size: 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 4s linear infinite;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo::before {
+      content: '';
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 0 12px var(--green-glow-strong);
+      flex-shrink: 0;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted2); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      position: relative; padding-bottom: 2px;
+      transition: color var(--transition);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--green);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .btn-ghost {
+      color: var(--text-muted2); background: none; border: none;
+      font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .btn-ghost:hover { color: var(--text); }
+
+    .btn-primary {
+      position: relative; display: inline-flex; align-items: center; gap: 6px;
+      padding: 0.5rem 1.25rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; font-size: 0.9rem; font-weight: 600;
+      border: none; border-radius: 10px; cursor: pointer;
+      text-decoration: none;
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    .btn-primary:hover::before { transform: translateX(100%); }
+    .btn-primary:hover {
+      box-shadow: 0 0 24px var(--green-glow-strong), 0 4px 16px rgba(0,0,0,0.4);
+      transform: translateY(-1px);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 7rem clamp(1rem,5vw,3rem) 4rem;
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(34,197,94,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(34,197,94,0.04) 0%, transparent 60%),
+        var(--navy);
+    }
+
+    /* Grid overlay */
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 70%);
+      top: 10%; left: 5%; animation: float1 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(34,197,94,0.08), transparent 70%);
+      top: 20%; right: 5%; animation: float2 10s ease-in-out infinite;
+    }
+    .orb-3 {
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(34,197,94,0.06), transparent 70%);
+      bottom: 15%; left: 30%; animation: float1 12s ease-in-out infinite reverse;
+    }
+
+    @keyframes float1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(20px,-20px) scale(1.05); }
+      66% { transform: translate(-15px,15px) scale(0.95); }
+    }
+    @keyframes float2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-25px,15px) scale(1.08); }
+    }
+
+    .hero-inner { position: relative; z-index: 1; text-align: center; max-width: 900px; width: 100%; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600;
+      color: #86efac;
+      margin-bottom: 1.5rem;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    .badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.1); }
+      50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    }
+    @keyframes pulseDot {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.7; }
+    }
+
+    .hero h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 30%, #86efac 55%, #22c55e 75%, #f1f5f9 100%);
+      background-size: 300%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 6s linear infinite;
+    }
+    @keyframes shimmerText {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text-muted2);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-ctas {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .btn-hero {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.85rem 2rem;
+      font-size: 1rem; font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer; text-decoration: none;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .btn-hero-primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      box-shadow: 0 0 30px rgba(34,197,94,0.25), 0 4px 20px rgba(0,0,0,0.3);
+      border: none;
+    }
+    .btn-hero-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      transform: translateX(-100%);
+    }
+    .btn-hero-primary:hover::before { animation: shimmerBtn 0.6s ease forwards; }
+    .btn-hero-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(34,197,94,0.4), 0 8px 30px rgba(0,0,0,0.4);
+    }
+    @keyframes shimmerBtn {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
+    .btn-hero-ghost {
+      background: transparent;
+      color: var(--text-muted2);
+      border: 1px solid var(--border);
+    }
+    .btn-hero-ghost:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+      background: var(--surface);
+      transform: translateY(-2px);
+    }
+
+    /* Trust bar */
+    .trust-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; flex-wrap: wrap;
+      color: var(--text-muted); font-size: 0.82rem; font-weight: 500;
+    }
+    .trust-bar span { color: var(--text-muted); }
+    .trust-pill {
+      padding: 3px 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--text-muted2);
+      letter-spacing: 0.01em;
+    }
+
+    /* Hero mockup */
+    .hero-mockup-wrap {
+      position: relative; z-index: 1;
+      margin-top: 4rem;
+      width: 100%; max-width: 900px;
+    }
+    .hero-mockup-glow {
+      position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+      width: 70%; height: 60px;
+      background: radial-gradient(ellipse, rgba(34,197,94,0.35), transparent 70%);
+      filter: blur(20px);
+    }
+    .hero-mockup {
+      background: linear-gradient(160deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .mockup-titlebar {
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .mockup-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .mockup-dot.red { background: #ef4444; }
+    .mockup-dot.yellow { background: #f59e0b; }
+    .mockup-dot.green { background: #22c55e; }
+    .mockup-url {
+      flex: 1; background: rgba(255,255,255,0.04); border-radius: 6px;
+      padding: 4px 10px; font-size: 0.72rem; color: var(--text-muted); text-align: center;
+      margin: 0 20px;
+    }
+    .mockup-body {
+      display: grid; grid-template-columns: 240px 1fr;
+      min-height: 380px;
+    }
+    .mockup-sidebar {
+      border-right: 1px solid var(--border);
+      padding: 20px;
+    }
+    .mockup-score-ring {
+      width: 100px; height: 100px; margin: 0 auto 16px;
+      position: relative;
+    }
+    .mockup-score-ring svg { transform: rotate(-90deg); }
+    .mockup-score-ring .score-val {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-size: 1.8rem; font-weight: 800; color: var(--green);
+      font-family: 'Manrope',sans-serif;
+    }
+    .mockup-label { font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-bottom: 14px; }
+    .mini-gauge { margin-bottom: 10px; }
+    .mini-gauge-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-muted2); margin-bottom: 4px; }
+    .mini-gauge-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .mini-gauge-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #22c55e, #86efac); }
+    .mockup-main { padding: 20px; }
+    .mockup-section-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 12px; }
+    .mockup-rec-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .rec-num {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700; color: var(--green); flex-shrink: 0;
+    }
+    .rec-text { font-size: 0.72rem; color: var(--text-muted2); line-height: 1.4; }
+    .rec-text strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
+    .slide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .slide-thumb {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      aspect-ratio: 16/10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px; font-size: 0.62rem; color: var(--text-muted);
+      position: relative; overflow: hidden;
+    }
+    .slide-thumb::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .slide-thumb.good::before { background: var(--green); }
+    .slide-thumb.warn::before { background: #f59e0b; }
+    .slide-thumb.bad::before { background: #ef4444; }
+    .slide-score { font-size: 0.8rem; font-weight: 700; }
+    .slide-thumb.good .slide-score { color: var(--green); }
+    .slide-thumb.warn .slide-score { color: #f59e0b; }
+    .slide-thumb.bad .slide-score { color: #ef4444; }
+
+    /* ─── MARQUEE ─── */
+    .marquee-section {
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.01);
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 2rem;
+      width: max-content;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .marquee-badge {
+      padding: 8px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--text-muted2);
+      white-space: nowrap;
+    }
+
+    /* ─── SECTION BASICS ─── */
+    section { padding: clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem); }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--green);
+      padding: 4px 12px;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Manrope',sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: clamp(1rem,2vw,1.15rem);
+      color: var(--text-muted2);
+      max-width: 540px;
+    }
+    .text-center { text-align: center; margin-left: auto; margin-right: auto; }
+
+    /* ─── HOW IT WORKS ─── */
+    .hiw { background: #0a0f1a; }
+    .hiw-header { text-align: center; margin-bottom: 4rem; }
+    .hiw-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; position: relative; }
+    .hiw-steps::before {
+      content: '';
+      position: absolute; top: 60px; left: 15%; right: 15%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green-glow-strong), var(--green-glow-strong), transparent);
+    }
+    .hiw-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      transition: all var(--transition);
+    }
+    .hiw-step:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05));
+      border: 1px solid rgba(34,197,94,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Manrope',sans-serif;
+      font-size: 1.4rem; font-weight: 800; color: var(--green);
+      margin: 0 auto 1.25rem;
+    }
+    .step-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .hiw-step h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
+    .hiw-step p { font-size: 0.9rem; color: var(--text-muted2); line-height: 1.6; }
+    .step-visual {
+      margin-top: 1.5rem;
+      background: var(--navy2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.7rem; color: var(--text-muted);
+    }
+    .step-visual-bar {
+      height: 6px; border-radius: 3px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 6px; overflow: hidden;
+    }
+    .step-visual-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #22c55e, #86efac); }
+
+    /* ─── FEATURES ─── */
+    .features { background: var(--navy); }
+    .features-header { text-align: center; margin-bottom: 3.5rem; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .feature-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      position: relative; overflow: hidden;
+      transition: all var(--transition);
+      cursor: default;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+    .feature-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: radial-gradient(circle at 50% 0%, rgba(34,197,94,0.06), transparent 60%);
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .feature-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.35); }
+    .feature-card:hover::after { opacity: 1; }
+    .feature-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.03) 50%, rgba(255,255,255,0.02) 100%);
+      border-color: rgba(34,197,94,0.2);
+    }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .feature-card p { font-size: 0.88rem; color: var(--text-muted2); line-height: 1.6; }
+    .feature-card.featured p { max-width: 480px; }
+    .feature-visual {
+      margin-top: 1.25rem;
+      display: flex; gap: 8px;
+    }
+    .fv-chip {
+      padding: 4px 10px; border-radius: 6px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      font-size: 0.7rem; font-weight: 600; color: var(--green);
+    }
+
+    /* ─── DEMO SECTION ─── */
+    .demo-section {
+      background: linear-gradient(180deg, var(--navy) 0%, #0a0f1a 100%);
+      text-align: center;
+    }
+    .demo-header { margin-bottom: 3rem; }
+    .demo-panel {
+      max-width: 800px; margin: 0 auto;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      position: relative;
+    }
+    .demo-panel::before {
+      content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+
+    .demo-score {
+      margin-bottom: 2rem;
+    }
+    .demo-score-num {
+      font-family: 'Manrope',sans-serif;
+      font-size: clamp(4rem,10vw,7rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #86efac);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      counter-reset: score;
+    }
+    .demo-score-label { font-size: 0.9rem; color: var(--text-muted2); margin-top: 4px; }
+
+    .demo-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 2rem; }
+    .demo-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: left;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .demo-card:nth-child(1) { animation-delay: 0.2s; }
+    .demo-card:nth-child(2) { animation-delay: 0.5s; }
+    .demo-card:nth-child(3) { animation-delay: 0.8s; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .demo-card-slide { font-size: 0.7rem; color: var(--green); font-weight: 600; margin-bottom: 6px; }
+    .demo-card-title { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .demo-card-text { font-size: 0.78rem; color: var(--text-muted2); line-height: 1.5; }
+    .demo-card-score {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 6px;
+      font-size: 0.7rem; font-weight: 700;
+      margin-top: 8px;
+    }
+    .demo-card-score.high { background: rgba(34,197,94,0.1); color: var(--green); }
+    .demo-card-score.mid { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .demo-card-score.low { background: rgba(239,68,68,0.1); color: #ef4444; }
+
+    .demo-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.85rem 2rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; font-size: 1rem; font-weight: 700;
+      border: none; border-radius: 12px; cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(34,197,94,0.25);
+      transition: all var(--transition);
+    }
+    .demo-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(34,197,94,0.4);
+    }
+
+    /* Animated count-up */
+    .count-up {
+      animation: countUp 2s ease-out forwards;
+    }
+    @keyframes countUp {
+      from { opacity: 0; filter: blur(4px); }
+      to { opacity: 1; filter: blur(0); }
+    }
+
+    /* ─── COMPARISON ─── */
+    .comparison { background: #0a0f1a; }
+    .comparison-header { text-align: center; margin-bottom: 3.5rem; }
+    .comparison-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem; max-width: 900px; margin: 0 auto;
+    }
+    .comp-panel {
+      border-radius: var(--radius-lg);
+      padding: 2rem; border: 1px solid;
+    }
+    .comp-panel.bad { background: rgba(239,68,68,0.03); border-color: rgba(239,68,68,0.15); }
+    .comp-panel.good { background: rgba(34,197,94,0.04); border-color: rgba(34,197,94,0.2); }
+    .comp-panel h3 {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .comp-panel.bad h3 { color: #ef4444; }
+    .comp-panel.good h3 { color: var(--green); }
+    .comp-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.9rem;
+    }
+    .comp-item:last-child { border-bottom: none; }
+    .comp-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .comp-text { color: var(--text-muted2); line-height: 1.5; }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials { background: var(--navy); }
+    .testimonials-header { text-align: center; margin-bottom: 3.5rem; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+    .testi-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: all var(--transition);
+    }
+    .testi-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.35); }
+    .testi-stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 2px; }
+    .testi-quote { font-size: 0.95rem; color: var(--text-muted2); line-height: 1.7; margin-bottom: 1.5rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border2); }
+    .testi-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .testi-role { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ─── FINAL CTA ─── */
+    .final-cta {
+      background: linear-gradient(135deg, #0a1f12 0%, #0d2818 50%, #091a10 100%);
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 60%);
+      pointer-events: none;
+    }
+    .cta-shape {
+      position: absolute; border-radius: 50%;
+      background: rgba(34,197,94,0.04);
+      border: 1px solid rgba(34,197,94,0.08);
+      animation: rotateSlow 20s linear infinite;
+    }
+    .cta-shape:nth-child(2) { width: 300px; height: 300px; top: -50px; right: -50px; animation-direction: reverse; }
+    .cta-shape:nth-child(3) { width: 200px; height: 200px; bottom: -50px; left: -30px; animation-duration: 15s; }
+    @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .final-cta-inner { position: relative; z-index: 1; }
+    .final-cta h2 {
+      font-family: 'Manrope',sans-serif;
+      font-size: clamp(2rem,5vw,3.5rem); font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.025em;
+      color: var(--text); margin-bottom: 1rem;
+    }
+    .final-cta h2 span { color: var(--green); }
+    .final-cta p { color: var(--text-muted2); font-size: 1.1rem; margin-bottom: 2.5rem; }
+
+    .cta-form {
+      display: flex; gap: 0.75rem;
+      max-width: 480px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .cta-form input {
+      flex: 1; min-width: 220px;
+      padding: 0.85rem 1.25rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text); font-size: 0.95rem;
+      outline: none; transition: border-color var(--transition);
+      font-family: inherit;
+    }
+    .cta-form input::placeholder { color: var(--text-muted); }
+    .cta-form input:focus { border-color: rgba(34,197,94,0.4); }
+    .cta-form button {
+      padding: 0.85rem 1.5rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; font-size: 0.95rem; font-weight: 700;
+      border: none; border-radius: 12px; cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition);
+      font-family: inherit;
+    }
+    .cta-form button:hover { box-shadow: 0 0 30px rgba(34,197,94,0.35); transform: translateY(-1px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #050810;
+      border-top: 1px solid var(--border);
+      padding: 4rem clamp(1rem,5vw,3rem) 2rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; max-width: 1100px; margin: 0 auto 3rem;
+    }
+    .footer-brand p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-top: 0.75rem; max-width: 260px; }
+    .footer-col h4 { font-size: 0.82rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul li a { color: var(--text-muted); font-size: 0.88rem; text-decoration: none; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { color: var(--text-muted); font-size: 0.82rem; }
+    .footer-socials { display: flex; gap: 1rem; }
+    .footer-socials a {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 0.85rem; text-decoration: none;
+      transition: all var(--transition);
+    }
+    .footer-socials a:hover { border-color: var(--border2); color: var(--green); transform: translateY(-2px); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .mockup-body { grid-template-columns: 1fr; }
+      .mockup-sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .feature-card.featured { grid-column: span 2; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .comparison-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card.featured { grid-column: span 1; }
+      .demo-cards { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .slide-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ── Navbar ─────────────────────────────────────────── -->
-<header class="navbar">
-  <div class="navbar-inner">
-    <a href="index.html" class="navbar-logo">
-      <div class="navbar-logo-icon">🌿</div>
-      SlideSage
-    </a>
-    <nav class="navbar-nav">
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="blog.html">Blog</a>
-      <a href="about.html">About</a>
-    </nav>
-    <div class="navbar-actions">
-      <a href="app.html" class="btn btn-primary">Try Free →</a>
-      <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar" id="navbar">
+  <a href="/" class="nav-logo">SlideSage</a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#" class="btn-ghost">Sign in</a>
+    <a href="app.html" class="btn-primary">Analyze Free ↗</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-inner">
+    <div class="badge">
+      <span class="dot"></span>
+      ✨ Now powered by GPT-4o
+    </div>
+    <h1>Your Presentations,<br>Perfected by AI</h1>
+    <p class="hero-sub">Upload any PowerPoint and receive a comprehensive AI analysis across content, design, clarity, and engagement — in under 60 seconds.</p>
+    <div class="hero-ctas">
+      <a href="app.html" class="btn-hero btn-hero-primary">
+        ⚡ Analyze My Presentation
+      </a>
+      <a href="#how-it-works" class="btn-hero btn-hero-ghost">
+        Watch how it works →
+      </a>
+    </div>
+    <div class="trust-bar">
+      <span>Used by teams at</span>
+      <span class="trust-pill">Google</span>
+      <span class="trust-pill">McKinsey</span>
+      <span class="trust-pill">Stripe</span>
+      <span class="trust-pill">Notion</span>
+      <span class="trust-pill">Deloitte</span>
     </div>
   </div>
-  <nav class="navbar-mobile">
-    <a href="features.html">Features</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="blog.html">Blog</a>
-    <a href="about.html">About</a>
-    <a href="app.html" class="btn btn-primary" style="margin-top:0.5rem;justify-content:center">Try Free →</a>
-  </nav>
-</header>
 
-<!-- ── Hero ──────────────────────────────────────────── -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-badge">
-      ✨ AI-Powered Presentation Analysis
-    </div>
-    <h1>AI Feedback for Your Presentations<br><span class="gradient-text">— in 30 Seconds</span></h1>
-    <p>Upload your PowerPoint. Get slide-by-slide AI analysis instantly. No signup required.</p>
-    <div class="hero-ctas">
-      <a href="app.html" class="btn btn-primary btn-lg">Analyze My Slides →</a>
-      <button class="btn btn-secondary btn-lg" data-demo>See Demo</button>
-    </div>
-    <div class="hero-trust">
-      <span>✅ No account needed</span>
-      <span>⚡ Results in under 30 seconds</span>
-      <span>🔒 Your files stay private</span>
+  <!-- Hero Mockup -->
+  <div class="hero-mockup-wrap">
+    <div class="hero-mockup-glow"></div>
+    <div class="hero-mockup">
+      <div class="mockup-titlebar">
+        <span class="mockup-dot red"></span>
+        <span class="mockup-dot yellow"></span>
+        <span class="mockup-dot green"></span>
+        <div class="mockup-url">slidesage.io/app — Analysis Results</div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-sidebar">
+          <div class="mockup-score-ring">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+              <circle cx="50" cy="50" r="44" fill="none" stroke="#22c55e" stroke-width="8"
+                stroke-dasharray="276.5" stroke-dashoffset="44" stroke-linecap="round"
+                style="transition:stroke-dashoffset 1.5s ease"/>
+            </svg>
+            <div class="score-val">84</div>
+          </div>
+          <div class="mockup-label">Overall Score</div>
+          <div class="mini-gauge">
+            <div class="mini-gauge-label"><span>Content</span><span>87</span></div>
+            <div class="mini-gauge-bar"><div class="mini-gauge-fill" style="width:87%"></div></div>
+          </div>
+          <div class="mini-gauge">
+            <div class="mini-gauge-label"><span>Design</span><span>78</span></div>
+            <div class="mini-gauge-bar"><div class="mini-gauge-fill" style="width:78%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div></div>
+          </div>
+          <div class="mini-gauge">
+            <div class="mini-gauge-label"><span>Clarity</span><span>91</span></div>
+            <div class="mini-gauge-bar"><div class="mini-gauge-fill" style="width:91%"></div></div>
+          </div>
+          <div class="mini-gauge">
+            <div class="mini-gauge-label"><span>Engagement</span><span>82</span></div>
+            <div class="mini-gauge-bar"><div class="mini-gauge-fill" style="width:82%;background:linear-gradient(90deg,#a855f7,#c084fc)"></div></div>
+          </div>
+        </div>
+        <div class="mockup-main">
+          <div class="mockup-section-title">Top Recommendations</div>
+          <div class="mockup-rec-card">
+            <div class="rec-num">1</div>
+            <div class="rec-text"><strong>Reduce slide text density</strong>Slides 3–7 have too much text. Aim for ≤40 words per slide to improve audience retention.</div>
+          </div>
+          <div class="mockup-rec-card">
+            <div class="rec-num">2</div>
+            <div class="rec-text"><strong>Add a clear narrative arc</strong>Your executive summary lacks a hook. Start with the problem statement before presenting data.</div>
+          </div>
+          <div class="mockup-rec-card">
+            <div class="rec-num">3</div>
+            <div class="rec-text"><strong>Improve data visualizations</strong>Replace the 3 tables on slides 9–11 with charts to make trends immediately visible.</div>
+          </div>
+          <div class="mockup-section-title" style="margin-top:16px">Slide Overview</div>
+          <div class="slide-grid">
+            <div class="slide-thumb good"><span>Slide 1</span><span class="slide-score">92</span></div>
+            <div class="slide-thumb warn"><span>Slide 2</span><span class="slide-score">71</span></div>
+            <div class="slide-thumb good"><span>Slide 3</span><span class="slide-score">88</span></div>
+            <div class="slide-thumb bad"><span>Slide 4</span><span class="slide-score">55</span></div>
+            <div class="slide-thumb good"><span>Slide 5</span><span class="slide-score">94</span></div>
+            <div class="slide-thumb warn"><span>Slide 6</span><span class="slide-score">74</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ── Stats Bar ──────────────────────────────────────── -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-item">
-      <strong>5,000+</strong>
-      Presentations Analyzed
-    </div>
-    <div class="stat-item">
-      <strong>4.9★</strong>
-      Average Rating
-    </div>
-    <div class="stat-item">
-      <strong>&lt;30s</strong>
-      Average Analysis Time
-    </div>
-    <div class="stat-item">
-      <strong>98%</strong>
-      User Satisfaction
-    </div>
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <!-- duplicated for seamless loop -->
+    <span class="marquee-badge">Apple</span>
+    <span class="marquee-badge">Google</span>
+    <span class="marquee-badge">McKinsey & Company</span>
+    <span class="marquee-badge">Deloitte</span>
+    <span class="marquee-badge">Stripe</span>
+    <span class="marquee-badge">Notion</span>
+    <span class="marquee-badge">Sequoia Capital</span>
+    <span class="marquee-badge">Y Combinator</span>
+    <span class="marquee-badge">Apple</span>
+    <span class="marquee-badge">Google</span>
+    <span class="marquee-badge">McKinsey & Company</span>
+    <span class="marquee-badge">Deloitte</span>
+    <span class="marquee-badge">Stripe</span>
+    <span class="marquee-badge">Notion</span>
+    <span class="marquee-badge">Sequoia Capital</span>
+    <span class="marquee-badge">Y Combinator</span>
   </div>
 </div>
 
-<!-- ── How It Works ───────────────────────────────────── -->
-<section class="section" id="how-it-works">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-label">How It Works</span>
-      <h2>From upload to insights in seconds</h2>
-      <p>No complex setup. No account required. Just upload your PPTX and get actionable feedback instantly.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-number">📁</div>
-        <h3>1. Upload Your PPTX</h3>
-        <p>Drag and drop your PowerPoint file or click to browse. We accept .pptx files up to 50MB.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">🤖</div>
-        <h3>2. AI Analyzes</h3>
-        <p>Our AI reviews every slide for clarity, structure, visual balance, and messaging effectiveness.</p>
-      </div>
-      <div class="step-card">
-        <div class="step-number">📊</div>
-        <h3>3. Get Your Report</h3>
-        <p>Receive a detailed score, per-slide feedback, and top recommendations. Export as PDF or Word.</p>
-      </div>
-    </div>
+<!-- ─── HOW IT WORKS ─── -->
+<section class="hiw" id="how-it-works">
+  <div class="hiw-header">
+    <div class="section-label text-center">⚙️ Process</div>
+    <h2 class="section-title text-center">Three steps to a better<br>presentation</h2>
+    <p class="section-sub text-center">From upload to actionable insights in under 60 seconds. No signup required.</p>
   </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ── Features ───────────────────────────────────────── -->
-<section class="section" id="features">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-label">Features</span>
-      <h2>Everything you need to present with confidence</h2>
-      <p>SlideSage gives you the honest feedback a presentation coach would, powered by state-of-the-art AI.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🧠</div>
-        <h3>AI Feedback</h3>
-        <p>Powered by Claude AI, your presentation gets expert-level analysis of content, structure, and messaging — the same feedback a $500/hr coach would give.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <h3>Slide-Level Analysis</h3>
-        <p>Every single slide gets its own score and actionable feedback. Know exactly which slides are strong and which need work.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>30 Second Results</h3>
-        <p>No waiting. Upload your file and get a comprehensive analysis report in under 30 seconds — faster than you can make a coffee.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📄</div>
-        <h3>Export PDF &amp; Word</h3>
-        <p>Download your analysis as a polished PDF report or Word document to share with your team, manager, or keep for reference.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🌍</div>
-        <h3>Multilingual Support</h3>
-        <p>Analyze presentations in English, Spanish, French, German, Japanese, and 20+ other languages. Your slides, your language.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🚀</div>
-        <h3>No Account Needed</h3>
-        <p>Get started immediately — no sign-up, no email, no credit card. Just upload and go. Create an account only if you want to save your history.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ── Testimonials ────────────────────────────────────── -->
-<section class="section" style="background:var(--color-surface)">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-label">Testimonials</span>
-      <h2>Loved by presenters worldwide</h2>
-      <p>From startup founders to enterprise sales teams — SlideSage helps everyone present better.</p>
-    </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"I used SlideSage before my Series A pitch and it flagged three slides that were genuinely confusing to investors. We fixed them and the pitch went so much smoother. Worth every penny."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">S</div>
-          <div>
-            <div class="testimonial-name">Sarah Chen</div>
-            <div class="testimonial-role">Founder, Axon Analytics</div>
+  <div class="hiw-steps">
+    <div class="hiw-step">
+      <div class="step-num">01</div>
+      <div class="step-icon">📎</div>
+      <h3>Upload Your File</h3>
+      <p>Drop your .pptx or .ppt file — up to 100 slides. We handle the rest securely.</p>
+      <div class="step-visual">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:32px;height:32px;background:rgba(34,197,94,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem">📄</div>
+          <div style="flex:1">
+            <div style="font-size:0.68rem;color:var(--text-muted2);margin-bottom:3px">Q4_Strategy.pptx</div>
+            <div class="step-visual-bar"><div class="step-visual-bar-fill" style="width:100%;animation:loadBar 2s ease-out forwards"></div></div>
           </div>
         </div>
+        <div style="font-size:0.65rem;color:var(--green)">✓ Uploaded successfully</div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Our sales team runs every deck through SlideSage before client meetings. The slide-level feedback has noticeably improved our win rate. It's like having a presentation expert on call."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">M</div>
-          <div>
-            <div class="testimonial-name">Marcus Johnson</div>
-            <div class="testimonial-role">VP Sales, CloudBase Inc.</div>
-          </div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🤖</div>
+      <h3>AI Analyzes Everything</h3>
+      <p>GPT-4o reads every slide, checking structure, language, design, and narrative flow.</p>
+      <div class="step-visual">
+        <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:6px">Processing 24 slides...</div>
+        <div class="step-visual-bar" style="margin-bottom:5px"><div class="step-visual-bar-fill" style="width:75%"></div></div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <span style="padding:2px 6px;background:rgba(34,197,94,0.1);border-radius:4px;font-size:0.62rem;color:var(--green)">Content ✓</span>
+          <span style="padding:2px 6px;background:rgba(34,197,94,0.1);border-radius:4px;font-size:0.62rem;color:var(--green)">Structure ✓</span>
+          <span style="padding:2px 6px;background:rgba(245,158,11,0.1);border-radius:4px;font-size:0.62rem;color:#f59e0b">Design ...</span>
         </div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"As a lecturer, I use SlideSage to review my course materials. The feedback on text density and visual hierarchy has made my slides so much cleaner. My students thank me."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">P</div>
-          <div>
-            <div class="testimonial-name">Dr. Priya Patel</div>
-            <div class="testimonial-role">Professor, MIT Media Lab</div>
-          </div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">03</div>
+      <div class="step-icon">📊</div>
+      <h3>Get Your Report</h3>
+      <p>A detailed scorecard with slide-by-slide feedback, priority fixes, and export options.</p>
+      <div class="step-visual">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:0.68rem;color:var(--text-muted2)">Overall Score</span>
+          <span style="font-size:1rem;font-weight:800;color:var(--green);font-family:'Manrope',sans-serif">84</span>
+        </div>
+        <div class="step-visual-bar"><div class="step-visual-bar-fill" style="width:84%"></div></div>
+        <div style="font-size:0.65rem;color:var(--text-muted);margin-top:5px">12 recommendations generated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section class="features" id="features">
+  <div class="features-header">
+    <div class="section-label text-center">✨ Features</div>
+    <h2 class="section-title text-center">Everything you need to<br>nail your next pitch</h2>
+    <p class="section-sub text-center">SlideSage goes beyond spell-check. It understands your story.</p>
+  </div>
+  <div class="features-grid">
+    <!-- Featured card -->
+    <div class="feature-card featured">
+      <div class="feature-icon">🧠</div>
+      <h3>Deep AI Analysis</h3>
+      <p>Our GPT-4o powered engine reads every word, image, and layout on your slides. It understands narrative flow, argument structure, data storytelling, and audience-appropriate language — then gives you a prioritized action plan.</p>
+      <div class="feature-visual">
+        <span class="fv-chip">Narrative ✓</span>
+        <span class="fv-chip">Data viz ✓</span>
+        <span class="fv-chip">Tone ✓</span>
+        <span class="fv-chip">Flow ✓</span>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📏</div>
+      <h3>Design Score</h3>
+      <p>Detects over-crowded slides, inconsistent fonts, and poor colour contrast before your audience does.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Clarity Check</h3>
+      <p>Measures readability and ensures your key messages land with impact and precision.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Quick Wins</h3>
+      <p>Each slide gets a single "Quick Win" — the one change that will have the biggest impact, fast.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📤</div>
+      <h3>Export to PDF & Word</h3>
+      <p>Download your full analysis as a beautifully formatted PDF or editable Word document to share with your team.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>100% Private</h3>
+      <p>Your files are processed securely and never stored. We delete everything the moment your report is ready.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DEMO PREVIEW ─── -->
+<section class="demo-section">
+  <div class="demo-header">
+    <div class="section-label text-center">🔬 Live Preview</div>
+    <h2 class="section-title text-center">See it in action</h2>
+    <p class="section-sub text-center">Here's what a real SlideSage analysis looks like — generated from a sample pitch deck.</p>
+  </div>
+  <div class="demo-panel">
+    <div class="demo-score">
+      <div class="demo-score-num count-up">84</div>
+      <div class="demo-score-label">/ 100 — Strong presentation · 24 slides · ~18 min read time</div>
+    </div>
+    <div class="demo-cards">
+      <div class="demo-card">
+        <div class="demo-card-slide">Slide 1 — Title</div>
+        <div class="demo-card-title">Strong opening hook</div>
+        <div class="demo-card-text">Your title slide immediately establishes the problem space. The value proposition is clear and compelling.</div>
+        <div class="demo-card-score high">92 / 100</div>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-slide">Slide 7 — Market Size</div>
+        <div class="demo-card-title">Chart needs context</div>
+        <div class="demo-card-text">The TAM chart is visually strong but lacks a data source citation. Add credibility with a footnote reference.</div>
+        <div class="demo-card-score mid">71 / 100</div>
+      </div>
+      <div class="demo-card">
+        <div class="demo-card-slide">Slide 14 — Financials</div>
+        <div class="demo-card-title">Reduce table density</div>
+        <div class="demo-card-text">This slide has 7 columns of data. Simplify to 3 key metrics and move the rest to an appendix.</div>
+        <div class="demo-card-score low">55 / 100</div>
+      </div>
+    </div>
+    <a href="app.html" class="demo-cta">Get Your Own Analysis →</a>
+  </div>
+</section>
+
+<!-- ─── COMPARISON ─── -->
+<section class="comparison">
+  <div class="comparison-header">
+    <div class="section-label text-center">⚖️ Compare</div>
+    <h2 class="section-title text-center">The difference is clear</h2>
+  </div>
+  <div class="comparison-grid">
+    <div class="comp-panel bad">
+      <h3>❌ Without SlideSage</h3>
+      <div class="comp-item"><span class="comp-icon">❌</span><span class="comp-text">Guessing which slides are weak</span></div>
+      <div class="comp-item"><span class="comp-icon">❌</span><span class="comp-text">Hours asking colleagues for vague feedback</span></div>
+      <div class="comp-item"><span class="comp-icon">❌</span><span class="comp-text">Realising problems during the actual presentation</span></div>
+      <div class="comp-item"><span class="comp-icon">❌</span><span class="comp-text">No consistent framework for improvement</span></div>
+      <div class="comp-item"><span class="comp-icon">❌</span><span class="comp-text">Wasting design time on the wrong fixes</span></div>
+    </div>
+    <div class="comp-panel good">
+      <h3>✅ With SlideSage</h3>
+      <div class="comp-item"><span class="comp-icon">✅</span><span class="comp-text">Precise per-slide scores and diagnostics</span></div>
+      <div class="comp-item"><span class="comp-icon">✅</span><span class="comp-text">Instant AI feedback in under 60 seconds</span></div>
+      <div class="comp-item"><span class="comp-icon">✅</span><span class="comp-text">Fix issues before anyone sees them</span></div>
+      <div class="comp-item"><span class="comp-icon">✅</span><span class="comp-text">Consistent, objective scoring every time</span></div>
+      <div class="comp-item"><span class="comp-icon">✅</span><span class="comp-text">Prioritised Quick Wins for maximum ROI</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <div class="section-label text-center">💬 Testimonials</div>
+    <h2 class="section-title text-center">Trusted by professionals<br>who present for a living</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"I uploaded our Series B pitch deck the night before the meeting and SlideSage caught 6 issues I never would have noticed. We closed the round. I genuinely believe this tool helped."</p>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&auto=format" alt="James R." loading="lazy" />
+        <div>
+          <div class="testi-name">James R.</div>
+          <div class="testi-role">Co-founder & CEO, Fintech startup</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"As a consultant, I live and die by my decks. SlideSage is the only tool I've found that actually understands what makes a slide persuasive vs. just pretty. It's become part of my workflow."</p>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&auto=format" alt="Sarah M." loading="lazy" />
+        <div>
+          <div class="testi-name">Sarah M.</div>
+          <div class="testi-role">Senior Consultant, McKinsey & Co.</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"My team uses SlideSage before every client presentation. The Quick Wins feature alone has saved us countless revision cycles. I can't imagine going back to guessing."</p>
+      <div class="testi-author">
+        <img class="testi-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&auto=format" alt="David K." loading="lazy" />
+        <div>
+          <div class="testi-name">David K.</div>
+          <div class="testi-role">VP Strategy, Fortune 500 company</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- ── Pricing ─────────────────────────────────────────── -->
-<section class="section" id="pricing">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-label">Pricing</span>
-      <h2>Simple, transparent pricing</h2>
-      <p>Start free. Upgrade when you need more. No hidden fees, no contracts, cancel anytime.</p>
+<!-- ─── FINAL CTA ─── -->
+<section class="final-cta">
+  <div class="cta-shape"></div>
+  <div class="cta-shape"></div>
+  <div class="final-cta-inner">
+    <div class="section-label text-center">🚀 Get Started</div>
+    <h2>Your best presentation<br>starts <span>right now</span></h2>
+    <p>Free to try. No credit card. No signup required.<br>Just upload and let the AI do its thing.</p>
+    <div class="cta-form">
+      <input type="email" placeholder="Enter your work email" />
+      <button>Get Early Access →</button>
     </div>
-    <div class="pricing-grid">
-      <!-- Free -->
-      <div class="pricing-card">
-        <div class="pricing-name">Free</div>
-        <div class="pricing-price">
-          <span class="currency">$</span>
-          <span class="amount">0</span>
-          <span class="period">/mo</span>
-        </div>
-        <p class="pricing-desc">Perfect for occasional use and trying out SlideSage.</p>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span>3 analyses per month</div>
-          <div class="pricing-feature"><span class="check">✓</span>Basic text report</div>
-          <div class="pricing-feature"><span class="check">✓</span>Slide-level feedback</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>PDF &amp; Word export</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>Priority analysis</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>API access</div>
-        </div>
-        <div class="pricing-divider"></div>
-        <a href="app.html" class="btn btn-secondary" style="width:100%;justify-content:center">Get Started Free</a>
-      </div>
-
-      <!-- Pro (Featured) -->
-      <div class="pricing-card featured" style="position:relative">
-        <div class="pricing-badge">MOST POPULAR</div>
-        <div class="pricing-name">Pro</div>
-        <div class="pricing-price">
-          <span class="currency">$</span>
-          <span class="amount">19</span>
-          <span class="period">/mo</span>
-        </div>
-        <p class="pricing-desc">For professionals who present regularly and need the full toolkit.</p>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span>Unlimited analyses</div>
-          <div class="pricing-feature"><span class="check">✓</span>PDF &amp; Word export</div>
-          <div class="pricing-feature"><span class="check">✓</span>Priority analysis queue</div>
-          <div class="pricing-feature"><span class="check">✓</span>Analysis history</div>
-          <div class="pricing-feature"><span class="check">✓</span>Email reports</div>
-          <div class="pricing-feature disabled"><span class="cross">✕</span>API access</div>
-        </div>
-        <div class="pricing-divider"></div>
-        <a href="pricing.html" class="btn btn-primary" style="width:100%;justify-content:center">Start Pro Trial →</a>
-      </div>
-
-      <!-- Team -->
-      <div class="pricing-card">
-        <div class="pricing-name">Team</div>
-        <div class="pricing-price">
-          <span class="currency">$</span>
-          <span class="amount">49</span>
-          <span class="period">/mo</span>
-        </div>
-        <p class="pricing-desc">For teams that need collaboration, API access, and white-label reports.</p>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span>5 team seats</div>
-          <div class="pricing-feature"><span class="check">✓</span>Everything in Pro</div>
-          <div class="pricing-feature"><span class="check">✓</span>API access</div>
-          <div class="pricing-feature"><span class="check">✓</span>White-label reports</div>
-          <div class="pricing-feature"><span class="check">✓</span>Team dashboard</div>
-          <div class="pricing-feature"><span class="check">✓</span>Priority support</div>
-        </div>
-        <div class="pricing-divider"></div>
-        <a href="pricing.html" class="btn btn-secondary" style="width:100%;justify-content:center">Start Team Trial</a>
-      </div>
-    </div>
+    <p style="margin-top:1rem;font-size:0.8rem;color:var(--text-muted)">Or <a href="app.html" style="color:var(--green);text-decoration:none">analyze a presentation now →</a> — no account needed</p>
   </div>
 </section>
 
-<!-- ── Final CTA ───────────────────────────────────────── -->
-<section class="cta-section">
-  <div class="container">
-    <h2>Ready to make every presentation your best?</h2>
-    <p>Join thousands of professionals who present with confidence using SlideSage.</p>
-    <div class="cta-buttons">
-      <a href="app.html" class="btn btn-white btn-lg">Analyze My Slides Free →</a>
-      <button class="btn btn-lg" style="color:rgba(255,255,255,0.85);border:1.5px solid rgba(255,255,255,0.3)" data-demo>Watch Demo</button>
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="nav-logo" style="text-decoration:none">SlideSage</a>
+      <p>AI-powered presentation analysis for professionals who need to get it right the first time.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="app.html">Analyzer</a></li>
+        <li><a href="#">API</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
     </div>
   </div>
-</section>
-
-<!-- ── Footer ─────────────────────────────────────────── -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="index.html" class="navbar-logo">
-          <div class="navbar-logo-icon">🌿</div>
-          SlideSage
-        </a>
-        <p>AI-powered presentation analysis that helps you communicate better, faster.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Product</h4>
-        <ul>
-          <li><a href="features.html">Features</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="app.html">Try Free</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="about.html#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Cookie Policy</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 SlideSage. All rights reserved.</span>
-      <span>Made with 🌿 for better presentations</span>
+  <div class="footer-bottom">
+    <p>© 2025 SlideSage. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#" title="Twitter/X">𝕏</a>
+      <a href="#" title="LinkedIn">in</a>
+      <a href="#" title="GitHub">⌥</a>
     </div>
   </div>
 </footer>
 
-<div class="toast-container"></div>
-<script src="js/app.js"></script>
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Animate elements on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.hiw-step, .feature-card, .testi-card, .comp-panel').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
 </body>
 </html>

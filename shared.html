@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shared Report — SlideSage</title>
+  <meta name="description" content="View a shared SlideSage presentation analysis report." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #020804;
+      --bg-card:    rgba(255,255,255,0.04);
+      --bg-card-h:  rgba(255,255,255,0.07);
+      --border:     rgba(255,255,255,0.08);
+      --border-h:   rgba(74,222,128,0.25);
+      --green:      #4ade80;
+      --green-dim:  rgba(74,222,128,0.15);
+      --green-glow: rgba(74,222,128,0.08);
+      --text:       #e8f5e9;
+      --text-muted: #6b7a6b;
+      --text-mid:   #9bb09b;
+      --yellow:     #fbbf24;
+      --red:        #f87171;
+      --radius:     14px;
+      --radius-sm:  8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(74,222,128,0.2); border-radius: 99px; }
+
+    /* ── Navbar ── */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 60px;
+      background: rgba(2,8,4,0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .nav-logo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: var(--green);
+      color: #020804;
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── Page Container ── */
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    /* ── Shared Badge ── */
+    .shared-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--green-dim);
+      border: 1px solid var(--border-h);
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+      margin-bottom: 28px;
+    }
+
+    .shared-badge svg { flex-shrink: 0; }
+
+    /* ── Loading State ── */
+    #loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    #loading-message {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ── Error State ── */
+    #error-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .error-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(248,113,113,0.1);
+      border: 1px solid rgba(248,113,113,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+
+    .error-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .error-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 400px;
+    }
+
+    /* ── Results Layout ── */
+    #results-state {
+      display: none;
+    }
+
+    .results-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .results-layout { grid-template-columns: 1fr; }
+      .results-sidebar { position: static !important; }
+    }
+
+    /* ── Sidebar / Left Panel ── */
+    .results-sidebar {
+      position: sticky;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: border-color 0.2s;
+    }
+
+    .glass-card:hover { border-color: var(--border-h); }
+
+    /* Score Circle Card */
+    .score-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 28px 24px;
+    }
+
+    .score-circle-wrap {
+      position: relative;
+      width: 140px;
+      height: 140px;
+    }
+
+    .score-circle-wrap svg {
+      width: 140px;
+      height: 140px;
+      transform: rotate(-90deg);
+    }
+
+    .score-circle-bg { fill: none; stroke: rgba(255,255,255,0.06); }
+    .score-circle    { fill: none; stroke: var(--green); stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+
+    .score-number-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .score-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .score-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .score-card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: -8px;
+    }
+
+    /* Slide Score Mini List */
+    .slide-scores-card h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+
+    .slide-score-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 9px;
+    }
+
+    .slide-score-row:last-child { margin-bottom: 0; }
+
+    .slide-score-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .slide-score-label {
+      flex: 1;
+      font-size: 12px;
+      color: var(--text-mid);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .slide-score-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+    }
+
+    /* CTA Card */
+    .cta-card {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .cta-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 11px 20px;
+      background: var(--green);
+      color: #020804;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── Right Panel ── */
+    .results-main {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* Summary Card */
+    .summary-text {
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    /* Slide Accordion */
+    .slide-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .slide-item:last-child { margin-bottom: 0; }
+    .slide-item:hover { border-color: var(--border-h); }
+
+    .slide-item__header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      background: var(--bg-card);
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+      gap: 12px;
+    }
+
+    .slide-item__header:hover { background: var(--bg-card-h); }
+    .slide-item__header:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
+
+    .slide-item__left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .slide-num-badge {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .slide-title-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .slide-item__right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .slide-score-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    .chevron-icon {
+      color: var(--text-muted);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    .slide-item__body {
+      display: none;
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .slide-feedback-text {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.65;
+    }
+
+    .score-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .score-bar-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 40px;
+      flex-shrink: 0;
+    }
+
+    .score-bar-track {
+      flex: 1;
+      height: 5px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.6s ease;
+    }
+
+    .score-bar-value {
+      font-size: 11px;
+      font-weight: 700;
+      width: 40px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Recommendations */
+    .rec-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rec-item:first-child { padding-top: 0; }
+    .rec-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .rec-num {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      border: 1px solid var(--border-h);
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .rec-text {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    /* ── Glow background effects ── */
+    .bg-glow {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.07;
+      z-index: 0;
+    }
+
+    .bg-glow-1 {
+      width: 600px;
+      height: 600px;
+      background: var(--green);
+      top: -200px;
+      right: -100px;
+    }
+
+    .bg-glow-2 {
+      width: 400px;
+      height: 400px;
+      background: #22c55e;
+      bottom: 10%;
+      left: -100px;
+    }
+
+    .page-container { position: relative; z-index: 1; }
+
+    /* ── Utility ── */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Background Glows -->
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <!-- Navbar -->
+  <nav id="navbar" role="navigation" aria-label="Site navigation">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-dot"></div>
+      SlideSage
+    </a>
+    <a href="app.html" class="nav-cta">
+      Analyze Your Deck
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </nav>
+
+  <!-- Page Container -->
+  <main class="page-container">
+
+    <!-- Shared Badge (hidden until results load) -->
+    <div class="shared-badge hidden" id="shared-badge" role="note">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      This report was shared with you via SlideSage
+    </div>
+
+    <!-- ── LOADING STATE ── -->
+    <div id="loading-state" role="status" aria-live="polite" aria-label="Loading report">
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="loading-title">Loading your report…</p>
+      <p id="loading-message">Fetching shared analysis</p>
+    </div>
+
+    <!-- ── ERROR STATE ── -->
+    <div id="error-state" role="alert" aria-live="assertive">
+      <div class="error-icon" aria-hidden="true">🔗</div>
+      <h1 class="error-title">This link has expired or doesn't exist</h1>
+      <p class="error-desc">The shared report you're looking for is no longer available. Links expire after 7 days.</p>
+      <a href="app.html" class="btn-cta" style="max-width:280px; margin-top:8px;">
+        Analyze Your Own Presentation
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <!-- ── RESULTS STATE ── -->
+    <div id="results-state">
+      <div class="results-layout">
+
+        <!-- ── LEFT SIDEBAR ── -->
+        <aside class="results-sidebar" aria-label="Score overview">
+
+          <!-- Overall Score Card -->
+          <div class="glass-card score-card">
+            <div class="score-circle-wrap" aria-hidden="true">
+              <svg viewBox="0 0 140 140" role="img" aria-label="Score circle">
+                <circle class="score-circle-bg" cx="70" cy="70" r="57" stroke-width="8"/>
+                <circle class="score-circle" id="score-circle-el" cx="70" cy="70" r="57" stroke-width="8"/>
+              </svg>
+              <div class="score-number-overlay">
+                <span class="score-number" id="score-number-el" aria-live="polite">—</span>
+                <span class="score-label" id="score-label-el">Overall</span>
+              </div>
+            </div>
+            <p class="score-card-title" id="score-grade-el">—</p>
+            <p class="score-card-subtitle">Overall Presentation Score</p>
+          </div>
+
+          <!-- Per-Slide Mini Scores -->
+          <div class="glass-card slide-scores-card">
+            <h3>Slide Scores</h3>
+            <div id="slide-scores-mini" aria-label="Individual slide scores"></div>
+          </div>
+
+          <!-- CTA Card -->
+          <div class="glass-card cta-card">
+            <p>Want AI feedback on your own deck?</p>
+            <a href="app.html" class="btn-cta" id="cta-btn">
+              Analyze Your Own Presentation
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+
+        </aside>
+
+        <!-- ── RIGHT MAIN PANEL ── -->
+        <div class="results-main" role="main">
+
+          <!-- Executive Summary -->
+          <section class="glass-card" aria-labelledby="summary-heading">
+            <p class="section-header" id="summary-heading">Executive Summary</p>
+            <p class="summary-text" id="summary-text-el">—</p>
+          </section>
+
+          <!-- Slide-by-Slide Breakdown -->
+          <section class="glass-card" aria-labelledby="slides-heading">
+            <p class="section-header" id="slides-heading">Slide-by-Slide Breakdown</p>
+            <div id="slides-accordion" aria-label="Slide details accordion"></div>
+          </section>
+
+          <!-- Recommendations -->
+          <section class="glass-card" aria-labelledby="recs-heading">
+            <p class="section-header" id="recs-heading">Recommendations</p>
+            <ul id="recommendations-list" aria-label="Improvement recommendations" style="list-style:none;"></ul>
+          </section>
+
+        </div><!-- /results-main -->
+      </div><!-- /results-layout -->
+    </div><!-- /results-state -->
+
+  </main><!-- /page-container -->
+
+  <script src="js/app.js"></script>
+  <script src="js/analyzer.js"></script>
+
+  <script>
+    /* =========================================
+       shared.html — Report Loader
+       ========================================= */
+    (function () {
+      'use strict';
+
+      /* ── Helpers ── */
+      function escHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function getScoreColor(score) {
+        if (score > 75) return '#4ade80';
+        if (score >= 50) return '#fbbf24';
+        return '#f87171';
+      }
+
+      function getScoreLabel(score) {
+        if (score >= 90) return 'Excellent';
+        if (score >= 75) return 'Good';
+        if (score >= 60) return 'Fair';
+        if (score >= 50) return 'Needs Work';
+        return 'Poor';
+      }
+
+      /* ── State elements ── */
+      var loadingState = document.getElementById('loading-state');
+      var errorState   = document.getElementById('error-state');
+      var resultsState = document.getElementById('results-state');
+      var sharedBadge  = document.getElementById('shared-badge');
+      var loadingMsg   = document.getElementById('loading-message');
+
+      function showError() {
+        if (loadingState) loadingState.style.display = 'none';
+        if (resultsState) resultsState.style.display = 'none';
+        if (errorState)   errorState.style.display = 'flex';
+      }
+
+      function showResults() {
+        if (loadingState) loadingState.style.display = 'none';
+        if (errorState)   errorState.style.display = 'none';
+        if (resultsState) resultsState.style.display = 'block';
+        if (sharedBadge)  sharedBadge.classList.remove('hidden');
+      }
+
+      /* ── Extract token ── */
+      var params = new URLSearchParams(window.location.search);
+      var token  = params.get('token');
+
+      if (!token || token.trim() === '') {
+        showError();
+        return;
+      }
+
+      /* ── Loading messages ── */
+      var messages = [
+        'Fetching shared analysis…',
+        'Loading slide data…',
+        'Preparing your report…',
+      ];
+      var msgIdx = 0;
+      var msgTimer = setInterval(function () {
+        msgIdx = (msgIdx + 1) % messages.length;
+        if (loadingMsg) loadingMsg.textContent = messages[msgIdx];
+      }, 1200);
+
+      /* ── Fetch report ── */
+      fetch('/.netlify/functions/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: token }),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          clearInterval(msgTimer);
+
+          /* Validate expected shape */
+          if (!data || typeof data.overallScore !== 'number' || !Array.isArray(data.slides)) {
+            showError();
+            return;
+          }
+
+          renderReport(data);
+          showResults();
+        })
+        .catch(function (err) {
+          clearInterval(msgTimer);
+          console.warn('[SlideSage] Failed to load shared report:', err);
+          showError();
+        });
+
+      /* ── Render Report ── */
+      function renderReport(data) {
+        var color = getScoreColor(data.overallScore);
+        var label = getScoreLabel(data.overallScore);
+
+        /* Score circle */
+        var circleEl  = document.getElementById('score-circle-el');
+        var numberEl  = document.getElementById('score-number-el');
+        var labelEl   = document.getElementById('score-label-el');
+        var gradeEl   = document.getElementById('score-grade-el');
+
+        if (circleEl) {
+          var r = 57;
+          var circumference = 2 * Math.PI * r;
+          circleEl.style.strokeDasharray  = circumference;
+          circleEl.style.strokeDashoffset = circumference;
+          circleEl.style.stroke = color;
+          /* Animate */
+          void circleEl.getBoundingClientRect();
+          animateScoreCircle(circleEl, numberEl, data.overallScore, color, circumference);
+        }
+
+        if (labelEl)  labelEl.textContent = 'Score';
+        if (gradeEl)  gradeEl.textContent = label;
+
+        /* Summary */
+        var summaryEl = document.getElementById('summary-text-el');
+        if (summaryEl) summaryEl.textContent = data.summary || '';
+
+        /* Slide mini scores (sidebar) */
+        var miniContainer = document.getElementById('slide-scores-mini');
+        if (miniContainer && Array.isArray(data.slides)) {
+          miniContainer.innerHTML = '';
+          data.slides.forEach(function (slide) {
+            var c = getScoreColor(slide.score);
+            var row = document.createElement('div');
+            row.className = 'slide-score-row';
+            row.innerHTML =
+              '<span class="slide-score-num" style="background:' + c + '1a;color:' + c + ';">' + slide.slideNumber + '</span>' +
+              '<span class="slide-score-label" title="' + escHtml(slide.title) + '">' + escHtml(slide.title) + '</span>' +
+              '<span class="slide-score-pill" style="background:' + c + '1a;color:' + c + ';">' + slide.score + '</span>';
+            miniContainer.appendChild(row);
+          });
+        }
+
+        /* Slide accordion */
+        var accordion = document.getElementById('slides-accordion');
+        if (accordion && Array.isArray(data.slides)) {
+          accordion.innerHTML = '';
+          data.slides.forEach(function (slide) {
+            accordion.appendChild(buildSlideItem(slide));
+          });
+        }
+
+        /* Recommendations */
+        var recsList = document.getElementById('recommendations-list');
+        if (recsList && Array.isArray(data.recommendations)) {
+          recsList.innerHTML = '';
+          data.recommendations.forEach(function (rec, i) {
+            var li = document.createElement('li');
+            li.className = 'rec-item';
+            li.innerHTML =
+              '<span class="rec-num" aria-hidden="true">' + (i + 1) + '</span>' +
+              '<span class="rec-text">' + escHtml(rec) + '</span>';
+            recsList.appendChild(li);
+          });
+        }
+      }
+
+      /* ── Build slide accordion item ── */
+      function buildSlideItem(slide) {
+        var color = getScoreColor(slide.score);
+
+        var item = document.createElement('div');
+        item.className = 'slide-item';
+
+        var header = document.createElement('button');
+        header.className = 'slide-item__header';
+        header.setAttribute('aria-expanded', 'false');
+        header.setAttribute('aria-controls', 'slide-body-' + slide.slideNumber);
+
+        header.innerHTML =
+          '<div class="slide-item__left">' +
+            '<span class="slide-num-badge" style="background:' + color + '1a;color:' + color + ';" aria-hidden="true">' + slide.slideNumber + '</span>' +
+            '<span class="slide-title-text">' + escHtml(slide.title) + '</span>' +
+          '</div>' +
+          '<div class="slide-item__right">' +
+            '<span class="slide-score-badge" style="background:' + color + '1a;color:' + color + ';">' + slide.score + '</span>' +
+            '<svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '</div>';
+
+        var body = document.createElement('div');
+        body.className = 'slide-item__body';
+        body.id = 'slide-body-' + slide.slideNumber;
+
+        body.innerHTML =
+          '<div class="score-bar-wrap">' +
+            '<span class="score-bar-label">Score</span>' +
+            '<div class="score-bar-track">' +
+              '<div class="score-bar-fill" style="width:' + slide.score + '%;background:' + color + ';"></div>' +
+            '</div>' +
+            '<span class="score-bar-value" style="color:' + color + ';">' + slide.score + '/100</span>' +
+          '</div>' +
+          '<p class="slide-feedback-text">' + escHtml(slide.feedback) + '</p>';
+
+        /* Toggle */
+        header.addEventListener('click', function () {
+          var isOpen = body.style.display !== 'none' && body.style.display !== '';
+          body.style.display = isOpen ? 'none' : 'block';
+          header.setAttribute('aria-expanded', String(!isOpen));
+          var chevron = header.querySelector('.chevron-icon');
+          if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+          header.style.background = isOpen
+            ? 'var(--bg-card)'
+            : 'var(--bg-card-h)';
+        });
+
+        item.appendChild(header);
+        item.appendChild(body);
+        return item;
+      }
+
+      /* ── Score circle animation ── */
+      function animateScoreCircle(circleEl, numberEl, target, color, circumference) {
+        var duration = 900;
+        var startTime = null;
+
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var elapsed  = ts - startTime;
+          var progress = Math.min(elapsed / duration, 1);
+          var eased    = 1 - Math.pow(1 - progress, 3);
+          var current  = Math.round(target * eased);
+
+          if (numberEl) numberEl.textContent = current;
+
+          var offset = circumference - (current / 100) * circumference;
+          circleEl.style.strokeDashoffset = String(offset);
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            if (numberEl) numberEl.textContent = target;
+            circleEl.style.strokeDashoffset = String(circumference - (target / 100) * circumference);
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

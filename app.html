@@ -1,224 +1,1288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SlideSage — Analyze Your Presentation</title>
-  <meta name="description" content="Upload your PowerPoint and get instant AI-powered slide analysis with SlideSage.">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
-  <link rel="stylesheet" href="css/main.css">
+  <!-- SEO -->
+  <meta name="description" content="Upload your PowerPoint and get detailed AI feedback on every slide. Score your presentation, fix weaknesses, export your report. Powered by GPT-4o." />
+  <meta name="keywords" content="analyze PowerPoint, AI slide feedback, presentation score, upload presentation, GPT-4o analysis, presentation report" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/app.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Analyze Your Presentation | SlideSage" />
+  <meta property="og:description" content="Upload your PowerPoint and get detailed AI feedback on every slide. Score your presentation, fix weaknesses, export your report. Powered by GPT-4o." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/app.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="Analyze Your Presentation | SlideSage" />
+  <meta name="twitter:description" content="Upload your PowerPoint and get detailed AI feedback on every slide. Score your presentation, fix weaknesses, export your report. Powered by GPT-4o." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dim: #16a34a;
+      --green-glow: rgba(34,197,94,0.18);
+      --green-glow-strong: rgba(34,197,94,0.35);
+      --navy: #080c14;
+      --navy2: #0d1117;
+      --navy3: #111827;
+      --surface: rgba(255,255,255,0.04);
+      --surface2: rgba(255,255,255,0.07);
+      --surface3: rgba(255,255,255,0.10);
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(34,197,94,0.25);
+      --text: #f1f5f9;
+      --text-muted: #64748b;
+      --text-muted2: #94a3b8;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --blue: #3b82f6;
+      --purple: #a855f7;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy2); }
+    ::-webkit-scrollbar-thumb { background: #1e3a2e; border-radius: 3px; }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(8,12,20,0.85);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1rem,4vw,2.5rem);
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.25rem; font-weight: 800;
+      background: linear-gradient(135deg, #22c55e 0%, #86efac 50%, #22c55e 100%);
+      background-size: 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 4s linear infinite;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo::before {
+      content: '';
+      width: 26px; height: 26px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-radius: 7px;
+      display: inline-block;
+      box-shadow: 0 0 10px var(--green-glow-strong);
+      flex-shrink: 0;
+    }
+    @keyframes shimmerText {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--text-muted2); font-size: 0.88rem; font-weight: 500;
+      text-decoration: none; transition: color var(--transition);
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-badge {
+      padding: 3px 10px; border-radius: 100px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      font-size: 0.72rem; font-weight: 600; color: #86efac;
+    }
+
+    /* ═══════════════════════════════
+       UPLOAD SECTION
+    ═══════════════════════════════ */
+    .upload-section {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 80px clamp(1rem,5vw,3rem) 3rem;
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 50%, rgba(34,197,94,0.07) 0%, transparent 70%),
+        var(--navy);
+    }
+    .upload-bg-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    }
+    .upload-orb {
+      position: absolute; pointer-events: none;
+      border-radius: 50%; filter: blur(80px);
+    }
+    .upload-orb-1 {
+      width: 500px; height: 500px; top: -100px; left: -100px;
+      background: radial-gradient(circle, rgba(34,197,94,0.06), transparent 70%);
+      animation: float1 10s ease-in-out infinite;
+    }
+    .upload-orb-2 {
+      width: 400px; height: 400px; bottom: -100px; right: -100px;
+      background: radial-gradient(circle, rgba(59,130,246,0.05), transparent 70%);
+      animation: float2 12s ease-in-out infinite;
+    }
+    @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-30px); } }
+    @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-25px,20px); } }
+
+    .upload-inner {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 620px;
+      text-align: center;
+    }
+
+    .upload-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px;
+      background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 100px;
+      font-size: 0.78rem; font-weight: 600; color: #86efac;
+      margin-bottom: 1.25rem;
+    }
+
+    .upload-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(2rem,5vw,3rem); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.1;
+      background: linear-gradient(135deg, #f1f5f9, #ffffff, #86efac);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+    .upload-sub {
+      color: var(--text-muted2); font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Upload zone */
+    .upload-zone {
+      position: relative;
+      background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(20px);
+      border: 2px dashed rgba(34,197,94,0.25);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      overflow: hidden;
+    }
+    .upload-zone::before {
+      content: '';
+      position: absolute; inset: -2px;
+      border-radius: 26px;
+      background: linear-gradient(90deg, #22c55e, #86efac, #22c55e, #16a34a, #22c55e);
+      background-size: 300%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      padding: 2px;
+      opacity: 0;
+      animation: borderSpin 3s linear infinite;
+      transition: opacity var(--transition);
+    }
+    .upload-zone:hover::before, .upload-zone.drag-over::before { opacity: 1; }
+    @keyframes borderSpin { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: rgba(34,197,94,0.5);
+      background: linear-gradient(160deg, rgba(34,197,94,0.06), rgba(34,197,94,0.02));
+      transform: translateY(-2px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 40px rgba(34,197,94,0.1);
+    }
+
+    .upload-icon-wrap {
+      width: 72px; height: 72px; border-radius: 20px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+    .upload-icon-wrap svg { width: 32px; height: 32px; }
+    @keyframes iconFloat {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .upload-zone h3 { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .upload-zone p { font-size: 0.9rem; color: var(--text-muted2); margin-bottom: 1.25rem; }
+
+    .format-badges { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 1.5rem; }
+    .format-badge {
+      padding: 4px 12px; border-radius: 8px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      font-size: 0.78rem; font-weight: 700; color: var(--text-muted2);
+      font-family: 'Manrope', monospace;
+    }
+
+    .upload-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0.75rem 1.75rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; font-size: 0.95rem; font-weight: 700;
+      border: none; border-radius: 12px; cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: all var(--transition);
+      font-family: inherit;
+    }
+    .upload-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: translateX(-100%);
+    }
+    .upload-btn:hover::before { animation: shimmerBtn 0.6s ease forwards; }
+    .upload-btn:hover { box-shadow: 0 0 30px rgba(34,197,94,0.4); transform: translateY(-1px); }
+    @keyframes shimmerBtn { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+    .upload-file-input { display: none; }
+
+    .demo-link {
+      display: block; margin-top: 1.25rem;
+      color: var(--text-muted); font-size: 0.88rem; text-decoration: none;
+      transition: color var(--transition);
+    }
+    .demo-link:hover { color: var(--green); }
+    .demo-link span { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ═══════════════════════════════
+       LOADING OVERLAY
+    ═══════════════════════════════ */
+    .loading-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(8,12,20,0.97);
+      backdrop-filter: blur(10px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .loading-overlay.active { opacity: 1; pointer-events: all; }
+
+    .loading-inner { text-align: center; max-width: 400px; width: 100%; padding: 0 1.5rem; }
+
+    .loading-logo {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.5rem; font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #86efac);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 2rem;
+    }
+
+    /* Waveform */
+    .waveform {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 4px; height: 48px; margin-bottom: 2.5rem;
+    }
+    .wave-bar {
+      width: 4px; border-radius: 2px;
+      background: linear-gradient(180deg, #22c55e, #16a34a);
+      animation: wavePulse 1.2s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(1)  { height: 16px; animation-delay: 0.0s; }
+    .wave-bar:nth-child(2)  { height: 28px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(3)  { height: 40px; animation-delay: 0.2s; }
+    .wave-bar:nth-child(4)  { height: 32px; animation-delay: 0.3s; }
+    .wave-bar:nth-child(5)  { height: 48px; animation-delay: 0.4s; }
+    .wave-bar:nth-child(6)  { height: 36px; animation-delay: 0.3s; }
+    .wave-bar:nth-child(7)  { height: 24px; animation-delay: 0.2s; }
+    .wave-bar:nth-child(8)  { height: 40px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(9)  { height: 20px; animation-delay: 0.0s; }
+    .wave-bar:nth-child(10) { height: 32px; animation-delay: 0.15s; }
+    .wave-bar:nth-child(11) { height: 44px; animation-delay: 0.25s; }
+    .wave-bar:nth-child(12) { height: 28px; animation-delay: 0.35s; }
+
+    @keyframes wavePulse {
+      0%,100% { transform: scaleY(1); opacity: 0.7; }
+      50% { transform: scaleY(0.3); opacity: 1; }
+    }
+
+    .loading-title { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .loading-sub { font-size: 0.88rem; color: var(--text-muted2); margin-bottom: 2rem; }
+
+    .loading-steps { list-style: none; text-align: left; margin-bottom: 2rem; }
+    .loading-step {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; border-radius: 10px;
+      font-size: 0.9rem; color: var(--text-muted);
+      transition: all var(--transition);
+      margin-bottom: 4px;
+    }
+    .loading-step.done { color: var(--text); background: rgba(34,197,94,0.06); }
+    .loading-step.active { color: var(--text); background: rgba(255,255,255,0.04); }
+    .step-icon-wrap {
+      width: 24px; height: 24px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+    }
+    .loading-step.done .step-icon-wrap { background: rgba(34,197,94,0.15); color: var(--green); }
+    .loading-step.active .step-icon-wrap { background: rgba(255,255,255,0.08); }
+    .loading-step.pending .step-icon-wrap { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+    .step-spinner {
+      width: 14px; height: 14px; border: 2px solid rgba(34,197,94,0.2);
+      border-top-color: var(--green); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-eta {
+      font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.5rem;
+    }
+    .loading-eta span { color: var(--green); font-weight: 600; }
+
+    .loading-progress-bar {
+      height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden;
+    }
+    .loading-progress-fill {
+      height: 100%; background: linear-gradient(90deg, #22c55e, #86efac);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    /* ═══════════════════════════════
+       RESULTS SECTION
+    ═══════════════════════════════ */
+    .results-section {
+      display: none;
+      min-height: 100vh;
+      padding-top: 60px;
+      background: var(--navy);
+    }
+    .results-section.active { display: flex; flex-direction: column; }
+
+    .results-header {
+      padding: 1.5rem clamp(1rem,4vw,2.5rem);
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,12,20,0.8);
+      backdrop-filter: blur(10px);
+      position: sticky; top: 60px; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .results-file-info { display: flex; align-items: center; gap: 12px; }
+    .results-file-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .results-file-name { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .results-file-meta { font-size: 0.78rem; color: var(--text-muted); }
+    .results-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-sm {
+      padding: 0.5rem 1rem; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; border: none;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: all var(--transition);
+      font-family: inherit;
+    }
+    .btn-sm-green { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+    .btn-sm-green:hover { box-shadow: 0 0 20px rgba(34,197,94,0.35); transform: translateY(-1px); }
+    .btn-sm-ghost { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted2); }
+    .btn-sm-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); transform: translateY(-1px); }
+
+    /* Results layout */
+    .results-body {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      flex: 1; min-height: 0;
+    }
+
+    /* LEFT PANEL */
+    .results-left {
+      border-right: 1px solid var(--border);
+      padding: 1.5rem;
+      position: sticky; top: 130px; /* below header+results-header */
+      height: calc(100vh - 130px);
+      overflow-y: auto;
+    }
+    .results-left::-webkit-scrollbar { width: 4px; }
+    .results-left::-webkit-scrollbar-thumb { background: #1e3a2e; }
+
+    /* SVG Gauge */
+    .gauge-wrap {
+      text-align: center; margin-bottom: 1.5rem; position: relative;
+    }
+    .gauge-svg { display: block; margin: 0 auto; }
+    .gauge-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -42%);
+      text-align: center;
+    }
+    .gauge-score {
+      font-family: 'Manrope', sans-serif;
+      font-size: 2.8rem; font-weight: 800;
+      background: linear-gradient(135deg, #22c55e, #86efac);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .gauge-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+    /* Mini gauges */
+    .mini-scores { margin-bottom: 1.5rem; }
+    .mini-score-item { margin-bottom: 12px; }
+    .mini-score-header {
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; margin-bottom: 5px;
+    }
+    .mini-score-name { color: var(--text-muted2); font-weight: 500; }
+    .mini-score-val { font-weight: 700; }
+    .mini-score-bar { height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .mini-score-fill { height: 100%; border-radius: 3px; transition: width 1s ease 0.5s; }
+    .fill-green { background: linear-gradient(90deg, #22c55e, #86efac); }
+    .fill-blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .fill-purple { background: linear-gradient(90deg, #a855f7, #c084fc); }
+    .fill-yellow { background: linear-gradient(90deg, #f59e0b, #fcd34d); }
+
+    .sidebar-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+    .sidebar-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.75rem;
+    }
+
+    .pres-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .pres-badge {
+      padding: 3px 10px; border-radius: 6px;
+      font-size: 0.72rem; font-weight: 600;
+    }
+    .pres-badge.type { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: #c084fc; }
+    .pres-badge.time { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25); color: #60a5fa; }
+
+    .strength-list, .weakness-list { list-style: none; margin-bottom: 1.25rem; }
+    .strength-list li, .weakness-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 6px 0; font-size: 0.82rem; color: var(--text-muted2);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      line-height: 1.4;
+    }
+    .strength-list li:last-child, .weakness-list li:last-child { border-bottom: none; }
+    .str-icon { font-size: 0.8rem; flex-shrink: 0; margin-top: 1px; }
+    .str-icon.good { color: var(--green); }
+    .str-icon.bad { color: var(--red); }
+
+    .export-btns { display: flex; flex-direction: column; gap: 8px; }
+    .export-btn {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      cursor: pointer; font-size: 0.85rem; font-weight: 600;
+      color: var(--text-muted2); transition: all var(--transition);
+      font-family: inherit;
+    }
+    .export-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); transform: translateX(2px); }
+    .export-btn.share { border-color: rgba(34,197,94,0.25); color: var(--green); background: rgba(34,197,94,0.05); }
+    .export-btn.share:hover { background: rgba(34,197,94,0.1); }
+    .export-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .export-icon.pdf { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.2); }
+    .export-icon.word { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2); }
+    .export-icon.share { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.2); }
+
+    /* RIGHT PANEL */
+    .results-right {
+      padding: 2rem clamp(1rem,4vw,2.5rem);
+      overflow-y: auto;
+      max-height: calc(100vh - 130px);
+    }
+    .results-right::-webkit-scrollbar { width: 6px; }
+    .results-right::-webkit-scrollbar-thumb { background: #1a2433; border-radius: 3px; }
+
+    /* Executive summary */
+    .exec-summary {
+      background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(34,197,94,0.02));
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .exec-summary::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(34,197,94,0.4), transparent);
+    }
+    .exec-summary-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 6px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      font-size: 0.72rem; font-weight: 700; color: var(--green);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .exec-summary h3 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .exec-summary p { font-size: 0.9rem; color: var(--text-muted2); line-height: 1.7; }
+
+    /* Section heading */
+    .results-section-title {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 1rem;
+    }
+    .results-section-title::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* Recommendations */
+    .recs-list { margin-bottom: 2.5rem; }
+    .rec-item {
+      display: flex; gap: 1rem;
+      padding: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 0.75rem;
+      transition: all var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .rec-item::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(180deg, #22c55e, #16a34a);
+      border-radius: 2px 0 0 2px;
+    }
+    .rec-item:hover { border-color: rgba(34,197,94,0.2); transform: translateX(4px); }
+    .rec-num-badge {
+      width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.85rem; font-weight: 800; color: var(--green);
+    }
+    .rec-content { flex: 1; }
+    .rec-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+    .rec-desc { font-size: 0.85rem; color: var(--text-muted2); line-height: 1.6; }
+    .rec-slide-ref {
+      display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 0.5rem; padding: 2px 8px; border-radius: 5px;
+      background: var(--surface2); font-size: 0.72rem;
+      color: var(--text-muted); font-weight: 500;
+    }
+    .rec-impact {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 5px;
+      font-size: 0.7rem; font-weight: 700; margin-left: 6px;
+    }
+    .rec-impact.high { background: rgba(239,68,68,0.1); color: var(--red); }
+    .rec-impact.med { background: rgba(245,158,11,0.1); color: var(--yellow); }
+
+    /* Slides accordion */
+    .slides-accordion { margin-bottom: 2rem; }
+    .slide-accordion-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .slide-accordion-item:hover { border-color: rgba(255,255,255,0.14); }
+    .slide-accordion-item.open { border-color: rgba(34,197,94,0.2); }
+
+    .slide-accordion-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      cursor: pointer;
+      transition: background var(--transition);
+      user-select: none;
+    }
+    .slide-accordion-header:hover { background: var(--surface2); }
+    .slide-accordion-item.open .slide-accordion-header { background: rgba(34,197,94,0.04); }
+
+    .slide-thumb-mini {
+      width: 52px; height: 33px; border-radius: 6px;
+      background: var(--navy2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; color: var(--text-muted); flex-shrink: 0;
+      position: relative; overflow: hidden;
+    }
+    .slide-thumb-mini::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .slide-thumb-mini.s-good::before { background: var(--green); }
+    .slide-thumb-mini.s-warn::before { background: var(--yellow); }
+    .slide-thumb-mini.s-bad::before { background: var(--red); }
+
+    .slide-header-info { flex: 1; }
+    .slide-header-title { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .slide-header-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+    .slide-header-score {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.1rem; font-weight: 800; flex-shrink: 0;
+    }
+    .slide-header-score.good { color: var(--green); }
+    .slide-header-score.warn { color: var(--yellow); }
+    .slide-header-score.bad { color: var(--red); }
+
+    .slide-chevron { color: var(--text-muted); transition: transform var(--transition); font-size: 0.8rem; }
+    .slide-accordion-item.open .slide-chevron { transform: rotate(180deg); }
+
+    .slide-accordion-body {
+      display: none; padding: 1.25rem;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.2);
+    }
+    .slide-accordion-item.open .slide-accordion-body { display: block; }
+
+    .slide-mini-scores {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 8px;
+      margin-bottom: 1rem;
+    }
+    .sms-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px;
+      text-align: center;
+    }
+    .sms-label { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .sms-val { font-family: 'Manrope',sans-serif; font-size: 1.2rem; font-weight: 800; }
+    .sms-val.g { color: var(--green); }
+    .sms-val.y { color: var(--yellow); }
+    .sms-val.r { color: var(--red); }
+    .sms-val.b { color: var(--blue); }
+
+    .slide-feedback { font-size: 0.88rem; color: var(--text-muted2); line-height: 1.65; margin-bottom: 1rem; }
+
+    .quick-win {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 14px; border-radius: 10px;
+      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15);
+    }
+    .quick-win-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .quick-win-text { font-size: 0.82rem; color: var(--text-muted2); line-height: 1.5; }
+    .quick-win-text strong { color: var(--green); font-weight: 700; }
+
+    /* ─── DEMO DATA HELPERS ─── */
+    .score-animate {
+      animation: scoreReveal 1s cubic-bezier(0.34,1.56,0.64,1) 0.3s both;
+    }
+    @keyframes scoreReveal {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .results-body { grid-template-columns: 1fr; }
+      .results-left { position: static; height: auto; max-height: none; border-right: none; border-bottom: 1px solid var(--border); }
+      .results-right { max-height: none; }
+      .slide-mini-scores { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 600px) {
+      .results-header { flex-direction: column; align-items: flex-start; }
+      .results-actions { width: 100%; justify-content: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ── Navbar ─────────────────────────────────────────── -->
-<header class="navbar">
-  <div class="navbar-inner">
-    <a href="index.html" class="navbar-logo">
-      <div class="navbar-logo-icon">🌿</div>
-      SlideSage
-    </a>
-    <nav class="navbar-nav">
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="blog.html">Blog</a>
-      <a href="about.html">About</a>
-    </nav>
-    <div class="navbar-actions">
-      <button class="btn btn-ghost btn-sm" data-demo-trigger>Try Demo</button>
-      <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">SlideSage</a>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <a href="index.html" class="nav-back">← Back to home</a>
+    <span class="nav-badge">✨ GPT-4o</span>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════
+     UPLOAD SECTION
+═══════════════════════════════ -->
+<section class="upload-section" id="upload-section">
+  <div class="upload-bg-grid"></div>
+  <div class="upload-orb upload-orb-1"></div>
+  <div class="upload-orb upload-orb-2"></div>
+
+  <div class="upload-inner">
+    <div class="upload-badge">⚡ Instant analysis · No signup</div>
+    <h1 class="upload-title">Analyze Your<br>Presentation</h1>
+    <p class="upload-sub">Upload your deck and get a full AI report in under 60 seconds.</p>
+
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+      <div class="upload-icon-wrap">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 4L16 22M16 4L10 10M16 4L22 10" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 24L4 26C4 27.1 4.9 28 6 28L26 28C27.1 28 28 27.1 28 26L28 24" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Drop your presentation here</h3>
+      <p>Drag &amp; drop or click to browse your files</p>
+      <div class="format-badges">
+        <span class="format-badge">.pptx</span>
+        <span class="format-badge">.ppt</span>
+      </div>
+      <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('file-input').click()">
+        📂 Choose File
       </button>
+      <input type="file" id="file-input" class="upload-file-input" accept=".pptx,.ppt" onchange="handleFileSelect(this)" />
+    </div>
+    <a href="#" class="demo-link" onclick="event.preventDefault();startDemo()">
+      Or <span>try the demo</span> with a sample pitch deck →
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     LOADING OVERLAY
+═══════════════════════════════ -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loading-inner">
+    <div class="loading-logo">SlideSage</div>
+    <div class="waveform">
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+      <div class="wave-bar"></div><div class="wave-bar"></div>
+    </div>
+    <div class="loading-title">Analyzing your presentation</div>
+    <div class="loading-sub" id="loading-sub-text">Reading 24 slides with GPT-4o...</div>
+    <ul class="loading-steps" id="loading-steps">
+      <li class="loading-step pending" id="step-1">
+        <div class="step-icon-wrap">○</div>
+        Reading presentation structure
+      </li>
+      <li class="loading-step pending" id="step-2">
+        <div class="step-icon-wrap">○</div>
+        Analyzing slide content
+      </li>
+      <li class="loading-step pending" id="step-3">
+        <div class="step-icon-wrap">○</div>
+        Generating AI feedback
+      </li>
+      <li class="loading-step pending" id="step-4">
+        <div class="step-icon-wrap">○</div>
+        Building your report
+      </li>
+    </ul>
+    <div class="loading-eta">Estimated time: <span id="eta-counter">~45s</span></div>
+    <div class="loading-progress-bar">
+      <div class="loading-progress-fill" id="progress-fill" style="width:0%"></div>
     </div>
   </div>
-  <nav class="navbar-mobile">
-    <a href="features.html">Features</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="blog.html">Blog</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
+</div>
 
-<!-- ── App Main ────────────────────────────────────────── -->
-<main class="app-main">
-  <div class="container">
+<!-- ═══════════════════════════════
+     RESULTS SECTION
+═══════════════════════════════ -->
+<section class="results-section" id="results-section">
 
-    <div class="app-header">
-      <h1 style="font-size:1.75rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.375rem">Analyze Your Presentation</h1>
-      <p style="color:var(--color-muted);font-size:0.9375rem">Upload a .pptx file and get AI-powered feedback on every slide in seconds.</p>
+  <!-- Results header bar -->
+  <div class="results-header">
+    <div class="results-file-info">
+      <div class="results-file-icon">📊</div>
+      <div>
+        <div class="results-file-name" id="results-filename">Q4_Investor_Update.pptx</div>
+        <div class="results-file-meta" id="results-meta">24 slides · 18 min read time · Analyzed just now</div>
+      </div>
+    </div>
+    <div class="results-actions">
+      <button class="btn-sm btn-sm-ghost" onclick="restartAnalysis()">← Analyze Another</button>
+      <button class="btn-sm btn-sm-ghost">📤 Share</button>
+      <button class="btn-sm btn-sm-green">📄 Export PDF</button>
+    </div>
+  </div>
+
+  <!-- Results body -->
+  <div class="results-body">
+
+    <!-- LEFT PANEL -->
+    <div class="results-left">
+
+      <!-- SVG Gauge -->
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" width="180" height="180" viewBox="0 0 180 180">
+          <!-- Background arc -->
+          <circle cx="90" cy="90" r="72"
+            fill="none"
+            stroke="rgba(255,255,255,0.05)"
+            stroke-width="12"
+            stroke-dasharray="452.4"
+            stroke-dashoffset="113.1"
+            stroke-linecap="round"
+            transform="rotate(135 90 90)"
+          />
+          <!-- Score arc — 84% of 270° arc -->
+          <circle cx="90" cy="90" r="72"
+            fill="none"
+            stroke="url(#gaugeGrad)"
+            stroke-width="12"
+            stroke-dasharray="452.4"
+            stroke-dashoffset="226.2"
+            stroke-linecap="round"
+            transform="rotate(135 90 90)"
+            id="gauge-arc"
+            style="transition: stroke-dashoffset 1.5s cubic-bezier(0.34,1.56,0.64,1) 0.5s"
+          />
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#16a34a"/>
+              <stop offset="100%" stop-color="#86efac"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="gauge-center">
+          <div class="gauge-score score-animate" id="gauge-score">84</div>
+          <div class="gauge-label">Overall Score</div>
+        </div>
+      </div>
+
+      <!-- Mini score breakdowns -->
+      <div class="mini-scores">
+        <div class="mini-score-item">
+          <div class="mini-score-header">
+            <span class="mini-score-name">Content</span>
+            <span class="mini-score-val" style="color:#22c55e">87</span>
+          </div>
+          <div class="mini-score-bar"><div class="mini-score-fill fill-green" style="width:87%"></div></div>
+        </div>
+        <div class="mini-score-item">
+          <div class="mini-score-header">
+            <span class="mini-score-name">Design</span>
+            <span class="mini-score-val" style="color:#3b82f6">78</span>
+          </div>
+          <div class="mini-score-bar"><div class="mini-score-fill fill-blue" style="width:78%"></div></div>
+        </div>
+        <div class="mini-score-item">
+          <div class="mini-score-header">
+            <span class="mini-score-name">Clarity</span>
+            <span class="mini-score-val" style="color:#a855f7">91</span>
+          </div>
+          <div class="mini-score-bar"><div class="mini-score-fill fill-purple" style="width:91%"></div></div>
+        </div>
+        <div class="mini-score-item">
+          <div class="mini-score-header">
+            <span class="mini-score-name">Engagement</span>
+            <span class="mini-score-val" style="color:#f59e0b">82</span>
+          </div>
+          <div class="mini-score-bar"><div class="mini-score-fill fill-yellow" style="width:82%"></div></div>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Type + time -->
+      <div class="sidebar-label">Presentation Details</div>
+      <div class="pres-badges">
+        <span class="pres-badge type">Investor Update</span>
+        <span class="pres-badge time">⏱ ~18 min</span>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Strengths -->
+      <div class="sidebar-label">Strengths</div>
+      <ul class="strength-list">
+        <li><span class="str-icon good">✓</span>Clear narrative arc from problem to solution</li>
+        <li><span class="str-icon good">✓</span>Compelling financial projections on slides 18–20</li>
+        <li><span class="str-icon good">✓</span>Strong team slide with relevant credentials</li>
+      </ul>
+
+      <!-- Weaknesses -->
+      <div class="sidebar-label">Areas to Improve</div>
+      <ul class="weakness-list">
+        <li><span class="str-icon bad">✗</span>Slides 6–9 text density is too high</li>
+        <li><span class="str-icon bad">✗</span>Inconsistent font sizes across sections</li>
+        <li><span class="str-icon bad">✗</span>Competitor slide lacks differentiation clarity</li>
+      </ul>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- Export -->
+      <div class="sidebar-label">Export & Share</div>
+      <div class="export-btns">
+        <button class="export-btn">
+          <div class="export-icon pdf">📄</div>
+          <div>
+            <div style="font-size:0.85rem;font-weight:700;color:var(--text)">Export as PDF</div>
+            <div style="font-size:0.72rem;color:var(--text-muted)">Full analysis report</div>
+          </div>
+        </button>
+        <button class="export-btn">
+          <div class="export-icon word">📝</div>
+          <div>
+            <div style="font-size:0.85rem;font-weight:700;color:var(--text)">Export as Word</div>
+            <div style="font-size:0.72rem;color:var(--text-muted)">Editable .docx format</div>
+          </div>
+        </button>
+        <button class="export-btn share">
+          <div class="export-icon share">🔗</div>
+          <div>
+            <div style="font-size:0.85rem;font-weight:700;">Share Report</div>
+            <div style="font-size:0.72rem;opacity:0.7">Copy shareable link</div>
+          </div>
+        </button>
+      </div>
     </div>
 
-    <div class="app-layout">
+    <!-- RIGHT PANEL -->
+    <div class="results-right">
 
-      <!-- ── Upload Section ─────────────────────────────── -->
-      <div id="uploadSection">
-        <div class="upload-zone" id="uploadZone">
-          <div class="upload-icon">📊</div>
-          <h3>Drop your .pptx here or click to browse</h3>
-          <p>Supports PowerPoint files (.pptx) up to 50MB</p>
-          <input type="file" id="fileInput" accept=".pptx" style="display:none" aria-label="Upload PPTX file">
-          <div class="upload-file-types">
-            <span class="file-type-badge">.pptx</span>
-            <span class="file-type-badge">up to 50MB</span>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap">
-          <button
-            id="analyzeBtn"
-            class="btn btn-primary btn-lg"
-            disabled
-            style="flex:1;justify-content:center;min-width:200px"
-          >
-            Upload a file first
-          </button>
-          <button
-            class="btn btn-secondary btn-lg"
-            data-demo-trigger
-            style="justify-content:center"
-          >
-            ✨ Try Demo
-          </button>
-        </div>
-
-        <p style="text-align:center;margin-top:1rem;font-size:0.8125rem;color:var(--color-muted)">
-          🔒 Your files are never stored or shared. Analysis is performed privately.
-        </p>
+      <!-- Executive Summary -->
+      <div class="exec-summary">
+        <div class="exec-summary-tag">🧠 Executive Summary</div>
+        <h3>Strong investor deck with key structural improvements needed</h3>
+        <p>Your Q4 investor update demonstrates a clear understanding of your market opportunity and shows strong traction data. The narrative flow from problem to solution to traction is effective, and your financial projections are well-supported. However, several slides suffer from information overload that will reduce audience retention. The most critical issue is slides 6–9, where dense text competes with your key messages. Implementing the top 5 recommendations below will likely lift your score to the 92–95 range.</p>
       </div>
 
-      <!-- ── Loading Section ────────────────────────────── -->
-      <div id="loadingSection" style="display:none">
-        <div class="result-card">
-          <div class="loading-state">
-            <div class="spinner"></div>
-            <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.375rem">Analyzing your presentation with AI...</h3>
-            <p style="color:var(--color-muted);font-size:0.875rem">
-              File: <span class="loading-filename" style="font-weight:600"></span>
-            </p>
-            <div class="loading-steps">
-              <div class="loading-step active">
-                <span class="step-dot"></span>
-                Reading slides &amp; extracting content
-              </div>
-              <div class="loading-step">
-                <span class="step-dot"></span>
-                Running AI analysis
-              </div>
-              <div class="loading-step">
-                <span class="step-dot"></span>
-                Scoring each slide
-              </div>
-              <div class="loading-step">
-                <span class="step-dot"></span>
-                Generating recommendations
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Top Recommendations -->
+      <div class="results-section-title">🎯 Top 5 Recommendations</div>
+      <div class="recs-list">
 
-      <!-- ── Results Section ────────────────────────────── -->
-      <div id="resultsSection" style="display:none">
-        <div class="results-panel">
-
-          <!-- Score + Summary -->
-          <div class="result-card" style="display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center">
-            <div class="score-section" style="padding:1rem">
-              <div class="score-circle-wrapper">
-                <svg class="score-circle-svg" viewBox="0 0 160 160">
-                  <circle class="score-track" cx="80" cy="80" r="65"/>
-                  <circle class="score-fill" cx="80" cy="80" r="65"/>
-                </svg>
-                <div class="score-value">
-                  <div class="score-number">0</div>
-                  <div class="score-label">Score</div>
-                </div>
-              </div>
-            </div>
+        <div class="rec-item">
+          <div class="rec-num-badge">1</div>
+          <div class="rec-content">
+            <div class="rec-title">Reduce text on market opportunity slides</div>
+            <div class="rec-desc">Slides 6–9 average 87 words each — nearly 3× the recommended maximum. Break each slide into two focused slides. Use bullet points with ≤8 words per point. Let visuals carry the data.</div>
             <div>
-              <h3 style="font-size:0.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-muted);margin-bottom:0.875rem">Executive Summary</h3>
-              <p id="summaryText" style="font-size:0.9375rem;line-height:1.7;color:var(--color-text)"></p>
+              <span class="rec-slide-ref">📌 Slides 6–9</span>
+              <span class="rec-impact high">🔴 High impact</span>
             </div>
-          </div>
-
-          <!-- Slide Accordion -->
-          <div class="result-card">
-            <h3>Slide-by-Slide Analysis</h3>
-            <div class="accordion" id="slidesAccordion">
-              <!-- Populated by JS -->
-            </div>
-          </div>
-
-          <!-- Recommendations -->
-          <div class="result-card">
-            <h3>Top Recommendations</h3>
-            <div class="recommendations" id="recommendationsList">
-              <!-- Populated by JS -->
-            </div>
-          </div>
-
-          <!-- Export -->
-          <div class="result-card">
-            <h3>Export Your Report</h3>
-            <p style="color:var(--color-muted);font-size:0.875rem;margin-bottom:1.25rem">Download your full analysis report to share with your team or keep for reference.</p>
-            <div class="export-buttons">
-              <button id="exportPDF" class="btn btn-primary">📄 Download PDF Report</button>
-              <button id="exportWord" class="btn btn-secondary">📝 Download Word Report</button>
-            </div>
-          </div>
-
-          <!-- Analyze Another -->
-          <div style="text-align:center">
-            <button onclick="resetAnalyzer()" class="btn btn-ghost">← Analyze Another Presentation</button>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ── Error Section ──────────────────────────────── -->
-      <div id="errorSection" style="display:none">
-        <div class="error-state">
-          <div class="error-icon">😕</div>
-          <h3>Analysis Failed</h3>
-          <p class="error-message">Something went wrong during analysis. Please try again.</p>
-          <div style="margin-top:1.5rem;display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
-            <button onclick="resetAnalyzer()" class="btn btn-primary">Try Again</button>
-            <button class="btn btn-secondary" data-demo-trigger>Try Demo Instead</button>
           </div>
         </div>
+
+        <div class="rec-item">
+          <div class="rec-num-badge">2</div>
+          <div class="rec-content">
+            <div class="rec-title">Add a data source to the TAM chart</div>
+            <div class="rec-desc">Your $42B market size claim on slide 7 is visually compelling but lacks a citation. Savvy investors will immediately ask for the source. Add a small footnote with the report name and year to build instant credibility.</div>
+            <div>
+              <span class="rec-slide-ref">📌 Slide 7</span>
+              <span class="rec-impact high">🔴 High impact</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num-badge">3</div>
+          <div class="rec-content">
+            <div class="rec-title">Simplify the financials table</div>
+            <div class="rec-desc">Slide 14 contains a 7-column financial table that is unreadable at presentation scale. Highlight your 3 key KPIs (ARR, gross margin, burn multiple) in large type and move the full table to an appendix slide.</div>
+            <div>
+              <span class="rec-slide-ref">📌 Slide 14</span>
+              <span class="rec-impact med">🟡 Medium impact</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num-badge">4</div>
+          <div class="rec-content">
+            <div class="rec-title">Standardise heading font sizes</div>
+            <div class="rec-desc">Heading sizes vary between 28pt and 40pt across sections with no consistent logic. Choose a 3-level type hierarchy (Title: 36pt, H2: 24pt, Body: 16pt) and apply it uniformly. This alone will make the deck feel significantly more professional.</div>
+            <div>
+              <span class="rec-slide-ref">📌 All slides</span>
+              <span class="rec-impact med">🟡 Medium impact</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rec-item">
+          <div class="rec-num-badge">5</div>
+          <div class="rec-content">
+            <div class="rec-title">Strengthen the competitive differentiation slide</div>
+            <div class="rec-desc">Slide 11 lists competitors but doesn't clearly articulate your defensible moat. Restructure as a 2×2 matrix with your positioning in the top-right quadrant. Add a one-sentence "why we win" statement at the bottom.</div>
+            <div>
+              <span class="rec-slide-ref">📌 Slide 11</span>
+              <span class="rec-impact med">🟡 Medium impact</span>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-    </div><!-- /app-layout -->
+      <!-- Slide-by-slide -->
+      <div class="results-section-title">📑 Slide-by-Slide Analysis</div>
+      <div class="slides-accordion" id="slides-accordion">
 
-    <!-- ── How It Works (bottom) ──────────────────────── -->
-    <div style="margin-top:4rem;padding:2.5rem;background:var(--color-light-green);border-radius:var(--radius-xl);text-align:center">
-      <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.5rem">How SlideSage Works</h3>
-      <p style="color:var(--color-muted);margin-bottom:1.5rem;font-size:0.9375rem">Our AI analyzes your presentation across 7 dimensions</p>
-      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem">
-        <span class="badge badge-primary">📝 Content Clarity</span>
-        <span class="badge badge-primary">🎨 Visual Design</span>
-        <span class="badge badge-primary">📐 Slide Structure</span>
-        <span class="badge badge-primary">💬 Message Consistency</span>
-        <span class="badge badge-primary">📊 Data Visualization</span>
-        <span class="badge badge-primary">🎯 Audience Fit</span>
-        <span class="badge badge-primary">⚡ Pacing &amp; Flow</span>
+        <!-- Slide 1 -->
+        <div class="slide-accordion-item open" onclick="toggleSlide(this)">
+          <div class="slide-accordion-header">
+            <div class="slide-thumb-mini s-good">S1</div>
+            <div class="slide-header-info">
+              <div class="slide-header-title">Title Slide — "Scaling the Future of Work"</div>
+              <div class="slide-header-sub">Strong opening · Clear value prop</div>
+            </div>
+            <span class="slide-header-score good">92</span>
+            <span class="slide-chevron">▼</span>
+          </div>
+          <div class="slide-accordion-body">
+            <div class="slide-mini-scores">
+              <div class="sms-item"><div class="sms-label">Content</div><div class="sms-val g">94</div></div>
+              <div class="sms-item"><div class="sms-label">Design</div><div class="sms-val g">90</div></div>
+              <div class="sms-item"><div class="sms-label">Clarity</div><div class="sms-val g">95</div></div>
+              <div class="sms-item"><div class="sms-label">Engage</div><div class="sms-val g">89</div></div>
+            </div>
+            <p class="slide-feedback">Excellent opening slide. The tagline is memorable, the company logo placement is professional, and the sub-headline cleanly sets up the narrative. The use of negative space creates a premium feel. One minor note: consider adding a subtle brand colour to the background rather than pure white for better differentiation.</p>
+            <div class="quick-win">
+              <span class="quick-win-icon">⚡</span>
+              <div class="quick-win-text"><strong>Quick Win:</strong> Add a single sentence below the tagline: your current ARR or key traction metric. "150+ enterprise customers · $4.2M ARR" immediately establishes credibility on the very first slide.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide-accordion-item" onclick="toggleSlide(this)">
+          <div class="slide-accordion-header">
+            <div class="slide-thumb-mini s-good">S2</div>
+            <div class="slide-header-info">
+              <div class="slide-header-title">The Problem — "Death by Meetings"</div>
+              <div class="slide-header-sub">Relatable hook · Needs data</div>
+            </div>
+            <span class="slide-header-score good">85</span>
+            <span class="slide-chevron">▼</span>
+          </div>
+          <div class="slide-accordion-body">
+            <div class="slide-mini-scores">
+              <div class="sms-item"><div class="sms-label">Content</div><div class="sms-val g">82</div></div>
+              <div class="sms-item"><div class="sms-label">Design</div><div class="sms-val g">88</div></div>
+              <div class="sms-item"><div class="sms-label">Clarity</div><div class="sms-val g">86</div></div>
+              <div class="sms-item"><div class="sms-label">Engage</div><div class="sms-val g">84</div></div>
+            </div>
+            <p class="slide-feedback">The problem framing is emotionally resonant and the statistic ("23 hours lost per week") is striking. However, the source for this statistic is missing. The layout is clean and the visual metaphor works well. The call-out box on the right is effective but slightly small for a projected presentation.</p>
+            <div class="quick-win">
+              <span class="quick-win-icon">⚡</span>
+              <div class="quick-win-text"><strong>Quick Win:</strong> Add the source attribution for the 23-hour statistic (Harvard Business Review, 2023) and increase the call-out box font to 20pt minimum.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide-accordion-item" onclick="toggleSlide(this)">
+          <div class="slide-accordion-header">
+            <div class="slide-thumb-mini s-bad">S6</div>
+            <div class="slide-header-info">
+              <div class="slide-header-title">Market Opportunity — TAM/SAM/SOM</div>
+              <div class="slide-header-sub">⚠️ Text overload · Critical fix needed</div>
+            </div>
+            <span class="slide-header-score bad">55</span>
+            <span class="slide-chevron">▼</span>
+          </div>
+          <div class="slide-accordion-body">
+            <div class="slide-mini-scores">
+              <div class="sms-item"><div class="sms-label">Content</div><div class="sms-val y">72</div></div>
+              <div class="sms-item"><div class="sms-label">Design</div><div class="sms-val r">41</div></div>
+              <div class="sms-item"><div class="sms-label">Clarity</div><div class="sms-val r">48</div></div>
+              <div class="sms-item"><div class="sms-label">Engage</div><div class="sms-val r">59</div></div>
+            </div>
+            <p class="slide-feedback">This is the most critical slide to fix. The underlying market opportunity data is strong — a $42B TAM with clear segmentation — but it's completely buried under 94 words of explanatory text. Investors at this stage won't read walls of text; they'll form a negative impression of your communication skills. The three market segments should be represented visually as concentric circles or a bar chart, not text paragraphs.</p>
+            <div class="quick-win">
+              <span class="quick-win-icon">⚡</span>
+              <div class="quick-win-text"><strong>Quick Win:</strong> Replace all body text with 3 large numbers: TAM $42B / SAM $8.4B / SOM $840M. Use concentric circles. Move all explanatory text to speaker notes. This single change will dramatically improve your perceived quality.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 14 -->
+        <div class="slide-accordion-item" onclick="toggleSlide(this)">
+          <div class="slide-accordion-header">
+            <div class="slide-thumb-mini s-warn">S14</div>
+            <div class="slide-header-info">
+              <div class="slide-header-title">Financial Projections — 3-Year Model</div>
+              <div class="slide-header-sub">Good data · Table too complex</div>
+            </div>
+            <span class="slide-header-score warn">71</span>
+            <span class="slide-chevron">▼</span>
+          </div>
+          <div class="slide-accordion-body">
+            <div class="slide-mini-scores">
+              <div class="sms-item"><div class="sms-label">Content</div><div class="sms-val g">85</div></div>
+              <div class="sms-item"><div class="sms-label">Design</div><div class="sms-val r">54</div></div>
+              <div class="sms-item"><div class="sms-label">Clarity</div><div class="sms-val y">68</div></div>
+              <div class="sms-item"><div class="sms-label">Engage</div><div class="sms-val y">77</div></div>
+            </div>
+            <p class="slide-feedback">Your 3-year financial model shows healthy growth trajectory and realistic margins, but the 7-column table format makes it impossible to read during a presentation. The data tells a great story (3× revenue growth, improving gross margins) — let the story be the hero, not the spreadsheet. Investors who want the detail will ask for the model separately.</p>
+            <div class="quick-win">
+              <span class="quick-win-icon">⚡</span>
+              <div class="quick-win-text"><strong>Quick Win:</strong> Highlight 3 headline metrics in massive type: "ARR growing 3× YoY · 74% Gross Margin · 18-month runway." Show a simple bar chart for ARR only. Link to the full model in your data room.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 24 -->
+        <div class="slide-accordion-item" onclick="toggleSlide(this)">
+          <div class="slide-accordion-header">
+            <div class="slide-thumb-mini s-good">S24</div>
+            <div class="slide-header-info">
+              <div class="slide-header-title">Close — "Join Us"</div>
+              <div class="slide-header-sub">Strong close · Clear CTA</div>
+            </div>
+            <span class="slide-header-score good">90</span>
+            <span class="slide-chevron">▼</span>
+          </div>
+          <div class="slide-accordion-body">
+            <div class="slide-mini-scores">
+              <div class="sms-item"><div class="sms-label">Content</div><div class="sms-val g">92</div></div>
+              <div class="sms-item"><div class="sms-label">Design</div><div class="sms-val g">88</div></div>
+              <div class="sms-item"><div class="sms-label">Clarity</div><div class="sms-val g">94</div></div>
+              <div class="sms-item"><div class="sms-label">Engage</div><div class="sms-val g">86</div></div>
+            </div>
+            <p class="slide-feedback">Excellent closing slide. The "Join Us" framing is collaborative rather than transactional, which is the right tone for a Series A. Contact information is prominently displayed. The summary of the ask ($3M, 18-month runway, key hires) is clear and appropriately concise. This is how a closing slide should look.</p>
+            <div class="quick-win">
+              <span class="quick-win-icon">⚡</span>
+              <div class="quick-win-text"><strong>Quick Win:</strong> Add a QR code linking to your data room so investors can request access immediately while the enthusiasm is fresh. Use a service like Notion or DocSend for tracking.</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
   </div>
-</main>
+</section>
 
-<!-- ── Footer (minimal) ──────────────────────────────── -->
-<footer style="background:var(--color-text);color:rgba(255,255,255,0.6);padding:1.5rem 0;text-align:center;font-size:0.8125rem">
-  <div class="container">
-    <a href="index.html" style="color:rgba(255,255,255,0.9);font-weight:700;margin-right:1.5rem">SlideSage</a>
-    <a href="pricing.html" style="margin-right:1rem;transition:color 0.15s" onmouseover="this.style.color='white'" onmouseout="this.style.color=''">Pricing</a>
-    <a href="about.html" style="margin-right:1rem;transition:color 0.15s" onmouseover="this.style.color='white'" onmouseout="this.style.color=''">About</a>
-    <span style="margin-left:1.5rem">© 2026 SlideSage</span>
-  </div>
-</footer>
+<script>
+  // ─── UPLOAD DRAG & DROP ───
+  const zone = document.getElementById('upload-zone');
 
-<div class="toast-container"></div>
-<script src="js/app.js"></script>
-<script src="js/analyzer.js"></script>
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(file);
+  });
+
+  function handleFileSelect(input) {
+    if (input.files[0]) processFile(input.files[0]);
+  }
+
+  function processFile(file) {
+    document.getElementById('results-filename').textContent = file.name;
+    document.getElementById('results-meta').textContent = 'Processing... · Analyzed just now';
+    startLoading();
+  }
+
+  function startDemo() {
+    document.getElementById('results-filename').textContent = 'Q4_Investor_Update_DEMO.pptx';
+    document.getElementById('results-meta').textContent = '24 slides · 18 min read time · Demo mode';
+    startLoading();
+  }
+
+  // ─── LOADING SEQUENCE ───
+  function startLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    overlay.classList.add('active');
+
+    const steps = [
+      { id: 'step-1', delay: 800,  label: 'Reading presentation structure' },
+      { id: 'step-2', delay: 2200, label: 'Analyzing slide content' },
+      { id: 'step-3', delay: 3800, label: 'Generating AI feedback' },
+      { id: 'step-4', delay: 5200, label: 'Building your report' },
+    ];
+
+    const progFill = document.getElementById('progress-fill');
+    const etaEl = document.getElementById('eta-counter');
+    const etaTimes = ['~45s', '~30s', '~18s', '~5s', 'Done!'];
+    const progPcts = ['12%', '35%', '65%', '88%', '100%'];
+
+    steps.forEach((step, i) => {
+      // Mark active
+      setTimeout(() => {
+        const el = document.getElementById(step.id);
+        el.classList.remove('pending');
+        el.classList.add('active');
+        el.querySelector('.step-icon-wrap').innerHTML = '<div class="step-spinner"></div>';
+        progFill.style.width = progPcts[i];
+        etaEl.textContent = etaTimes[i];
+      }, step.delay);
+
+      // Mark done
+      setTimeout(() => {
+        const el = document.getElementById(step.id);
+        el.classList.remove('active');
+        el.classList.add('done');
+        el.querySelector('.step-icon-wrap').textContent = '✓';
+      }, step.delay + 1000);
+    });
+
+    // Show results
+    setTimeout(() => {
+      progFill.style.width = '100%';
+      etaEl.textContent = 'Done!';
+      setTimeout(() => {
+        overlay.classList.remove('active');
+        document.getElementById('upload-section').style.display = 'none';
+        const results = document.getElementById('results-section');
+        results.classList.add('active');
+        results.style.display = 'flex';
+        // Animate gauge
+        setTimeout(animateGauge, 300);
+      }, 600);
+    }, 6800);
+  }
+
+  // ─── GAUGE ANIMATION ───
+  function animateGauge() {
+    const arc = document.getElementById('gauge-arc');
+    if (!arc) return;
+    // Full arc circumference: 452.4 (r=72, 2πr=452.4)
+    // We want to show 84% of a 270° arc
+    // Full 270° = 338.7 dasharray value
+    // 84% of 338.7 = 284.5
+    // stroke-dasharray = 452.4 total
+    // stroke-dashoffset to show 84% of 270° arc:
+    // visible portion = 452.4 * (84/100) * (270/360) = 452.4 * 0.84 * 0.75 = 284.5
+    // dashoffset = 452.4 - 284.5 = 167.9... but also offset the starting gap
+    // Simple approach: dashoffset starts at 452.4 (nothing shown) then animates to target
+    arc.style.strokeDashoffset = '452.4';
+    setTimeout(() => {
+      arc.style.strokeDashoffset = '167.9';
+    }, 100);
+  }
+
+  // ─── ACCORDION ───
+  function toggleSlide(item) {
+    item.classList.toggle('open');
+  }
+
+  // ─── RESTART ───
+  function restartAnalysis() {
+    // Reset loading steps
+    ['step-1','step-2','step-3','step-4'].forEach(id => {
+      const el = document.getElementById(id);
+      el.className = 'loading-step pending';
+      el.querySelector('.step-icon-wrap').textContent = '○';
+    });
+    document.getElementById('progress-fill').style.width = '0%';
+    document.getElementById('eta-counter').textContent = '~45s';
+
+    // Show upload, hide results
+    document.getElementById('results-section').classList.remove('active');
+    document.getElementById('results-section').style.display = 'none';
+    document.getElementById('upload-section').style.display = '';
+    document.getElementById('file-input').value = '';
+  }
+</script>
+
 </body>
 </html>

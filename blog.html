@@ -1,219 +1,536 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SlideSage Blog — Presentation Tips &amp; AI Insights</title>
-  <meta name="description" content="Learn how to create better presentations with AI, tips from experts, and case studies from SlideSage users.">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
-  <link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — SlideSage Presentation Tips & Insights</title>
+  <!-- SEO -->
+  <meta name="description" content="Presentation tips, design guides, and case studies from the SlideSage team. Learn how to create presentations that win deals and impress audiences." />
+  <meta name="keywords" content="presentation tips, slide design, PowerPoint guide, presentation case studies, public speaking, AI presentation advice" />
+  <meta name="author" content="SlideSage" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://slidesage-app.netlify.app/blog.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Blog | SlideSage" />
+  <meta property="og:description" content="Presentation tips, design guides, and case studies from the SlideSage team. Learn how to create presentations that win deals and impress audiences." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:url" content="https://slidesage-app.netlify.app/blog.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SlideSage" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@slidesage" />
+  <meta name="twitter:title" content="Blog | SlideSage" />
+  <meta name="twitter:description" content="Presentation tips, design guides, and case studies from the SlideSage team. Learn how to create presentations that win deals and impress audiences." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&auto=format&fit=crop&q=80" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ═══════════════════════════════════════
+       BLOG PAGE — PREMIUM STYLES
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 0; background: rgba(10,15,10,0.72); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border-bottom: 1px solid rgba(74,222,128,0.08); transition: background 0.3s, box-shadow 0.3s; }
+    .navbar.scrolled { background: rgba(10,15,10,0.95); box-shadow: 0 2px 24px rgba(0,0,0,0.5); }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+    .nav-inner { display: flex; align-items: center; gap: 2rem; }
+    .nav-logo { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; color: #f1f5f1; text-decoration: none; }
+    .nav-logo span { color: #4ade80; }
+    .nav-links { display: flex; gap: 0.25rem; margin: 0; flex: 1; list-style: none; }
+    .nav-links a { padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; color: #9ca39c; transition: color 0.2s, background 0.2s; text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; border-radius: 10px; transition: all 0.2s; text-decoration: none; cursor: pointer; border: none; font-family: inherit; }
+    .btn-primary { background: linear-gradient(135deg, #4ade80, #16a34a); color: #0a0f0a; padding: 0.55rem 1.25rem; font-size: 0.875rem; box-shadow: 0 0 20px rgba(74,222,128,0.25); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 28px rgba(74,222,128,0.4); }
+    .btn-outline { background: transparent; color: #f1f5f1; padding: 0.55rem 1.25rem; font-size: 0.875rem; border: 1.5px solid rgba(255,255,255,0.18); }
+    .btn-outline:hover { border-color: #4ade80; color: #4ade80; background: rgba(74,222,128,0.06); }
+    .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; border-radius: 12px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #f1f5f1; border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999; background: rgba(10,15,10,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(74,222,128,0.1); padding: 1.5rem; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 0.5rem; list-style: none; }
+    .mobile-menu ul li a { display: block; padding: 0.75rem 1rem; border-radius: 8px; color: #9ca39c; font-weight: 500; text-decoration: none; }
+    .mobile-menu ul li a:hover { color: #f1f5f1; background: rgba(255,255,255,0.06); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 1rem; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 160px 0 80px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74,222,128,0.13) 0%, transparent 65%), #0a0f0a;
+      text-align: center;
+    }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.75rem; }
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); font-weight: 900; line-height: 1.1; letter-spacing: -2px; background: linear-gradient(135deg, #fff 0%, #c3fac8 50%, #4ade80 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+    .hero p { font-size: 1.1rem; color: #9ca39c; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+
+    /* ── Categories ── */
+    .categories-bar {
+      padding: 32px 0 0; background: #0a0f0a;
+      position: sticky; top: 64px; z-index: 100;
+    }
+    .categories-scroll { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 24px; }
+    .categories-scroll::-webkit-scrollbar { height: 0; }
+    .cat-btn {
+      padding: 0.5rem 1.2rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      color: #9ca39c; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      font-family: inherit;
+    }
+    .cat-btn.active, .cat-btn:hover { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.3); color: #4ade80; }
+    .cat-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(74,222,128,0.15), transparent); }
+
+    /* ── Featured ── */
+    .featured-section { padding: 64px 0 48px; background: #0a0f0a; }
+    .section-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4ade80; margin-bottom: 1.5rem; }
+
+    .featured-card {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 0;
+      background: rgba(20,26,20,0.8); border: 1px solid rgba(74,222,128,0.15);
+      border-radius: 22px; overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+    }
+    .featured-card:hover { border-color: rgba(74,222,128,0.35); box-shadow: 0 20px 64px rgba(0,0,0,0.6), 0 0 40px rgba(74,222,128,0.05); }
+    .featured-image { position: relative; overflow: hidden; min-height: 360px; }
+    .featured-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+    .featured-card:hover .featured-image img { transform: scale(1.04); }
+    .featured-image-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 50%, rgba(10,15,10,0.3) 100%); }
+    .featured-content { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+    .featured-meta { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .article-cat { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #4ade80; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2); padding: 0.25rem 0.7rem; border-radius: 100px; }
+    .article-date { font-size: 0.78rem; color: #9ca39c; }
+    .featured-content h2 { font-size: 1.75rem; font-weight: 800; color: #f1f5f1; line-height: 1.3; letter-spacing: -0.5px; margin-bottom: 1rem; }
+    .featured-content p { font-size: 0.95rem; color: #9ca39c; line-height: 1.75; margin-bottom: 1.75rem; }
+    .read-more { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 600; color: #4ade80; }
+    .read-more:hover { gap: 0.75rem; }
+    .author-mini { display: flex; align-items: center; gap: 0.65rem; margin-top: auto; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .author-mini-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #4ade80, #16a34a); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #0a0f0a; flex-shrink: 0; }
+    .author-mini-name { font-size: 0.8rem; font-weight: 600; color: #f1f5f1; }
+    .author-mini-role { font-size: 0.72rem; color: #9ca39c; }
+    .read-time { margin-left: auto; font-size: 0.75rem; color: #9ca39c; }
+
+    /* ── Articles Grid ── */
+    .articles-section { padding: 0 0 80px; background: #0a0f0a; }
+    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .article-card {
+      background: rgba(20,26,20,0.7); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px; overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      text-decoration: none; display: flex; flex-direction: column;
+    }
+    .article-card:hover { border-color: rgba(74,222,128,0.25); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
+    .article-img { position: relative; overflow: hidden; aspect-ratio: 16/9; }
+    .article-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+    .article-card:hover .article-img img { transform: scale(1.06); }
+    .article-img-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(10,15,10,0.7) 100%); }
+    .article-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .article-meta { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 700; color: #f1f5f1; line-height: 1.4; margin-bottom: 0.65rem; letter-spacing: -0.25px; }
+    .article-excerpt { font-size: 0.85rem; color: #9ca39c; line-height: 1.65; margin-bottom: 1.25rem; flex: 1; }
+    .article-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .article-author { display: flex; align-items: center; gap: 0.5rem; }
+    .article-author-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #4ade80, #16a34a); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: #0a0f0a; }
+    .article-author-name { font-size: 0.78rem; color: #9ca39c; font-weight: 500; }
+    .article-read-time { font-size: 0.75rem; color: #6b7b6b; }
+
+    /* ── Newsletter ── */
+    .newsletter-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #0d1a00, #0a1400);
+      border-top: 1px solid rgba(74,222,128,0.1);
+      border-bottom: 1px solid rgba(74,222,128,0.1);
+    }
+    .newsletter-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+    .newsletter-icon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+    .newsletter-inner h2 { font-size: 2rem; font-weight: 800; color: #f1f5f1; letter-spacing: -1px; margin-bottom: 0.75rem; }
+    .newsletter-inner p { font-size: 1rem; color: #9ca39c; margin-bottom: 2rem; line-height: 1.7; }
+    .newsletter-form { display: flex; gap: 0.75rem; max-width: 460px; margin: 0 auto; }
+    .newsletter-form input { flex: 1; padding: 0.85rem 1.1rem; font-size: 0.925rem; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.12); border-radius: 12px; color: #f1f5f1; font-family: inherit; transition: border-color 0.2s; }
+    .newsletter-form input:focus { border-color: rgba(74,222,128,0.4); outline: none; }
+    .newsletter-form button { padding: 0.85rem 1.5rem; background: linear-gradient(135deg, #4ade80, #16a34a); color: #0a0f0a; border: none; border-radius: 12px; font-size: 0.925rem; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; transition: all 0.2s; }
+    .newsletter-form button:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(74,222,128,0.35); }
+    .newsletter-fine { margin-top: 1rem; font-size: 0.78rem; color: #6b7b6b; }
+
+    /* ── Load More ── */
+    .load-more { padding: 48px 0; text-align: center; background: #0a0f0a; }
+
+    /* ── Footer ── */
+    .footer { background: #0d1a00; border-top: 1px solid rgba(74,222,128,0.1); padding: 72px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand .footer-logo { font-size: 1.3rem; font-weight: 800; color: #f1f5f1; margin-bottom: 0.75rem; display: block; letter-spacing: -0.5px; text-decoration: none; }
+    .footer-brand .footer-logo span { color: #4ade80; }
+    .footer-brand p { font-size: 0.875rem; color: #9ca39c; line-height: 1.7; margin-bottom: 1.5rem; }
+    .footer-newsletter { display: flex; gap: 0.5rem; }
+    .footer-newsletter input { flex: 1; padding: 0.6rem 1rem; font-size: 0.875rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #f1f5f1; font-family: inherit; }
+    .footer-newsletter button { padding: 0.6rem 1.1rem; background: #16a34a; color: #fff; border-radius: 10px; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; font-family: inherit; white-space: nowrap; }
+    .footer-col h5 { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #4ade80; margin-bottom: 1.1rem; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 0.5rem; list-style: none; }
+    .footer-col ul li a { font-size: 0.875rem; color: #9ca39c; transition: color 0.2s; text-decoration: none; }
+    .footer-col ul li a:hover { color: #f1f5f1; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.825rem; color: #6b7b6b; }
+    .social-links { display: flex; gap: 0.6rem; }
+    .social-link { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #9ca39c; transition: all 0.2s; text-decoration: none; }
+    .social-link:hover { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.25); color: #4ade80; }
+
+    @media (max-width: 960px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-image { min-height: 280px; }
+      .articles-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1/-1; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 120px 0 56px; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="navbar">
-  <div class="navbar-inner">
-    <a href="index.html" class="navbar-logo">
-      <div class="navbar-logo-icon">🌿</div>
-      SlideSage
-    </a>
-    <nav class="navbar-nav">
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="blog.html" style="color:var(--color-primary)">Blog</a>
-      <a href="about.html">About</a>
-    </nav>
-    <div class="navbar-actions">
-      <a href="app.html" class="btn btn-primary">Try Free →</a>
-      <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-  <nav class="navbar-mobile">
-    <a href="features.html">Features</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="blog.html">Blog</a>
-    <a href="about.html">About</a>
-    <a href="app.html" class="btn btn-primary" style="margin-top:0.5rem;justify-content:center">Try Free →</a>
-  </nav>
-</header>
-
-<!-- Hero -->
-<section style="background:linear-gradient(180deg,var(--color-light-green) 0%,#fff 100%);padding:4.5rem 0 3.5rem;text-align:center">
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
   <div class="container">
-    <span class="section-label">The SlideSage Blog</span>
-    <h1 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-0.04em;margin:1rem 0 1.25rem">Presentation tips, AI insights &amp; more</h1>
-    <p style="font-size:1.0625rem;color:var(--color-muted);max-width:480px;margin:0 auto">
-      Practical advice for presenters who want to communicate more clearly and persuasively.
-    </p>
-  </div>
-</section>
-
-<!-- Featured Post -->
-<section class="section" style="padding-bottom:2rem">
-  <div class="container">
-    <div style="background:var(--color-light-green);border:1.5px solid rgba(61,90,0,0.15);border-radius:var(--radius-xl);padding:2.5rem;display:grid;grid-template-columns:1fr 1.2fr;gap:2.5rem;align-items:center;margin-bottom:3rem">
-      <div>
-        <span class="section-label" style="margin-bottom:0.75rem">Featured Post</span>
-        <h2 style="font-size:1.875rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:1rem;line-height:1.3">How AI is Changing Presentation Design Forever</h2>
-        <p style="color:var(--color-muted);line-height:1.7;margin-bottom:1.5rem">
-          From automated layout suggestions to real-time feedback, AI tools are fundamentally reshaping how we create and deliver presentations. Here's what's changing and what it means for your next deck.
-        </p>
-        <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;font-size:0.875rem;color:var(--color-muted)">
-          <span>📅 March 28, 2026</span>
-          <span>⏱ 8 min read</span>
-          <span>👁 4,230 views</span>
-        </div>
-        <a href="#" class="btn btn-primary">Read Article →</a>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Slide<span>Sage</span> 📊</a>
+      <ul class="nav-links">
+        <li><a href="features.html">Features</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="app.html" class="btn btn-primary">Try Free →</a>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
       </div>
-      <div style="background:linear-gradient(135deg,var(--color-primary),var(--color-accent));border-radius:var(--radius-lg);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:5rem">🤖</div>
-    </div>
-
-    <!-- Blog Grid -->
-    <div class="blog-grid">
-
-      <article class="blog-card">
-        <div class="blog-card-image">📊</div>
-        <div class="blog-card-content">
-          <div class="blog-category">Tips &amp; Tricks</div>
-          <h3>10 Tips for Clearer Slides That Actually Get Read</h3>
-          <p>Most slides fail for the same reasons. Here are 10 evidence-backed techniques that make your slides clearer, more memorable, and impossible to ignore.</p>
-          <div class="blog-meta">
-            <span>March 22, 2026</span>
-            <span>6 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="blog-card">
-        <div class="blog-card-image">💼</div>
-        <div class="blog-card-content">
-          <div class="blog-category">Case Study</div>
-          <h3>Case Study: How SlideSage Helped a Sales Team Close 30% More</h3>
-          <p>CloudBase Inc. ran every sales deck through SlideSage for 90 days. The results surprised even us — here's exactly what changed and by how much.</p>
-          <div class="blog-meta">
-            <span>March 15, 2026</span>
-            <span>10 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="blog-card">
-        <div class="blog-card-image">🎤</div>
-        <div class="blog-card-content">
-          <div class="blog-category">Public Speaking</div>
-          <h3>The Science of Memorable Presentations: What Research Actually Shows</h3>
-          <p>Cognitive science has a lot to say about why some presentations stick and others are forgotten instantly. Here's what the research tells us.</p>
-          <div class="blog-meta">
-            <span>March 8, 2026</span>
-            <span>7 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="blog-card">
-        <div class="blog-card-image">🚀</div>
-        <div class="blog-card-content">
-          <div class="blog-category">Startup</div>
-          <h3>The 12-Slide Investor Pitch Deck: What Every Slide Should Say</h3>
-          <p>The format that Sequoia, a16z, and YC expect. We break down each slide — what it needs, what to avoid, and common mistakes founders make.</p>
-          <div class="blog-meta">
-            <span>March 1, 2026</span>
-            <span>12 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="blog-card">
-        <div class="blog-card-image">🎨</div>
-        <div class="blog-card-content">
-          <div class="blog-category">Design</div>
-          <h3>Design Rules for Non-Designers: Make Your Slides Look Professional</h3>
-          <p>You don't need to be a graphic designer to create beautiful slides. Master these 5 fundamental design principles and your decks will look polished every time.</p>
-          <div class="blog-meta">
-            <span>February 22, 2026</span>
-            <span>5 min read</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="blog-card">
-        <div class="blog-card-image">📈</div>
-        <div class="blog-card-content">
-          <div class="blog-category">Data Viz</div>
-          <h3>Stop Using Tables: Better Ways to Visualize Data in Presentations</h3>
-          <p>Tables are the most overused and least engaging way to show data. Here are 8 alternatives that make your numbers impossible to misunderstand.</p>
-          <div class="blog-meta">
-            <span>February 15, 2026</span>
-            <span>6 min read</span>
-          </div>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- Load More -->
-    <div style="text-align:center;margin-top:3rem">
-      <button class="btn btn-ghost btn-lg" onclick="showToast('More articles coming soon!','info')">Load More Articles</button>
     </div>
   </div>
-</section>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <ul>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="app.html" class="btn btn-primary">Try Free →</a>
+</div>
 
-<!-- Newsletter -->
-<section class="section" style="background:var(--color-surface)">
-  <div class="container-sm" style="text-align:center">
-    <h2 style="font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;letter-spacing:-0.03em">Get presentation tips in your inbox</h2>
-    <p style="color:var(--color-muted);margin-bottom:2rem">Weekly actionable tips on presentations, public speaking, and visual communication. Unsubscribe anytime.</p>
-    <form class="newsletter-form" data-source="blog" style="display:flex;gap:0.75rem;max-width:440px;margin:0 auto">
-      <input type="email" placeholder="your@email.com" required style="flex:1;padding:0.75rem 1rem;border:1.5px solid var(--color-border);border-radius:var(--radius-md);font-size:0.9375rem;outline:none;font-family:inherit;transition:border-color 0.15s" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='var(--color-border)'">
-      <button type="submit" class="btn btn-primary">Subscribe →</button>
-    </form>
-    <p style="font-size:0.8125rem;color:var(--color-muted);margin-top:0.875rem">No spam. 1,200+ readers. Unsubscribe anytime.</p>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
+<!-- ═══ HERO ═══ -->
+<section class="hero">
   <div class="container">
-    <h2>Ready to improve your next presentation?</h2>
-    <p>Upload your deck and get AI feedback in under 30 seconds. Free, no sign-up required.</p>
-    <div class="cta-buttons">
-      <a href="app.html" class="btn btn-white btn-lg">Analyze My Slides Free →</a>
+    <div class="hero-badge">✦ Updated weekly</div>
+    <h1>Presentation Tips &amp;<br>Insights from the Pros</h1>
+    <p>Expert guides, AI deep-dives, and real case studies to help you present with more confidence and close more deals.</p>
+  </div>
+</section>
+
+<!-- ═══ CATEGORIES ═══ -->
+<div class="categories-bar">
+  <div class="container">
+    <div class="categories-scroll">
+      <button class="cat-btn active">All</button>
+      <button class="cat-btn">AI &amp; Tech</button>
+      <button class="cat-btn">Tips</button>
+      <button class="cat-btn">Case Studies</button>
+      <button class="cat-btn">Design</button>
+      <button class="cat-btn">Strategy</button>
+      <button class="cat-btn">Product</button>
+    </div>
+  </div>
+  <div class="cat-divider"></div>
+</div>
+
+<!-- ═══ FEATURED ARTICLE ═══ -->
+<section class="featured-section">
+  <div class="container">
+    <div class="section-eyebrow">✦ Featured Article</div>
+    <a href="#" class="featured-card">
+      <div class="featured-image">
+        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&auto=format&fit=crop" alt="How GPT-4 is Transforming Business Presentations" loading="lazy" />
+        <div class="featured-image-overlay"></div>
+      </div>
+      <div class="featured-content">
+        <div class="featured-meta">
+          <span class="article-cat">AI &amp; Tech</span>
+          <span class="article-date">April 2, 2026</span>
+        </div>
+        <h2>How GPT-4 is Transforming Business Presentations in 2026</h2>
+        <p>The way we prepare and deliver presentations has changed more in the last 18 months than in the previous decade. Here's a deep dive into exactly how AI is reshaping the craft — and what it means for you.</p>
+        <span class="read-more">Read full article →</span>
+        <div class="author-mini">
+          <div class="author-mini-avatar">AC</div>
+          <div>
+            <div class="author-mini-name">Alex Chen</div>
+            <div class="author-mini-role">CEO, SlideSage</div>
+          </div>
+          <div class="read-time">12 min read</div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══ ARTICLES GRID ═══ -->
+<section class="articles-section">
+  <div class="container">
+    <div class="articles-grid">
+
+      <!-- Article 1 -->
+      <a href="#" class="article-card">
+        <div class="article-img">
+          <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&auto=format&fit=crop" alt="How AI is Revolutionizing Presentations" loading="lazy" />
+          <div class="article-img-overlay"></div>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-cat">AI &amp; Tech</span>
+            <span class="article-date">Mar 28, 2026</span>
+          </div>
+          <h3>How AI is Revolutionizing the Art of Presentations</h3>
+          <p class="article-excerpt">From real-time feedback to automated slide generation, AI tools are giving presenters superpowers. We break down the landscape.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <div class="article-author-avatar">SM</div>
+              <span class="article-author-name">Sarah Miller</span>
+            </div>
+            <span class="article-read-time">8 min</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 2 -->
+      <a href="#" class="article-card">
+        <div class="article-img">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&auto=format&fit=crop" alt="10 Slide Mistakes That Kill Deals" loading="lazy" />
+          <div class="article-img-overlay"></div>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-cat">Tips</span>
+            <span class="article-date">Mar 22, 2026</span>
+          </div>
+          <h3>10 Slide Mistakes That Kill Deals (And How to Fix Them)</h3>
+          <p class="article-excerpt">We analyzed 10,000 sales decks and found the same 10 critical mistakes over and over. Here's how to avoid every single one.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <div class="article-author-avatar">MR</div>
+              <span class="article-author-name">Marcus Roy</span>
+            </div>
+            <span class="article-read-time">6 min</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 3 -->
+      <a href="#" class="article-card">
+        <div class="article-img">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&auto=format&fit=crop" alt="Case Study: 23% Higher Close Rate" loading="lazy" />
+          <div class="article-img-overlay"></div>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-cat">Case Studies</span>
+            <span class="article-date">Mar 15, 2026</span>
+          </div>
+          <h3>Case Study: How One Sales Team Achieved a 23% Higher Close Rate</h3>
+          <p class="article-excerpt">Synova's inside sales team went from 14% to 37% close rate in 90 days. Here's exactly what changed — and the role SlideSage played.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <div class="article-author-avatar">AC</div>
+              <span class="article-author-name">Alex Chen</span>
+            </div>
+            <span class="article-read-time">10 min</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 4 -->
+      <a href="#" class="article-card">
+        <div class="article-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop" alt="The Science of Slide Design" loading="lazy" />
+          <div class="article-img-overlay"></div>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-cat">Design</span>
+            <span class="article-date">Mar 8, 2026</span>
+          </div>
+          <h3>The Science of Slide Design: What Neuroscience Tells Us</h3>
+          <p class="article-excerpt">Cognitive load theory, F-pattern reading, and visual hierarchy — how brain science should inform every design decision you make.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <div class="article-author-avatar">SM</div>
+              <span class="article-author-name">Sarah Miller</span>
+            </div>
+            <span class="article-read-time">9 min</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 5 -->
+      <a href="#" class="article-card">
+        <div class="article-img">
+          <img src="https://images.unsplash.com/photo-1560472354-b33ff0ad2a89?w=600&auto=format&fit=crop" alt="Why Executive Decks Fail" loading="lazy" />
+          <div class="article-img-overlay"></div>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-cat">Strategy</span>
+            <span class="article-date">Feb 28, 2026</span>
+          </div>
+          <h3>Why Executive Decks Fail — and the 5-Slide Framework That Fixes Them</h3>
+          <p class="article-excerpt">Most executive presentations fail in the first 90 seconds. Here's the framework used by top consultants to make every second count.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <div class="article-author-avatar">MR</div>
+              <span class="article-author-name">Marcus Roy</span>
+            </div>
+            <span class="article-read-time">7 min</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 6 -->
+      <a href="#" class="article-card">
+        <div class="article-img">
+          <img src="https://images.unsplash.com/photo-1553028826-f4f5e2e9e869?w=600&auto=format&fit=crop" alt="SlideSage vs Manual Review" loading="lazy" />
+          <div class="article-img-overlay"></div>
+        </div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="article-cat">Product</span>
+            <span class="article-date">Feb 19, 2026</span>
+          </div>
+          <h3>SlideSage vs Manual Review: Which Gets You Better Results Faster?</h3>
+          <p class="article-excerpt">We ran a controlled test: 50 decks reviewed manually by a consultant, 50 by SlideSage. The results surprised even us.</p>
+          <div class="article-footer">
+            <div class="article-author">
+              <div class="article-author-avatar">AC</div>
+              <span class="article-author-name">Alex Chen</span>
+            </div>
+            <span class="article-read-time">11 min</span>
+          </div>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
 
+<!-- ═══ LOAD MORE ═══ -->
+<div class="load-more">
+  <div class="container">
+    <button class="btn btn-outline btn-lg" onclick="this.textContent='Loading…'; setTimeout(()=>this.textContent='Load more articles',1200)">Load more articles</button>
+  </div>
+</div>
+
+<!-- ═══ NEWSLETTER ═══ -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-inner">
+      <span class="newsletter-icon">📬</span>
+      <h2>Get weekly presentation tips</h2>
+      <p>Join 8,000+ subscribers who get our best presentation advice, AI news, and case studies every Thursday morning.</p>
+      <form class="newsletter-form" action="/.netlify/functions/newsletter" method="POST">
+        <input type="email" name="email" placeholder="Enter your email address" required />
+        <button type="submit">Subscribe →</button>
+      </form>
+      <p class="newsletter-fine">No spam. Unsubscribe any time. Read by presenters in 40+ countries.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="container">
-    <div class="footer-inner">
+    <div class="footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="navbar-logo">
-          <div class="navbar-logo-icon">🌿</div>
-          SlideSage
-        </a>
-        <p>AI-powered presentation analysis that helps you communicate better, faster.</p>
+        <a href="index.html" class="footer-logo">Slide<span>Sage</span> 📊</a>
+        <p>AI-powered presentation coaching that turns your slides into your strongest asset. Trusted by 5,000+ presenters worldwide.</p>
+        <form class="footer-newsletter" action="/.netlify/functions/newsletter" method="POST">
+          <input type="email" name="email" placeholder="Your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
       </div>
       <div class="footer-col">
-        <h4>Product</h4>
-        <ul><li><a href="features.html">Features</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="app.html">Try Free</a></li></ul>
+        <h5>Product</h5>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="app.html">Try Free</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
-        <ul><li><a href="about.html">About</a></li><li><a href="blog.html">Blog</a></li><li><a href="about.html#contact">Contact</a></li></ul>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
       </div>
       <div class="footer-col">
-        <h4>Legal</h4>
-        <ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 SlideSage. All rights reserved.</span>
-      <span>Made with 🌿 for better presentations</span>
+      <span class="footer-copy">© 2026 SlideSage Inc. All rights reserved.</span>
+      <div class="social-links">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">⌥</a>
+      </div>
     </div>
   </div>
 </footer>
 
-<div class="toast-container"></div>
-<script src="js/app.js"></script>
+<script>
+  // Navbar
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('open'));
+
+  // Category filter
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
 </body>
 </html>
